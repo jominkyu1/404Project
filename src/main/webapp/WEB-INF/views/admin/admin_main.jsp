@@ -37,7 +37,6 @@
         <!-- 어드민 네비게이션 로드 -->
         <jsp:include page="../include/admin_nav.jsp" />
 
-
         <div class="col p-3 bg-body-tertiary"> 
             <h2 class="lead text-center fw-bold">메인화면</h2><hr>
                 <div class="table-responsive-sm">
