@@ -2,13 +2,16 @@
 <!--부트스트랩 아이콘 CSS
     https://icons.getbootstrap.com/ 이곳에서 아이콘 확인! 클래스명에 아이콘 적으면됨!
 -->
-<link
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
-      rel="stylesheet"
-/>
+<!--부트스트랩 아이콘 CSS
+https://icons.getbootstrap.com/ 이곳에서 아이콘 확인! 클래스명에 아이콘 적으면됨!
+-->
 <link href="css/bootstrap.min.css" rel="stylesheet" />
+<link
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+    rel="stylesheet"
+/>
 <nav class="navbar navbar-expand-lg" style="background-color: rgba(211, 211, 211, 0.38);">
-<div class="container px-4 px-lg-5" id="navbarjs">
+    <div class="container px-4 px-lg-5" id="navbarjs">
         <a class="navbar-brand fw-bolder" href="/">
             <i class="bi-bookmark-heart-fill mx-2"></i>404 STORE
         </a>
@@ -39,5 +42,5 @@
                 </button>
             </form>
         </div>
-</div>
+    </div>
 </nav>

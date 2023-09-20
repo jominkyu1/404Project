@@ -11,4 +11,9 @@ public class RecommandController {
     public String recommand() {
         return "recommand";
     }
+
+    @GetMapping("/item")
+    public String recommandItem(){
+        return "recommand-re";
+    }
 }

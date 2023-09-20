@@ -99,7 +99,7 @@
                 <div class="text-center">
                   <!-- Product name-->
                   <h5 class="fw-bolder">
-                    <a href="iteminfo.html" class="text-decoration-none">Galaxy Buds 2</a>
+                    <a href="/item" class="text-decoration-none">Galaxy Buds 2</a>
                   </h5>
                   <!-- Product price-->
                   <span class="fw-bolder">87,000원</span>
@@ -237,7 +237,7 @@
     <!-- 푸터 (footer.html) -->
     <jsp:include page="include/footer.jsp" />
     <!-- include.js 자바스크립트 -->
-    <script src="include/include.js"></script>
+    <script src="/include/include.js"></script>
     <script>
       includeHTML();
     </script>

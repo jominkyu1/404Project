@@ -12,4 +12,14 @@ public class GuideController {
     public String guide() {
         return "guide";
     }
+
+    @GetMapping("/digitalit")
+    public String digitalIt(){
+        return "digital_IT";
+    }
+
+    @GetMapping("/item")
+    public String itemInfo(){
+        return "bluetooth_earphone_guide";
+    }
 }

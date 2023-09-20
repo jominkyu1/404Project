@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <!-- BOOTSTRAP -->
-<link href="css/bootstrap.min.css" rel="stylesheet" />
+<link href="/css/bootstrap.min.css" rel="stylesheet" />
 
 <header class="bg-white" id="headerjs">
     <div id="carouselExampleIndicators" class="carousel slide carousel-dark" data-bs-ride="carousel">
@@ -13,11 +13,11 @@
         <!-- 배너 이미지 넣는 공간 1100x260 -->
         <div class="carousel-inner mx-auto">
             <div class="carousel-item active">
-                <img src="images/banner1.webp"
+                <img src="/images/banner1.webp"
                      class="d-block mx-auto" alt="Slide 1">
             </div>
             <div class="carousel-item">
-                <img src="images/dummybanner.png"
+                <img src="/images/dummybanner.png"
                      class="d-block mx-auto" alt="Slide 2">
             </div>
             <div class="carousel-item">

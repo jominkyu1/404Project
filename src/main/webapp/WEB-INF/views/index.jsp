@@ -16,7 +16,7 @@
             https://icons.getbootstrap.com/ 이곳에서 아이콘 확인! 클래스명에 아이콘 적으면됨!
         -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
-        <link href="css/bootstrap.min.css" rel="stylesheet" />
+        <link href="/css/bootstrap.min.css" rel="stylesheet" />
     </head>
     <style>
         .carousel-inner{

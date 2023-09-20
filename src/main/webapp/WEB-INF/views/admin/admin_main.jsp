@@ -137,10 +137,6 @@
     <!-- 푸터 (footer.html) -->
     <jsp:include page="../include/footer.jsp" />
     <!-- include.js 자바스크립트 -->
-    <script src="include/include.js"></script>
-    <script>
-            includeHTML();
-    </script>
     </body>
 
     <!-- Bootstrap core JS-->

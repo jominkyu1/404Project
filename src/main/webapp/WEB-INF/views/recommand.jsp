@@ -87,7 +87,7 @@
         <div class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="font-size:1.7rem;">
-              생활가전 <img src="./images/vaccum.jpg" width="40" height="30" >
+              생활가전 <img src="/images/vaccum.jpg" width="40" height="30" >
             </button>
           </h2>
           <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
@@ -97,8 +97,8 @@
                   <div class="col-md-3 col-sm-3 col-xs-6 ">
                     <ul class="list-unstyled" style="font-size: 150%;">
                       <li>               
-                        <a href="recommand-re.html" >세탁기</a>
-                        <a href="recommand_redirect.html" >세탁기</a>
+                        <a href="/recommand/item" >세탁기</a>
+                        <a href="/recommand/item" >세탁기</a>
                       </li>
                       <li>
                         <a href="#">세탁기</a>
@@ -142,7 +142,7 @@
         <div class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" style="font-size:1.7rem;">
-              계절가전 <img src="./images/aircon1.png" width="30" height="30">
+              계절가전 <img src="/images/aircon1.png" width="30" height="30">
             </button>
           </h2>
           <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
@@ -196,7 +196,7 @@
         <div class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree" style="font-size:1.7rem;">
-              주방가전 <img src="./images/fridge.jpg" width="25" height="30">
+              주방가전 <img src="/images/fridge.jpg" width="25" height="30">
             </button>
           </h2>
           <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
@@ -250,7 +250,7 @@
         <div class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour" style="font-size:1.7rem;">
-              디지털/IT <img src="./images/monitor.jpg" width="25" height="25" class="mx-1">
+              디지털/IT <img src="/images/monitor.jpg" width="25" height="25" class="mx-1">
             </button>
           </h2>
           <div id="collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionExample">

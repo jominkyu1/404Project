@@ -70,11 +70,11 @@
                 <div class="collapse navbar-collapse justify-content-center" id="navbarColor02">
                     <ul class="navbar-nav">
                         <li class="nav-item active">
-                            <a class="nav-link" href="guide.html" data-abc="true">전체 <span
+                            <a class="nav-link" href="/guide" data-abc="true">전체 <span
                                     class="visually-hidden">(current)</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="digital_IT.html" data-abc="true">디지털 IT</a>
+                            <a class="nav-link" href="/guide/digitalit" data-abc="true">디지털 IT</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#" data-abc="true">생활가전</a>
@@ -157,7 +157,7 @@
                                 <h5 class="fw-bolder">블루투스<br>이어폰</h5>
                                 <!-- Product explanation-->
                                 <div class="text-center">
-                                    <a id="hello1" href="bluetooth_earphone_guide.html">
+                                    <a id="hello1" href="/guide/item">
                                         가성비 좋고 <br>
                                         나에게 맞는 제품 추천!
                                     </a>
@@ -265,27 +265,10 @@
 
             </div>
         </div>
-
-
-
-
-
-
-
-
-
-
-
         <!--구매가이드 End-->
-
     </section>
     <!-- 푸터 (footer.html) -->
     <jsp:include page="include/footer.jsp" />
-    <!-- include.js 자바스크립트 -->
-    <script src="include/include.js"></script>
-    <script>
-        includeHTML();
-    </script>
 </body>
 
 <!-- Bootstrap core JS-->
