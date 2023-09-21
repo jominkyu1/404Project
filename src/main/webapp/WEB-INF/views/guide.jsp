@@ -48,16 +48,8 @@
     <!-- 배너(header.html) 로드 -->
     <jsp:include page="include/header.jsp" />
     <!-- 매인 섹션 -->
-    <section class="py-5">
-
+    <section>
         <!--Main 네비게이션바 시작-->
-        <style>
-            #navbarColor02 ul li {
-                margin: 0 25px;
-                /* 원하는 간격으로 조정 */
-            }
-        </style>
-
         <nav class="navbar navbar-expand-lg bg-light" id="guidenav">
             <div class="container">
                 <div class="d-flex align-items-center">
@@ -81,20 +73,6 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#" data-abc="true">주방가전</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                Dropdown
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Action</a></li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                            </ul>
                         </li>
                     </ul>
                 </div>
@@ -121,18 +99,7 @@
                 <div class="col mb-5">
                     <div class="card h-100">
                         <!-- Product image-->
-
-
-
-
-
-
-
-
-
-
-
-
+                        
 
                         <!-- Product details-->
                         <style>
@@ -147,7 +114,7 @@
                         <div class="card-body p-4">
                             <div class="bd">
                                 <div class="im w-auto h-auto">
-                                    <img class="card-img-top radius" src="images/guide/bluetooth_earphones.jpg"
+                                    <img class="card-img-top radius h-50" src="/images/guide/bluetooth_earphones.jpg"
                                         alt="버즈2" />
                                 </div>
                             </div>
@@ -178,91 +145,8 @@
                             });
                         </script>
 
-
-
-
-
-
-
-
-
-
-
                     </div>
                 </div>
-                <div class="col mb-5">
-                    <div class="card h-100">
-                        <!-- Sale badge-->
-                        <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">세일
-                        </div>
-                        <!-- Product image-->
-                        <img class="card-img-top" src="./images/buds2pro.png" alt="버즈2프로" />
-                        <!-- Product details-->
-                        <div class="card-body p-4">
-                            <div class="text-center">
-                                <!-- Product name-->
-                                <h5 class="fw-bolder">Galaxy Buds 2 Pro</h5>
-                                <!-- Product price-->
-                                <span class="text-muted text-decoration-line-through">200,000원</span>
-                                175,000원
-                            </div>
-                        </div>
-                        <!-- Product actions-->
-                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">구매하기</a></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col mb-5">
-                    <div class="card h-100">
-                        <!-- Product image-->
-                        <img class="card-img-top" src="./images/induction.png" alt="인덕션" />
-                        <!-- Product details-->
-                        <div class="card-body p-4">
-                            <div class="text-center">
-                                <!-- Product name-->
-                                <h5 class="fw-bolder">삼성 빌트인 인덕션</h5>
-                                <!-- Product price-->
-                                870,000원
-                            </div>
-                        </div>
-                        <!-- Product actions-->
-                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">구매하기</a></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col mb-5">
-                    <div class="card h-100">
-                        <!-- Sale badge-->
-                        <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">인기
-                        </div>
-                        <!-- Product image-->
-                        <img class="card-img-top" src="./images/fold5.png" alt="폴드5" />
-                        <!-- Product details-->
-                        <div class="card-body p-4">
-                            <div class="text-center">
-                                <!-- Product name-->
-                                <h5 class="fw-bolder">갤럭시Z 폴드 5</h5>
-                                <!-- Product reviews-->
-                                <div class="d-flex justify-content-center small text-warning mb-2">
-                                    <div class="bi-star-fill"></div>
-                                    <div class="bi-star-fill"></div>
-                                    <div class="bi-star-fill"></div>
-                                    <div class="bi-star-fill"></div>
-                                    <div class="bi-star-fill"></div>
-                                </div>
-                                <!-- Product price-->
-                                1,250,000원
-                            </div>
-                        </div>
-                        <!-- Product actions-->
-                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">구매하기</a></div>
-                        </div>
-                    </div>
-                </div>
-
             </div>
         </div>
         <!--구매가이드 End-->

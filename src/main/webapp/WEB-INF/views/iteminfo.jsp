@@ -73,7 +73,7 @@
                 <i class="bi-cart-fill me-1"></i>
                 장바구니
               </button>
-              <a class="btn btn-outline-dark mx-2" href="weeksale.html">
+              <a class="btn btn-outline-dark mx-2" href="/specialstore">
                 <i class="bi-arrow-return-right me-1"></i>
                 목록으로
               </a>

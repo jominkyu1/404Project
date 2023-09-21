@@ -29,7 +29,7 @@ https://icons.getbootstrap.com/ 이곳에서 아이콘 확인! 클래스명에 �
                 <li class="nav-item"><a class="nav-link" href="/login">로그인</a></li>
             </ul>
             <!-- 검색 기능-->
-            <form class="d-flex me-2">
+            <form class="navbar-nav mx-2">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" required tabindex="1">
                 <input class="btn btn-outline-dark text-bg-dark" type="submit" value="검색">
             </form>

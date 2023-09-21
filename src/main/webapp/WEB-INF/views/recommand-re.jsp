@@ -41,10 +41,10 @@
         <jsp:include page="include/header.jsp" />
         <!-- 매인 섹션 -->
         <section>
-          <div class="border1">
+          <div class="border border-5 border-secondary">
             <div class="row">
-              <div class="col-2">
-                <div class="card" style="width: 20rem;">
+              <div class="col-3 border border-5 border-primary">
+                <div class="card" style="width: 100%;">
                   <img src="https://placehold.it/700x500" class="card-img-top" alt="...">
                   <div class="card-body">
                     <h5 class="card-title">제품 이름</h5>
@@ -54,12 +54,17 @@
                   </div>
                 </div>
               </div>
-              <div class="col-10">
-                <span class="text-start mb-5 ">상품 설명을 적으면 됩니다.</span>
-                
+              <div class="col-9 border border-5 border-danger">
+                <div class="border border-5">
+                <span class="text-start mb-5 ">
+                  상품 설명을 적으면 됩니다.상품 설명을 적으면 됩니다.상품 설명을 적으면 됩니다.상품 설명을 적으면 됩니다.
+                  상품 설명을 적으면 됩니다.상품 설명을 적으면 됩니다.상품 설명을 적으면 됩니다.상품 설명을 적으면 됩니다.
+                  상품 설명을 적으면 됩니다.상품 설명을 적으면 됩니다.상품 설명을 적으면 됩니다.상품 설명을 적으면 됩니다.
+                </span>
+                </div>
                 <div>
                   <div>
-                    <div class="border border-5 ">
+                    <div class="border border-5 border-black my-2">
                       <h2>장점</h2>
                       <ul>
                         <li>
@@ -87,109 +92,11 @@
             </div>
           </div>
           
-          
-          
-          <div class="border2">
-            <div class="row">
-              <div class="col-2">
-                <div class="card" style="width: 20rem;">
-                  <img src="https://placehold.it/700x500" class="card-img-top" alt="...">
-                  <div class="card-body">
-                    <h5 class="card-title">제품 이름</h5>
-                    <p class="card-text"></p>
-                    <a href="#" class="btn btn-primary">404 픽</a>
-                    <a href="#" class="btn btn-primary">다른 사이트 픽</a>
-                  </div>
-                </div>
-              </div>
-              <div class="col-10">
-                <span class="text-start mb-5 ">상품 설명을 적으면 됩니다.</span>
-                
-                <div>
-                  <div>
-                    <div class="border border-5 ">
-                      <h2>장점</h2>
-                      <ul>
-                        <li>
-                          싸다
-                        </li>
-                        <li>
-                          좋다
-                        </li>
-                      </ul>
-                      <hr class=""><br>
-                      <h2 class="">단점</h2>
-                      <ul>
-                        <li>
-                          비싸다
-                        </li>
-                        <li>
-                          안좋다
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              
-              </div>
-            </div>
-          </div>
-          
-          <div class="border3">
-            <div class="row">
-              <div class="col-2">
-                <div class="card" style="width: 20rem;">
-                  <img src="https://placehold.it/700x500" class="card-img-top" alt="...">
-                  <div class="card-body">
-                    <h5 class="card-title">제품 이름</h5>
-                    <p class="card-text"></p>
-                    <a href="#" class="btn btn-primary">404 픽</a>
-                    <a href="#" class="btn btn-primary">다른 사이트 픽</a>
-                  </div>
-                </div>
-              </div>
-              <div class="col-10">
-                <span class="text-start mb-5 ">상품 설명을 적으면 됩니다.</span>
-                
-                <div>
-                  <div>
-                    <div class="border border-5 ">
-                      <h2>장점</h2>
-                      <ul>
-                        <li>
-                          싸다
-                        </li>
-                        <li>
-                          좋다
-                        </li>
-                      </ul>
-                      <hr class=""><br>
-                      <h2 class="">단점</h2>
-                      <ul>
-                        <li>
-                          비싸다
-                        </li>
-                        <li>
-                          안좋다
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              
-              </div>
-            </div>
-          </div>
         </section>
         <!-- 푸터 (footer.html) -->
         <jsp:include page="include/footer.jsp" />
-        <!-- include.js 자바스크립트 -->
-        <script src="include/include.js"></script>
-        <script>
-            includeHTML();
-        </script>
     </body>
 
     <!-- Bootstrap core JS-->
-    <script src="js/bootstrap.bundle.js"></script>
+    <script src="/js/bootstrap.bundle.js"></script>
 </html>
