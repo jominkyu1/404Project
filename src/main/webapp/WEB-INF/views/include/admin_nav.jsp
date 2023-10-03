@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<link rel="stylesheet" href="css/bootstrap_min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
 <div class="d-flex flex-column flex-shrink-0 p-3 bg-secondary-subtle " style="width: 200px; min-height: 75vh;">
     <span class="fw-bold text-black mx-auto">관리자 페이지</span>
     <hr>

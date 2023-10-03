@@ -1,11 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 <!--부트스트랩 아이콘 CSS
     https://icons.getbootstrap.com/ 이곳에서 아이콘 확인! 클래스명에 아이콘 적으면됨!
 -->
-<!--부트스트랩 아이콘 CSS
-https://icons.getbootstrap.com/ 이곳에서 아이콘 확인! 클래스명에 아이콘 적으면됨!
--->
-<link href="css/bootstrap.min.css" rel="stylesheet" />
+<link href="/css/bootstrap.min.css" rel="stylesheet" />
 <link
     href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
     rel="stylesheet"
@@ -25,8 +25,16 @@ https://icons.getbootstrap.com/ 이곳에서 아이콘 확인! 클래스명에 �
             </ul>
             <!-- 오른쪽 위 네비게이션 링크 추가 -->
             <ul class="navbar-nav mx-2">
-                <li class="nav-item"><a class="nav-link" href="/register">회원가입</a></li>
-                <li class="nav-item"><a class="nav-link" href="/login">로그인</a></li>
+                <sec:authorize access="isAnonymous()">
+                    <li class="nav-item"><a class="nav-link" href="/register">회원가입</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/login">로그인</a></li>
+                </sec:authorize>
+                <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')" >
+                    <sec:authentication property="principal.user" var="user"/>
+                    
+                    <li class="nav-item"><a class="nav-link" href="/user/${user.user_id}">회원정보</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/logout">로그아웃</a></li>
+                </sec:authorize>
             </ul>
             <!-- 검색 기능-->
             <form class="navbar-nav mx-2">
