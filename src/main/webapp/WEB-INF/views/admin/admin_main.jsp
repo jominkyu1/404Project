@@ -50,15 +50,15 @@
                                 <th>전체회원</th>
                                 <th>일반회원</th>
                                 <th>VIP회원</th>
-                                <th>Admin</th>
+                                <th>관리자</th>
                             </tr>
                             </thead>
                             <tbody class="table-group-divider text-center">
                                 <tr class="table-light" >
-                                    <td scope="row">150</td>
-                                    <td>100</td>
-                                    <td>40</td>
-                                    <td>10</td>
+                                    <td scope="row">${count.allUsers}</td>
+                                    <td>${count.normalUsers}</td>
+                                    <td>0</td>
+                                    <td>${count.adminUsers}</td>
                                 </tr>
                             </tbody>
                     </table>

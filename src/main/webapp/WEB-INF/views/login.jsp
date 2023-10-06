@@ -18,6 +18,16 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
 
     </head>
+    <style>
+        .carousel-inner{
+            width: 80%;
+            height: 35vh;
+        }
+        .carousel-item, .carousel-item img{
+            width: 100%;
+            height: 100%;
+        }
+    </style>
     <body>
     <!-- 네비게이션(nav.html) 로드 -->
     <jsp:include page="include/nav.jsp" />

@@ -2,7 +2,7 @@ package net.store.project.security;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import net.store.project.vo.user.UserRepository;
+import net.store.project.repository.UserRepository;
 import net.store.project.vo.user.UserVO;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

@@ -42,6 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests() //URL별 권한 관리를 설정하는 옵션의 시작점
                 .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/user/**").hasRole("USER")
                 .anyRequest().permitAll() //그 외 URL에 대한 접근을 허용
                 .and()
 
@@ -71,7 +72,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        // userVO -> userDetails로 변환해주는 서비스 클래스
+        // userVO -> userDetails로 변환 후 시큐리티에서 관리하는 유저객체로 할당
         auth.userDetailsService(storeUserDetailsService);
     }
 }

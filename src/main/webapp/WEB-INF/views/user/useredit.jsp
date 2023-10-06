@@ -13,11 +13,19 @@
         height: 100%;
     }
 </style>
+<script>
+  function enablePasswordInput(){
+      var passwordInput = document.getElementById('password');
+      passwordInput.disabled = false;
+      passwordInput.value = '';
+      passwordInput.focus();
+  }
+</script>
 <body>
   <jsp:include page="../include/nav.jsp" />
   <jsp:include page="../include/header.jsp" />
   <section class="py-5 mx-auto">
-    <div class="text-center "><h2>회원정보</h2></div>
+    <div class="text-center "><h2>회원정보 수정</h2></div>
     <div class="container mt-2">
       <div class="row">
         <div class="col-4">
@@ -26,25 +34,34 @@
           </div>
         </div>
         <div class="col-8">
-          <table class="table table-hover ">
+          <table class="table table-hover">
             <tr>
               <th>아이디</th>
-              <td>${user.username}</td>
+              <td><input type="text" class="input-group-text" name="username" value="${user.username}"></td>
+            </tr>
+            <tr>
+              <th>비밀번호</th>
+              <td>
+                <div class="input-group">
+                <input type="password" class="input-group-text" id="password" name="password" value="${user.password}" disabled>
+                <input type="button" class="btn btn-outline-secondary mx-2" value="비밀번호 변경"
+                       onclick="enablePasswordInput()">
+                </div>
+              </td>
             </tr>
             <tr>
               <th>전화번호</th>
-              <td>${user.userphone}</td>
+              <td><input type="text" class="input-group-text" name="userphone" value="${user.userphone}"></td>
             </tr>
             <tr>
               <th>이메일</th>
-              <td>${user.email}</td>
+              <td><input type="text" class="input-group-text" name="email" value="${user.email}"></td>
             </tr>
             <tr>
-              <th>주소</th>
+              <th rowspan="2">주소</th>
               <td>${user.address1}  ${user.address2}</td>
             </tr>
             <tr>
-              <th>상세주소</th>
               <td>${user.address_detail}</td>
             </tr>
             <tr>
@@ -59,8 +76,7 @@
           
           <!-- 하단요소 -->
           <div class="mt-2 w-100">
-            <a href="" class="btn btn-outline-secondary">프로필사진 업로드</a>
-            <a href="/user/${user.user_id}/edit" class="btn btn-outline-secondary">정보수정</a>
+            <a href="" class="btn btn-outline-secondary">수정완료</a>
           </div>
         </div>
       </div>

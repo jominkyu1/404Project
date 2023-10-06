@@ -24,7 +24,7 @@ public class UserVO {
             strategy=GenerationType.SEQUENCE,
             generator="users_seq_gename"
     )
-    private Integer user_id;
+    private Long user_id;
 
     @Column(nullable = false, unique = true)
     private String username;

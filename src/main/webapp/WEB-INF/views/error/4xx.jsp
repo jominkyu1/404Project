@@ -28,10 +28,10 @@
     <div class="row justify-content-center">
       <div class="col-md-12 text-center">
         <span class="display-1 d-block">${pageContext.response.status}</span>
-        <div class="mb-4 lead">페이지를 찾을 수 없습니다!</div>
-        <c:if test=" ${!empty pageContext.exception.message}}">
+        <div class="mb-4 lead">페이지를 찾을 수 없습니다! </div>
+        <c:if test="${not empty message}">
           <hr>
-          <p>오류 내용:${pageContext.exception.message}</p>
+          <div class="mb-4 lead">내용: <b>${message}</b></div>
         </c:if>
         <button class="btn btn-lg btn-outline-secondary" onclick="history.back()">이전 페이지</button>
       </div>

@@ -3,7 +3,7 @@ package net.store.project;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.store.project.vo.user.UserGrade;
-import net.store.project.vo.user.UserRepository;
+import net.store.project.repository.UserRepository;
 import net.store.project.vo.user.UserVO;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;

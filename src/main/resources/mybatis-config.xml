@@ -5,6 +5,6 @@
 
 <configuration>
   <typeAliases>
-
+    <typeAlias type="net.store.project.vo.user.UserVO" alias="userVO" />
   </typeAliases>
 </configuration>
