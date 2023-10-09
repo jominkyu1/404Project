@@ -42,7 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests() //URL별 권한 관리를 설정하는 옵션의 시작점
                 .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/user/**").hasRole("USER")
+                .antMatchers("/user/**").hasAnyRole("USER", "ADMIN")
                 .anyRequest().permitAll() //그 외 URL에 대한 접근을 허용
                 .and()
 
@@ -74,5 +74,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         // userVO -> userDetails로 변환 후 시큐리티에서 관리하는 유저객체로 할당
         auth.userDetailsService(storeUserDetailsService);
+    }
+
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        //AuthenticationManager를 Bean으로 등록 (정보 수정시 필요)
+        return super.authenticationManagerBean();
     }
 }

@@ -25,7 +25,7 @@
       <optional>true</optional>
     </dependency>
     
-    <!-- Validation -->
+    <!-- Validation(유효성 검증 어노테이션) -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-validation</artifactId>

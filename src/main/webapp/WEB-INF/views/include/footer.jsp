@@ -5,8 +5,6 @@
   <div class="container">
     <p class="m-0 text-center text-black">
     Copyright &copy; 404Store 2023
-    <a href="/admin">임시 어드민</a>
     </p>
-    
   </div>
 </footer>

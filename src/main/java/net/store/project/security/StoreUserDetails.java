@@ -18,14 +18,14 @@ import java.util.List;
 @Slf4j
 @Getter
 public class StoreUserDetails extends User {
-    private final UserVO user;
+    private UserVO user;
 
     public StoreUserDetails(UserVO user){
-        //아이디 비밀번호 권한
         super(user.getUsername(), user.getPassword(), setAuthorities(user.getUsergrade().getValue()));
-        log.info("StoreUserDetails객체의 권한: {}", user.getUsergrade().getValue());
-
         this.user=user;
+
+        //아이디 비밀번호 권한
+        log.info("StoreUserDetails객체의 권한: {}", user.getUsergrade().getValue());
     }
 
     private static List<GrantedAuthority> setAuthorities(String usergrade) {

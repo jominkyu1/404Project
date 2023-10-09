@@ -7,12 +7,14 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.sql.Timestamp;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Getter
 @Setter
+@ToString
 public class UserRegisterForm {
 
     private String username;
@@ -35,6 +37,9 @@ public class UserRegisterForm {
     @NotNull(message = "우편번호를 입력해주세요.")
     private Integer postcode;
 
+    private Timestamp regdate;
+    private Timestamp moddate;
+
     public UserVO toEntity() {
         return UserVO.builder()
                     .username(username)
@@ -46,5 +51,22 @@ public class UserRegisterForm {
                     .address_detail(address_detail)
                     .postcode(postcode)
                     .build();
+    }
+
+    public static UserRegisterForm fromEntity(UserVO userVO){
+        UserRegisterForm userRegisterForm = new UserRegisterForm();
+
+        userRegisterForm.setUsername(userVO.getUsername());
+        userRegisterForm.setPassword(userVO.getPassword());
+        userRegisterForm.setEmail(userVO.getEmail());
+        userRegisterForm.setUserphone(userVO.getUserphone());
+        userRegisterForm.setAddress1(userVO.getAddress1());
+        userRegisterForm.setAddress2(userVO.getAddress2());
+        userRegisterForm.setAddress_detail(userVO.getAddress_detail());
+        userRegisterForm.setPostcode(userVO.getPostcode());
+        userRegisterForm.setRegdate(userVO.getRegdate());
+        userRegisterForm.setModdate(userVO.getModdate());
+
+        return userRegisterForm;
     }
 }

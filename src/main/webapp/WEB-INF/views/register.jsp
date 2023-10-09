@@ -49,6 +49,7 @@
                       <form:form modelAttribute="userRegisterForm"
                                  method="post"
                                  class="col-auto p-3 border border2">
+                        
                         <!-- 에러처리 -->
                         <spring:hasBindErrors name="userRegisterForm">
                           <div class="alert alert-danger alert-dismissible fade show" role="alert">

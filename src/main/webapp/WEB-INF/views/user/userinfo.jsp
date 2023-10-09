@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
   <title></title>
@@ -49,11 +50,11 @@
             </tr>
             <tr>
               <th>가입날짜</th>
-              <td>${user.regdate}</td>
+              <td><fmt:formatDate value="${user.regdate}" pattern="yyyy년 MM월 dd일 a hh시 mm분" /></td>
             </tr>
             <tr>
               <th>정보수정날짜</th>
-              <td>${user.moddate}</td>
+              <td><fmt:formatDate value="${user.moddate}" pattern="yyyy년 MM월 dd일 a hh시 mm분" /></td>
             </tr>
           </table>
           

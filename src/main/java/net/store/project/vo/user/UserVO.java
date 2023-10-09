@@ -1,10 +1,12 @@
 package net.store.project.vo.user;
 
 import lombok.*;
+import net.store.project.vo.user.form.UserRegisterForm;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.sql.Timestamp;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -66,5 +68,20 @@ public class UserVO {
         this.address2 = address2;
         this.address_detail = address_detail;
         this.postcode = postcode;
+    }
+    
+    /**
+     * 정보수정 메소드
+     * */
+    public Long updateFromRegisterForm(UserRegisterForm form){
+        this.username = form.getUsername();
+        this.password = form.getPassword();
+        this.email = form.getEmail();
+        this.userphone = form.getUserphone();
+        this.address1 = form.getAddress1();
+        this.address2 = form.getAddress2();
+        this.address_detail = form.getAddress_detail();
+        this.postcode = form.getPostcode();
+        return this.user_id;
     }
 }

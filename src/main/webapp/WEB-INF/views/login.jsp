@@ -63,8 +63,10 @@
                                 <a href="/register" class="btn btn-secondary float-end">회원가입</a>
                             </div>
                         </form>
+                        <!-- 소셜 로그인 TODO
                         <img src="/images/login/naverbtn.png" class="img-fluid my-4 d-block mx-auto " style="width:150px;">
                         <img src="/images/login/kakaobtn.png" class="img-fluid my-4 d-block mx-auto " style="width:150px;">
+                        -->
                     </div>
                 </div>
             </div>
