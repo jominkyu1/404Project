@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-@Repository
+
 public interface UserRepository extends JpaRepository<UserVO, Long> {
 
     //유저아이디로 유저정보 가져오기

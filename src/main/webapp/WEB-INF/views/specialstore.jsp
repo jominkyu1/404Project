@@ -1,4 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -93,7 +95,8 @@
           <div class="col mb-5">
             <div class="card h-100">
               <!-- Product image-->
-              <img class="card-img-top" src="images/buds2.png" alt="버즈2" />
+              <img class="card-img-top" src="images/buds2.png" alt="버즈2"
+                   style="height: 60%; width: auto;"/>
               <!-- Product details-->
               <div class="card-body p-4">
                 <div class="text-center">
@@ -118,119 +121,53 @@
               </div>
             </div>
           </div>
-          <div class="col mb-5">
-            <div class="card h-100">
-              <!-- Sale badge-->
-              <div
-                class="badge bg-dark text-white position-absolute"
-                style="top: 0.5rem; right: 0.5rem"
-              >
-                세일
-              </div>
-              <!-- Product image-->
-              <img
-                class="card-img-top"
-                src="https://placehold.it/400x500"
-                alt="버즈2프로"
-              />
-              <!-- Product details-->
-              <div class="card-body p-4">
-                <div class="text-center">
-                  <!-- Product name-->
-                  <h5 class="fw-bolder">Galaxy Buds 2 Pro</h5>
-                  <!-- Product price-->
-                  <span class="text-muted text-decoration-line-through"
-                    >200,000원</span
-                  >
-                  175,000원
+          <c:forEach items="${itemlist}" var="item">
+            <div class="col mb-5">
+              <div class="card h-100">
+                <!-- Sale badge
+                <div
+                  class="badge bg-dark text-white position-absolute"
+                  style="top: 0.5rem; right: 0.5rem">
+                  세일
                 </div>
-              </div>
-              <!-- Product actions-->
-              <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                <div class="text-center">
-                  <a class="btn btn-outline-dark mt-auto mb-1" href="#"
-                    >장바구니</a
-                  >
-                </div>
-                <div class="text-center">
-                  <a class="btn btn-primary mt-auto" href="#">구매하기</a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col mb-5">
-            <div class="card h-100">
-              <!-- Product image-->
-              <img
-                class="card-img-top"
-                src="https://placehold.it/400x500"
-                alt="인덕션"
-              />
-              <!-- Product details-->
-              <div class="card-body p-4">
-                <div class="text-center">
-                  <!-- Product name-->
-                  <h5 class="fw-bolder">삼성 빌트인 인덕션</h5>
-                  <!-- Product price-->
-                  870,000원
-                </div>
-              </div>
-              <!-- Product actions-->
-              <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                <div class="text-center">
-                  <a class="btn btn-outline-dark mt-auto mb-1" href="#"
-                    >장바구니</a
-                  >
-                </div>
-                <div class="text-center">
-                  <a class="btn btn-primary mt-auto" href="#">구매하기</a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col mb-5">
-            <div class="card h-100">
-              <!-- Sale badge-->
-              <div
-                class="badge bg-dark text-white position-absolute"
-                style="top: 0.5rem; right: 0.5rem"
-              >
-                인기
-              </div>
-              <!-- Product image-->
-              <img class="card-img-top" src="https://placehold.it/400x500" alt="폴드5" />
-              <!-- Product details-->
-              <div class="card-body p-4">
-                <div class="text-center">
-                  <!-- Product name-->
-                  <h5 class="fw-bolder">갤럭시Z 폴드 5</h5>
-                  <!-- Product reviews-->
-                  <div
-                    class="d-flex justify-content-center small text-warning mb-2"
-                  >
-                    <div class="bi-star-fill"></div>
-                    <div class="bi-star-fill"></div>
-                    <div class="bi-star-fill"></div>
-                    <div class="bi-star-fill"></div>
-                    <div class="bi-star-fill"></div>
+                -->
+                <!-- Product image-->
+                <img
+                    class="card-img-top"
+                    src="/itemimages/${item.image_path}"
+                    alt="${item.name}"
+                    style="height: 60%; width: auto;"
+                />
+                <!-- Product details-->
+                <div class="card-body p-4">
+                  <div class="text-center">
+                    <!-- Product name-->
+                    <h5 class="fw-bolder">
+                      <a href="/item/${item.item_id}" class="text-decoration-none">
+                        ${item.name}
+                      </a>
+                    </h5>
+                    <!-- Product price-->
+                    <span class="fw-bolder">
+                      <!-- 1,000,000원같이 쉼표를 넣어 표기함-->
+                      <fmt:formatNumber type="number" maxFractionDigits="3" value="${item.price}"/>원
+                    </span>
                   </div>
-                  <!-- Product price-->
-                  1,250,000원
                 </div>
-              </div>
-              <!-- Product actions-->
-              <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                <div class="text-center">
-                  <a class="btn btn-outline-dark mt-auto mb-1" href="#"
+                <!-- Product actions-->
+                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                  <div class="text-center">
+                    <a class="btn btn-outline-dark mt-auto mb-1" href="#"
                     >장바구니</a
-                  >
-                </div>
-                <div class="text-center">
-                  <a class="btn btn-primary mt-auto" href="#">구매하기</a>
+                    >
+                  </div>
+                  <div class="text-center">
+                    <a class="btn btn-primary mt-auto" href="#">구매하기</a>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          </c:forEach>
         </div>
       </div>
     </section>

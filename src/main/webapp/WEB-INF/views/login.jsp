@@ -28,7 +28,17 @@
             height: 100%;
         }
     </style>
+    <script>
+        function alertUpdated(){
+            alert("회원정보가 수정되었습니다. 다시 로그인하세요!");
+        }
+    </script>
     <body>
+    <c:if test="${!empty param.updated}">
+        <script>
+            alertUpdated();
+        </script>
+    </c:if>
     <!-- 네비게이션(nav.html) 로드 -->
     <jsp:include page="include/nav.jsp" />
     <!-- 배너(header.html) 로드 -->

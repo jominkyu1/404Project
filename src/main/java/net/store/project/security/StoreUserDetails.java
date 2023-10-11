@@ -23,7 +23,6 @@ public class StoreUserDetails extends User {
     public StoreUserDetails(UserVO user){
         super(user.getUsername(), user.getPassword(), setAuthorities(user.getUsergrade().getValue()));
         this.user=user;
-
         //아이디 비밀번호 권한
         log.info("StoreUserDetails객체의 권한: {}", user.getUsergrade().getValue());
     }
@@ -35,5 +34,9 @@ public class StoreUserDetails extends User {
         list.add(new SimpleGrantedAuthority(usergrade));
 
         return list;
+    }
+
+    public void updateUserDetails(UserVO userVO){
+        this.user = userVO;
     }
 }

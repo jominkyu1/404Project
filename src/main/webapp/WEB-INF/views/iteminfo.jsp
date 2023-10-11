@@ -1,4 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -36,30 +40,36 @@
     <!-- 배너(header.html) 로드 -->
     <jsp:include page="include/header.jsp" />
     <!-- 매인 섹션 -->
+    <c:if test="${empty item}">
+      <script>
+        alert("상품을 확인할 수 없습니다.");
+        location.href = "/specialstore";
+      </script>
+    </c:if>
     <section class="py-5">
       <div class="container px-4 px-lg-5 my-5">
         <div class="row gx-4 gx-lg-5 align-items-center">
-          <!-- 더미 이미지 -->
+          <!-- 이미지 -->
           <div class="col-md-6">
             <img
               class="card-img-top mb-5 mb-md-0"
-              src="https://placehold.it/600x700"
+              src="/itemimages/${item.image_path}"
               alt="..."
             />
           </div>
 
           <div class="col-md-6">
-            <div class="small mb-1">Samsung Galaxy Buds2</div>
-            <h1 class="display-5 fw-bolder">갤럭시 버즈2</h1>
+            <h1 class="display-5 fw-bolder">${item.name}</h1>
             <div class="fs-5 mb-5">
               <span class="text-decoration-line-through">500,000원</span>
-              <span>190,000원</span>
+              <span>
+                <fmt:formatNumber type="number" maxFractionDigits="3" value="${item.price}" var="price"/>
+                ${price}원
+              </span>
             </div>
 
             <p class="lead">
-              갤럭시 버즈2에 대한 설명입니다. 갤럭시 버즈2에 대한 설명입니다.
-              갤럭시 버즈2에 대한 설명입니다. 갤럭시 버즈2에 대한 설명입니다.
-              갤럭시 버즈2에 대한 설명입니다. 갤럭시 버즈2에 대한 설명입니다.
+              ${item.description}
             </p>
             <div class="d-flex">
               <input
@@ -81,6 +91,9 @@
                 class="btn btn-outline-dark ms-auto"
                 data-bs-toggle="modal"
                 data-bs-target="#productInquiryModal"
+                <sec:authorize access="isAnonymous()">
+                  onclick="alert('로그인이 필요합니다.'); location.href='/login';"
+                </sec:authorize>
               >
                 <i class="bi-question-circle me-1"></i>
                 상품 문의
@@ -92,61 +105,54 @@
         <!-- 상품 문의-->
         <div>
           <table class="table">
-            <caption class="caption-top mb-3"><b>상품문의: 2개</b></caption>
+            <caption class="caption-top mb-3 text-center"><b>상품문의: ${qnaCount}개</b></caption>
             <thead class="table-light ">
               <tr>
-                <th scope="col" width="10%">이름</th>
-                <th scope="col">문의내용</th>
-                <th scope="col" width="5%">답변</th>
+                <th class="col-1">문의일자</th>
+                <th class="col-1" width="10%">아이디</th>
+                <th class="col-9">문의내용</th>
+                <th class="col-1" width="5%">답변</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>홍길동</td>
-                <td>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  Consectetur, dolorum laudantium, eveniet reiciendis autem
-                  eligendi iure veniam deleniti earum nihil rerum aliquam
-                  cupiditate ipsa animi nulla voluptate ea aut culpa.
-
-                  <button
-                    class="btn btn-outline-secondary btn-sm dropdown-toggle float-end"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#reply1"
-                    aria-expanded="false"
-                    disabled = "true"
-                  >
-                    답변보기
-                  </button>
-                  <div class="collapse" id="reply1">
-                    <p class="m-auto fw-bolder "><hr>비활성화된 답변</p>
-                  </div>
-                </td>
-                <td style="color: red">X</td>
-              </tr>
-              <tr>
-                <td>거북이</td>
-                <td>
-                  상품이 마음에 드네요. 재입고 예정일은 언제인가요?
-
-                  <!-- 답변 내용-->
-                  <button
-                    class="btn btn-outline-secondary btn-sm dropdown-toggle float-end"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#reply2"
-                    aria-expanded="false"
-                    
-                  >
-                    답변보기
-                  </button>
-                  <div class="collapse" id="reply2">
-                    <p class="m-auto fw-bolder "><hr>관심을 가져 주셔서 감사합니다. 10월 중순에 입고될 예정입니다.</p>
-                  </div>
-                </td>
-                <td style="color:blue">O</td>
-              </tr>
+              <c:forEach items="${qnaList}" var="qna">
+                <tr>
+                  <td>
+                    <fmt:formatDate value="${qna.regdate}" pattern="yy-MM-dd" />
+                  </td>
+                  <td>${qna.userVO.username}</td>
+                  <td>
+                    ${qna.contents}
+  
+                    <button
+                      class="btn btn-outline-secondary btn-sm dropdown-toggle float-end"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#reply${qna.item_qna_id}"
+                      aria-expanded="false"
+                      <c:if test="${qna.answered == 0}">
+                        disabled="disabled"
+                      </c:if>
+                    >
+                      답변보기
+                    </button>
+                    <div class="collapse" id="reply${qna.item_qna_id}">
+                      <hr>
+                      <p class="m-auto fw-bolder" >
+                          ${qna.answered_text}
+                      </p>
+                    </div>
+                  </td>
+                  <c:choose>
+                    <c:when test="${qna.answered == 0}">
+                      <td align="center" style="color: red">X</td>
+                    </c:when>
+                    <c:otherwise>
+                      <td align="center" style="color: green">O</td>
+                    </c:otherwise>
+                  </c:choose>
+                </tr>
+              </c:forEach>
             </tbody>
           </table>
         </div>
@@ -154,13 +160,9 @@
     </section>
     <!-- 푸터 (footer.html) -->
     <jsp:include page="include/footer.jsp" />
-    <!-- include.js 자바스크립트 -->
-    <script src="include/include.js"></script>
-    <script>
-      includeHTML();
-    </script>
   </body>
-
+ <sec:authorize access="isAuthenticated()">
+   <sec:authentication property="principal.user" var="user" />
   <!-- 모달 창 -->
   <div
     class="modal fade"
@@ -169,6 +171,7 @@
     aria-labelledby="productInquiryModalLabel"
     aria-hidden="true"
   >
+    <form method="post" action="/item/${item.item_id}/applyQna">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -180,30 +183,34 @@
             aria-label="닫기"
           ></button>
         </div>
+        
         <div class="modal-body">
           <!-- 상품 문의 폼 -->
-          <form>
             <div class="mb-3">
-              <label for="inquiryName" class="form-label">이름</label>
+              <label for="username" class="form-label">아이디</label>
               <input
                 type="text"
-                class="form-control"
-                id="inquiryName"
-                required
+                class="form-control bg-dark-subtle"
+                id="username"
+                name="username"
+                value="${user.username}"
+                readonly
               />
             </div>
             <div class="mb-3">
-              <label for="inquiryMessage" class="form-label">문의 내용</label>
+              <label for="contents" class="form-label">문의 내용</label>
               <textarea
                 class="form-control"
-                id="inquiryMessage"
+                id="contents"
+                name="contents"
                 rows="4"
                 required
               ></textarea>
             </div>
-          </form>
+          
         </div>
         <div class="modal-footer">
+          <button type="submit" class="btn btn-outline-secondary">문의하기</button>
           <button
             type="button"
             class="btn btn-secondary"
@@ -211,11 +218,12 @@
           >
             닫기
           </button>
-          <button type="button" class="btn btn-primary">문의</button>
         </div>
       </div>
     </div>
+    </form>
   </div>
+ </sec:authorize>
   <!-- Bootstrap core JS-->
-  <script src="js/bootstrap.bundle.js"></script>
+  <script src="/js/bootstrap.bundle.js"></script>
 </html>

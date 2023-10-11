@@ -2,8 +2,10 @@ package net.store.project.vo.user;
 
 import lombok.*;
 import net.store.project.vo.user.form.UserRegisterForm;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -54,6 +56,7 @@ public class UserVO {
 
     @Enumerated(value = EnumType.STRING)
     @Column(nullable = false)
+    @ColumnDefault("'USER'")
     private UserGrade usergrade; //USER, ADMIN
 
 
@@ -68,10 +71,12 @@ public class UserVO {
         this.address2 = address2;
         this.address_detail = address_detail;
         this.postcode = postcode;
+        this.usergrade = UserGrade.USER;
     }
     
     /**
      * 정보수정 메소드
+     * UserRegisterForm을 받아서 해당 정보로 수정
      * */
     public Long updateFromRegisterForm(UserRegisterForm form){
         this.username = form.getUsername();

@@ -17,9 +17,11 @@ public class UserService {
     private final UserRepository userRepository;
 
     @Transactional
-    public void updateUser(Long id, UserRegisterForm userRegisterForm){
+    public UserVO updateUser(Long id, UserRegisterForm userRegisterForm){
         UserVO userVO = userRepository.findById(id).orElseThrow(() -> new NoSuchElementException("해당 유저가 없습니다."));
         userVO.updateFromRegisterForm(userRegisterForm);
+
+        return userVO;
     }
 
     public long getAllCount(){

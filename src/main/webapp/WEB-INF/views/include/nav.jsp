@@ -10,12 +10,23 @@
     href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
     rel="stylesheet"
 />
+
+
+
+
+
+
+
+
 <nav class="navbar navbar-expand-lg" style="background-color: rgba(211, 211, 211, 0.38);">
     <div class="container px-2" id="navbarjs">
         <a class="navbar-brand fw-bolder" href="/">
             <i class="bi-bookmark-heart-fill mx-2"></i>404 STORE
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <button class="navbar-toggler" type="button"
+                data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse fw-bold" id="navbarSupportedContent">
             <ul class="navbar-nav mx-2">
                 <li class="nav-item"><a class="nav-link" href="/">홈</a></li>
@@ -31,14 +42,14 @@
                 </sec:authorize>
                 <sec:authorize access="hasRole('ROLE_USER')" >
                     <sec:authentication property="principal.user" var="user"/>
-                    
+                    <li class="nav-link" style="color: lightseagreen">${user.username}</li>
                     <li class="nav-item"><a class="nav-link" href="/user/${user.user_id}">회원정보</a></li>
                     <li class="nav-item"><a class="nav-link" href="/logout">로그아웃</a></li>
                 </sec:authorize>
                 <sec:authorize access="hasRole('ROLE_ADMIN')" >
                     <sec:authentication property="principal.user" var="user"/>
-                    
-                    <li class="nav-item"><a class="nav-link" href="/admin">어드민</a></li>
+                    <li class="nav-link" style="color: lightseagreen">${user.username}</li>
+                    <li class="nav-item"><a class="nav-link" href="/admin">관리자</a></li>
                     <li class="nav-item"><a class="nav-link" href="/user/${user.user_id}">회원정보</a></li>
                     <li class="nav-item"><a class="nav-link" href="/logout">로그아웃</a></li>
                 </sec:authorize>
@@ -59,3 +70,4 @@
         </div>
     </div>
 </nav>
+

@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- 더미이미지(데모이미지) 사용시
     <img src="https://placehold.it/가로x세로">
     로 적용 후 확인해보면 자동으로 그 사이즈에 맞게 불러옴
@@ -16,6 +17,8 @@
         -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" />
+        <!-- jQuery -->
+        <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 
     </head>
     <style>
@@ -71,38 +74,24 @@
                 <thead>
                     <tr>
                         <th class="w-25">상품명</th>
-                        <th class="w-75">제목</th>
-                        <th class="w-25">이름</th>
+                        <th class="w-75">문의내용</th>
+                        <th class="w-25">아이디</th>
                         <th class="w-25">날짜</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>버즈2 프로</td>
-                        <td class="overflow-hidden text-nowrap">
-                            <a href="#">
-                            안녕하세요. 상품문의 드립니다. 상품문의 드립니다. 상품문의 드립니다. 상품문의 드립니다.
-                            </a>
-                        </td>
-                        <td class="overflow-hidden text-nowrap">홍길동</td>
-                        <td class="overflow-hidden text-nowrap">2023/09/03</td>
-                    </tr>
-                    <tr>
-                        <td>아이템2</td>
-                        <td class="overflow-hidden text-nowrap">
-                            안녕하세요. 상품문의 드립니다. 상품문의 드립니다. 상품문의 드립니다. 상품문의 드립니다.
-                        </td>
-                        <td class="overflow-hidden text-nowrap">홍길동</td>
-                        <td class="overflow-hidden text-nowrap">2023/09/03</td>
-                    </tr>
-                    <tr>
-                        <td>아이템3</td>
-                        <td class="overflow-hidden text-nowrap">
-                            안녕하세요. 상품문의 드립니다. 상품문의 드립니다. 상품문의 드립니다. 상품문의 드립니다.
-                        </td>
-                        <td class="overflow-hidden text-nowrap">홍길동</td>
-                        <td class="overflow-hidden text-nowrap">2023/09/03</td>
-                    </tr>
+                    <c:forEach items="${notAnsweredQnaList}" var="qna">
+                        <tr>
+                            <td>${qna.itemVO.name}</td>
+                            <td class="overflow-hidden text-nowrap">
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#answerModal" data-qna-id="${qna.item_qna_id}">
+                                    ${qna.contents}
+                                </a>
+                            </td>
+                            <td class="overflow-hidden text-nowrap">${qna.userVO.username}</td>
+                            <td class="overflow-hidden text-nowrap">${qna.regdate}</td>
+                        </tr>
+                    </c:forEach>
                 </tbody>
             </table>
             <table class="table table-striped text-center mx-auto table-hover" style="table-layout: fixed;">
@@ -136,9 +125,48 @@
     </section>
     <!-- 푸터 (footer.html) -->
     <jsp:include page="../include/footer.jsp" />
-    <!-- include.js 자바스크립트 -->
+    
+    
+    <!-- 미답변 상품문의 모달 -->
+    <div class="modal fade" id="answerModal" tabindex="-1" aria-labelledby="answerModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="answerModalLabel">답변 작성</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    
+                    <form method="post" action="/admin/answer?type=item">
+                        <div class="mb-3">
+                            <label for="answerText" class="form-label">답변 내용</label>
+                            <textarea class="form-control" id="answerText" rows="6" name="answered_text"></textarea>
+                            <!-- ItemQnaVO PK값 -->
+                            <input type="hidden" id="selectedQnaId" name="item_qna_id" value="">
+                            
+                        </div>
+                        
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                            <button type="submit" class="btn btn-primary" >답변 작성</button>
+                        </div>
+                    </form>
+                </div>
+                
+            </div>
+        </div>
+    </div>
     </body>
-
+    <script>
+        $(document).on('show.bs.modal', '#answerModal',function(event){
+            var triggerElement = $(event.relatedTarget);
+            var qnaId = triggerElement.data('qna-id');
+            $('#selectedQnaId').val(qnaId);
+            
+            $('#answerText').focus();
+        });
+    </script>
+    
     <!-- Bootstrap core JS-->
-    <script src="js/bootstrap.bundle.js"></script>
+    <script src="/js/bootstrap.bundle.js"></script>
 </html>

@@ -8,7 +8,12 @@ import net.store.project.service.UserService;
 import net.store.project.vo.user.UserVO;
 import net.store.project.vo.user.form.UserRegisterForm;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -31,6 +36,8 @@ public class UserController {
     private final UserRepository userRepository;
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
+    private final AuthenticationManager authenticationManager;
+    private final UserDetailsService userDetailsService;
 
     @ExceptionHandler(IllegalArgumentException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -73,7 +80,8 @@ public class UserController {
                                BindingResult bindingResult,
                                @PathVariable Long id,
                                @RequestParam Boolean passwordChanged,
-                               Model model){
+                               Model model,
+                               @AuthenticationPrincipal StoreUserDetails storeUserDetails){
         log.info("수정객체: {}", user);
 
         //검증
@@ -85,9 +93,12 @@ public class UserController {
 
         //비밀번호를 수정했다면 인코딩
         if(passwordChanged) user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        //유저정보 업데이트
+        UserVO userVO = userService.updateUser(id, user);
+        //스프링시큐리티 UserDetails 업데이트
+        storeUserDetails.updateUserDetails(userVO);
         
-        userService.updateUser(id, user);
         return "redirect:/user/" + id;
     }
-
 }

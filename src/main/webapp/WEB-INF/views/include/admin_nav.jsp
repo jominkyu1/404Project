@@ -5,7 +5,7 @@
     <hr>
     <ul class="nav nav-pills flex-column mb-auto">
         <li class="nav-item">
-            <a href="/admin_main" class="nav-link text-black fw-bolder" aria-current="page">
+            <a href="/admin" class="nav-link text-black fw-bolder" aria-current="page">
                 메인화면
             </a>
         </li>
@@ -38,7 +38,7 @@
             </a>
         </li>
         <li>
-            <a href="/admin_main/write_store" class="nav-link text-black fw-bolder">
+            <a href="/admin/store" class="nav-link text-black fw-bolder">
                 이번주특가
             </a>
         </li>

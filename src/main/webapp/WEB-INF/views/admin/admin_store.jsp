@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- 더미이미지(데모이미지) 사용시
     <img src="https://placehold.it/가로x세로">
     로 적용 후 확인해보면 자동으로 그 사이즈에 맞게 불러옴
@@ -18,16 +19,6 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" />
 
     </head>
-    <style>
-        .carousel-inner{
-            width: 80%;
-            height: 35vh; 
-        }
-        .carousel-item, .carousel-item img{
-            width: 100%;
-            height: 100%;
-        }   
-    </style>
     <body>
     <!-- 네비게이션 로드 -->
     <jsp:include page="../include/nav.jsp" />
@@ -56,21 +47,23 @@
                   </tr>
                   </thead>
                   <tbody>
+                  <c:forEach items="${itemlist}" var="item">
+                    <tr class="table-light">
+                      <td>${item.name}</td>
+                      <td>${item.price}</td>
+                      <td>${item.stockQuantity}</td>
+                      <td>${item.regdate}</td>
+                    </tr>
+                  </c:forEach>
                     <tr class="table-light" >
                       <td scope="row">갤럭시 버즈2</td>
                       <td>180,000</td>
                       <td>5</td>
                       <td>2023. 09. 13</td>
                     </tr>
-                    <tr class="table-light">
-                      <td scope="row">Item</td>
-                      <td>Item</td>
-                      <td>Item</td>
-                      <td>2023. 09. 13</td>
-                    </tr>
                   </tbody>
                   <tfooter>
-                    <button class="btn btn-dark my-2">제품등록</button>
+                    <a href="/admin/store/write" class="btn btn-dark my-2">제품등록</a>
                   </tfooter>
               </table>
             </div>
