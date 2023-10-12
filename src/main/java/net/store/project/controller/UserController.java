@@ -36,28 +36,18 @@ public class UserController {
     private final UserRepository userRepository;
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
-    private final AuthenticationManager authenticationManager;
-    private final UserDetailsService userDetailsService;
-
-    @ExceptionHandler(IllegalArgumentException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public String illegalArgumentHandler(IllegalArgumentException e, Model model) {
-        model.addAttribute("message", e.getMessage());
-        return "error/4xx";
-    }
 
     @GetMapping("/{id}")
-    public String userInfo(@PathVariable("id") Long user_id,
-                           @AuthenticationPrincipal StoreUserDetails user,
+    public String userInfo(@PathVariable Long id,
+                           @AuthenticationPrincipal StoreUserDetails storeUserDetails,
                            Model model) {
+    	//로그인된 유저가 아니라면 로그인창으로 리다이렉트
+        if (storeUserDetails == null) return "redirect:/login";
 
-        if (user == null) return "redirect:/login";
+        // 접근하는주소 != 세션에있는유저 -> 예외발생
+        if(!isValidatedUser(id, storeUserDetails)) throw new IllegalArgumentException("잘못된 접근입니다.");
 
-        Long sessionUserId = user.getUser().getUser_id();
-        if (!Objects.equals(sessionUserId, user_id)) throw new IllegalArgumentException("잘못된 접근입니다.");
-
-        UserVO userVO = userRepository.findById(user_id)
-                .orElseThrow(() -> new NoSuchElementException("해당 유저가 없습니다."));
+        UserVO userVO = userRepository.findById(id).get();
 
         model.addAttribute("user", userVO);
         return "user/userinfo";
@@ -65,11 +55,15 @@ public class UserController {
 
     @GetMapping("/{id}/edit")
     public String userEdit(@PathVariable Long id,
+                           @AuthenticationPrincipal StoreUserDetails storeUserDetails,
                            Model model) {
-        UserVO user = userRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("해당 유저가 없습니다."));
 
-        UserRegisterForm userRegisterForm = UserRegisterForm.fromEntity(user); //UserVO -> UserRegisterForm
+        // 접근하는주소 != 세션에있는유저 -> 예외발생
+        if(!isValidatedUser(id, storeUserDetails)) throw new IllegalArgumentException("잘못된 접근입니다.");
+        UserVO user = userRepository.findById(id).get();
+
+        //UserVO -> UserRegisterForm
+        UserRegisterForm userRegisterForm = UserRegisterForm.fromEntity(user);
 
         model.addAttribute("userRegisterForm", userRegisterForm);
         return "user/useredit";
@@ -90,6 +84,11 @@ public class UserController {
             model.addAttribute("errors", bindingResult);
             return "user/useredit";
         }
+        
+        //username(아이디)가 이미 있다면 예외발생
+        if(userRepository.findByUsername(user.getUsername()).isPresent()) {
+            throw new IllegalArgumentException("이미 존재하는 아이디입니다.");
+        }
 
         //비밀번호를 수정했다면 인코딩
         if(passwordChanged) user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -100,5 +99,17 @@ public class UserController {
         storeUserDetails.updateUserDetails(userVO);
         
         return "redirect:/user/" + id;
+    }
+
+    /**
+     * id에 해당하는 유저와 세션에있는 유저가 같은지 검증
+     * @return true: 같음, false: 다름
+     * */
+    private boolean isValidatedUser(Long id, StoreUserDetails storeUserDetails){
+
+        UserVO foundUser = userRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("존재하지 않는 사용자입니다"));
+        
+        return Objects.equals(foundUser.getUser_id(), storeUserDetails.getUser().getUser_id());
     }
 }

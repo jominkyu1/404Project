@@ -39,7 +39,7 @@ public class ImageHandler {
             Path path = Paths.get(fullPath);
             // 프로젝트 경로에 저장
             multipartFile.transferTo(path);
-
+            
             // DB에 저장될 날짜/랜덤파일명.jpg 리턴
             return currentDate + "/" + randomFilename;
         } catch (IOException e) {

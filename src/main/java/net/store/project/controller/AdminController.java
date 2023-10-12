@@ -58,7 +58,6 @@ public class AdminController {
 
         //TODO 일반 QNA답변처리
 
-        System.out.println(type + answered_text + item_qna_id);
         return "redirect:/admin";
     }
 

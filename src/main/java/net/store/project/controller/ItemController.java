@@ -52,7 +52,7 @@ public class ItemController {
 
 
     /**
-     * 상품문의 처리 메소드
+     * 상품문의 등록 메소드
      * */
     @PostMapping("/{item_id}/applyQna")
     public String applyQna(@PathVariable Long item_id,

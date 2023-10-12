@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page isErrorPage="true" %>
 <html>
 <head>
   <meta charset="utf-8" />
@@ -29,10 +30,22 @@
       <div class="col-md-12 text-center">
         <span class="display-1 d-block">${pageContext.response.status}</span>
         <div class="mb-4 lead">페이지를 찾을 수 없습니다! </div>
-        <c:if test="${not empty message}">
-          <hr>
-          <div class="mb-4 lead">내용: <b>${message}</b></div>
-        </c:if>
+        <hr>
+        <c:choose>
+          <c:when test="${not empty message}">
+            <div class="mb-4 lead">내용: <b>${message}</b></div>
+          </c:when>
+          <c:when test="${exception != null}">
+            <div class="mb-4 lead">
+              <%
+                String errorMessage = exception.getMessage();
+                int index = errorMessage.lastIndexOf(": ")+1;
+              %>
+              내용: <b><%=errorMessage.substring(index)%></b>
+            </div>
+          </c:when>
+          <c:otherwise />
+        </c:choose>
         <button class="btn btn-lg btn-outline-secondary" onclick="history.back()">이전 페이지</button>
       </div>
     </div>
