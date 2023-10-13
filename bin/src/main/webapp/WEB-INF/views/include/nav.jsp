@@ -33,7 +33,7 @@
                 <!-- <li class="nav-item"><a class="nav-link" href="/recommand">추천</a></li> -->
                 <li class="nav-item"><a class="nav-link" href="/guide">구매가이드</a></li>
                 <li class="nav-item"><a class="nav-link" href="/specialstore">특가스토어</a></li>
-                <li class="nav-item"><a class="nav-link" href="/help">고객센터</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">고객센터</a></li>
             </ul>
             <!-- 오른쪽 위 네비게이션 링크 추가 -->
             <ul class="navbar-nav mx-2 ms-auto">
