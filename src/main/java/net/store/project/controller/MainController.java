@@ -15,8 +15,4 @@ public class MainController {
 		return "login";
 	}
 
-	@GetMapping("/wishlist")
-	public String wishlist() {
-		return "wishlist";
-	}
 }

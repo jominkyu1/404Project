@@ -15,7 +15,7 @@ import javax.persistence.*;
 public class CartItemVO {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int cart_item_id;
+    private Long cart_item_id;
 
     private int quantity; //담은 아이템의 수량
 
@@ -26,4 +26,17 @@ public class CartItemVO {
     @ManyToOne //단방향
     @JoinColumn(name = "cart_id")
     private CartVO cartVO;
+    
+    /**
+     * 카트아이템 생성 메소드
+     * 필요인자: 카트객체, 아이템객체, 수량
+     * */
+    public static CartItemVO createCartItem(CartVO cartVO, ItemVO itemVO, int quantity){
+        CartItemVO cartItemVO = new CartItemVO();
+        cartItemVO.setCartVO(cartVO);
+        cartItemVO.setItemVO(itemVO);
+        cartItemVO.setQuantity(quantity);
+
+        return cartItemVO;
+    }
 }

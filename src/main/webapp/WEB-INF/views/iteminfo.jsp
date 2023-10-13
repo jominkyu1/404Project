@@ -65,29 +65,35 @@
               <span>
                 <fmt:formatNumber type="number" maxFractionDigits="3" value="${item.price}" var="price"/>
                 ${price}원
-              </span>
+              </span> <br>
+              <span>재고: <b>${item.stockQuantity}</b>개</span>
             </div>
-
+            
             <p class="lead">
               ${item.description}
             </p>
+            <form method="get" action="/cart/add/${item.item_id}">
             <div class="d-flex">
+              <!--  -->
               <input
                 class="form-control text-center me-3"
-                id="inputQuantity"
+                id="quantity"
+                name="quantity"
                 type="num"
                 value="1"
                 style="max-width: 3rem"
               />
-              <button class="btn btn-outline-dark flex-shrink-0" type="button">
+              <button class="btn btn-outline-dark flex-shrink-0" type="submit">
                 <i class="bi-cart-fill me-1"></i>
                 장바구니
               </button>
+              <!-- -->
               <a class="btn btn-outline-dark mx-2" href="/specialstore">
                 <i class="bi-arrow-return-right me-1"></i>
                 목록으로
               </a>
               <button
+                type="button"
                 class="btn btn-outline-dark ms-auto"
                 data-bs-toggle="modal"
                 data-bs-target="#productInquiryModal"
@@ -99,6 +105,7 @@
                 상품 문의
               </button>
             </div>
+            </form>
           </div>
         </div>
         <hr class="my-5">

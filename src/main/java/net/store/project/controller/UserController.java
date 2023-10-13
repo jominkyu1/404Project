@@ -23,6 +23,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.persistence.Tuple;
 import javax.servlet.http.HttpSession;
 import java.util.NoSuchElementException;
 import java.util.Objects;
@@ -77,7 +78,6 @@ public class UserController {
                                Model model,
                                @AuthenticationPrincipal StoreUserDetails storeUserDetails){
         log.info("수정객체: {}", user);
-
         //검증
         if (bindingResult.hasErrors()) {
             log.info("binding errors={}", bindingResult);

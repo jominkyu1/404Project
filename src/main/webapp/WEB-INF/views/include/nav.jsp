@@ -30,9 +30,10 @@
         <div class="collapse navbar-collapse fw-bold" id="navbarSupportedContent">
             <ul class="navbar-nav mx-2">
                 <li class="nav-item"><a class="nav-link" href="/">홈</a></li>
-                <li class="nav-item"><a class="nav-link" href="/recommand">추천</a></li>
+                <!-- <li class="nav-item"><a class="nav-link" href="/recommand">추천</a></li> -->
                 <li class="nav-item"><a class="nav-link" href="/guide">구매가이드</a></li>
                 <li class="nav-item"><a class="nav-link" href="/specialstore">특가스토어</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">고객센터</a></li>
             </ul>
             <!-- 오른쪽 위 네비게이션 링크 추가 -->
             <ul class="navbar-nav mx-2 ms-auto">
@@ -60,7 +61,7 @@
                 <input class="btn btn-outline-dark text-bg-dark" type="submit" value="검색">
             </form>
             <!-- 장바구니 -->
-            <form class="nav-item d-flex m-1 ms-auto" action="/wishlist">
+            <form class="nav-item d-flex m-1 ms-auto" action="/cart">
                 <button class="btn btn-outline-dark" type="submit">
                     <i class="bi-cart-fill me-1"></i>
                     장바구니
