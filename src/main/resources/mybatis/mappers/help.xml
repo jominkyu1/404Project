@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="Help"> <!-- 매퍼 네임스페이스명을 Help로 지정 -->
+<!-- 고객센터  -->
+<insert id="help_write">
+  insert into board (help_no,help_title,help_name,help_hit,help_date)
+  values(1,#{help_title}, #{help_name}, #{help_hit}, sysdate)
+</insert>
+</mapper>
