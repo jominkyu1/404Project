@@ -6,7 +6,7 @@
 <configuration>
   <typeAliases>
     <typeAlias type="net.store.project.vo.user.UserVO" alias="userVO" />
-    <typeAlias type="net.store.project.vo.board.BoardVO" alias="BoardVO" />
+    <typeAlias type="net.store.project.vo.board.BoardVO" alias="board" />
     <typeAlias type="net.store.project.vo.page.PageVO" alias="page" />
   </typeAliases>
 </configuration>

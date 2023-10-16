@@ -1,6 +1,4 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- 더미이미지(데모이미지) 사용시
     <img src="https://placehold.it/가로x세로">
     로 적용 후 확인해보면 자동으로 그 사이즈에 맞게 불러옴
@@ -88,14 +86,15 @@
 }
 
 #body, #body2 {
-    width:1000px; 
-    margin: auto;
+	width: 1000px;
+	margin: auto;
 }
 
 #body, td, th {
-    border-collapse : collapse;
-    border : 1px solid black;
-};
+	border-collapse: collapse;
+	border: 1px solid black;
+}
+;
 </style>
 <body>
 	<!-- 네비게이션(nav) 로드 -->
@@ -103,46 +102,26 @@
 	<!-- 배너(header) 로드 -->
 	<jsp:include page="../include/header.jsp" />
 	<section>
-		<!-- Spring Security의 Session에서 유저정보를 가져옴 -->
-		<!-- isAuthenticated() -> 로그인 한 유저라면(인가받은 유저라면) -->
-		<!-- 게시판 글쓰면 해당 로그인한 유저가 글작성시 해당유저 아이디 자동입력 되게하고 username 외래키 참조 boardVO에서 유저네임참조
-		nav.jsp 파일 참조해서 코딩하기 -->
-		<sec:authorize access="isAuthenticated()">
-			<sec:authentication property="principal.user" var="user"/>		
-			
-		</sec:authorize>
-	
-		<div id="bWrite_wrap">
-		<h2 class="bWrite_title">게시판 글쓰기</h2>
-		<form method="post" action="board_write_ok"
-			onsubmit="return bw_check();">
-			<table id="bWrite_t">
-				<tr>
-					<th>이름</th>
-					<td><input name="board_name" id="board_name" size="14" /></td>
-				</tr>
-				<tr>
-					<th>제목</th>
-					<td><input name="board_title" id="board_title" size="35" /></td>
-				</tr>
-				<tr>
-					<th>비밀번호</th>
-					<td><input type="password" name="board_pwd" id="board_pwd"
-						size="14" /></td>
-				</tr>
-				<tr>
-					<th>내용</th>
-					<td><textarea name="board_cont" id="board_cont" rows="9"
-							cols="36"></textarea></td>
-				</tr>
-			</table>
-			<div id="bWrite_menu">
-				<input type="submit" value="저장" /> <input type="reset" value="취소"
-					onclick="$('#board_name').focus();" /> <input type="button"
-					value="목록" onclick="location='board_list?page=${page}';" />
-			</div>
-		</form>
-	</div>
+		<div id="bDel_wrap">
+			<h2 class="bDel_title">게시판 삭제</h2>
+			<form method="post" action="board_del_ok"
+				onsubmit="return del_check();">
+				<input type="hidden" name="board_no" value="${b.board_no}" /> <input
+					type="hidden" name="page" value="${page}" />
+				<table id="bDel_t">
+					<tr>
+						<th>비밀번호</th>
+						<td><input type="password" name="del_pwd" id="del_pwd"
+							size="14" /></td>
+					</tr>
+				</table>
+				<div id="bDel_menu">
+					<input type="submit" value="삭제" /> <input type="reset" value="취소"
+						onclick="$('#del_pwd').focus();" /> <input type="button"
+						value="목록" onclick="location='board_list?page=${page}';" />
+				</div>
+			</form>
+		</div>
 	</section>
 	<!-- 푸터 (footer.html) -->
 	<jsp:include page="../include/footer.jsp" />
@@ -150,5 +129,4 @@
 
 <!-- Bootstrap core JS-->
 <script src="/js/bootstrap.bundle.js"></script>
-
 </html>

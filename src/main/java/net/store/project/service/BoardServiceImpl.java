@@ -32,6 +32,36 @@ public class BoardServiceImpl implements BoardService {
 		return this.boardDao.getListCount(p);
 	}
 
+	@Override
+	public BoardVO getBoardCont(int board_no) {
+		return this.boardDao.getBoardCont(board_no);
+	}
+
+	@Override
+	public BoardVO getBoardCont2(int board_no) {
+		return this.boardDao.getBoardCont(board_no);
+	}
+
+	@Override
+	public void updateHit(int board_no) {
+		this.boardDao.updateHit(board_no);
+	}
+
+	@Override
+	public void replyBoard(BoardVO rb) {
+		this.boardDao.replyBoard(rb);
+	}
+
+	@Override
+	public void editBoard(BoardVO eb) {
+		this.boardDao.editBoard(eb);
+	}
+
+	@Override
+	public void delBoard(int board_no) {
+		this.boardDao.delBoard(board_no);
+	}
+
 
 
 }

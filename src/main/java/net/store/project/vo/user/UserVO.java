@@ -28,10 +28,10 @@ public class UserVO {
             strategy=GenerationType.SEQUENCE,
             generator="users_seq_gename"
     )
-    private Long user_id;
+    private Long user_id; //PK
 
     @Column(nullable = false, unique = true)
-    private String username;
+    private String username; //login id
 
     @Column(nullable = false)
     private String password;

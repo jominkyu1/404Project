@@ -18,7 +18,7 @@ import java.util.List;
 @Slf4j
 @Getter
 public class StoreUserDetails extends User {
-    private UserVO user;
+    private UserVO user; //로그인시 스프링 시큐리티 세션에 저장될 유저
 
     public StoreUserDetails(UserVO user){
         super(user.getUsername(), user.getPassword(), setAuthorities(user.getUsergrade().getValue()));
