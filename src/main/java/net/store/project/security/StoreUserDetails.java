@@ -19,6 +19,7 @@ import java.util.List;
 @Getter
 public class StoreUserDetails extends User {
     private UserVO user;
+    private Long user_cart_id;
 
     public StoreUserDetails(UserVO user){
         super(user.getUsername(), user.getPassword(), setAuthorities(user.getUsergrade().getValue()));
@@ -39,4 +40,7 @@ public class StoreUserDetails extends User {
     public void updateUserDetails(UserVO userVO){
         this.user = userVO;
     }
+    public void setUser_cart_id(Long cart_id){
+        this.user_cart_id=cart_id;
+    };
 }

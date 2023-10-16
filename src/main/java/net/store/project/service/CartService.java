@@ -29,7 +29,7 @@ public class CartService {
      * 매개변수로 아이템의PK, 유저의PK, 수량이 넘어옴
      * */
     @Transactional
-    public void addCart(Long item_id, Long user_id, int quantity){
+    public Long addCart(Long item_id, Long user_id, int quantity){
         ItemVO itemVO = itemRepository.findById(item_id)
                 .orElseThrow(IllegalArgumentException::new);
 
@@ -39,6 +39,8 @@ public class CartService {
         CartVO cartVO = cartRepository.findByUserVO(userVO);
 
         //유저가 카트가 없다면 카트를 생성
+        //Security의 UserDetailsService에서 로그인시에 없으면 생성 후 세션에 저장하므로 중복코드이나
+        //검증을 한번 더 진행!
         if(cartVO == null){
             cartVO = CartVO.createCart(userVO);
             cartRepository.save(cartVO);
@@ -53,5 +55,7 @@ public class CartService {
             CartItemVO cartItemVO = CartItemVO.createCartItem(cartVO, itemVO, quantity);
             cartItemRepository.save(cartItemVO);
         }
+
+        return cartVO.getCart_id();
     }
 }
