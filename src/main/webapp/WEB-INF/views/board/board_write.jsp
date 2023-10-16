@@ -99,33 +99,33 @@
 	<jsp:include page="../include/header.jsp" />
 	<section>
 		<div id="bWrite_wrap">
-		<h2 class="bWrite_title">고객센터 글쓰기</h2>
-		<form method="post" action="help_write_ok"
+		<h2 class="bWrite_title">게시판 글쓰기</h2>
+		<form method="post" action="board_write_ok"
 			onsubmit="return bw_check();">
 			<table id="bWrite_t">
 				<tr>
 					<th>이름</th>
-					<td><input name="help_name" id="help_name" size="14" /></td>
+					<td><input name="board_name" id="board_name" size="14" /></td>
 				</tr>
 				<tr>
 					<th>제목</th>
-					<td><input name="help_title" id="help_title" size="35" /></td>
+					<td><input name="board_title" id="board_title" size="35" /></td>
 				</tr>
 				<tr>
 					<th>비밀번호</th>
-					<td><input type="password" name="help_pwd" id="help_pwd"
+					<td><input type="password" name="board_pwd" id="board_pwd"
 						size="14" /></td>
 				</tr>
 				<tr>
 					<th>내용</th>
-					<td><textarea name="help_cont" id="help_cont" rows="9"
+					<td><textarea name="board_cont" id="board_cont" rows="9"
 							cols="36"></textarea></td>
 				</tr>
 			</table>
 			<div id="bWrite_menu">
 				<input type="submit" value="저장" /> <input type="reset" value="취소"
 					onclick="$('#board_name').focus();" /> <input type="button"
-					value="목록" onclick="location='help_list?page=${page}';" />
+					value="목록" onclick="location='board_list?page=${page}';" />
 			</div>
 		</form>
 	</div>
