@@ -119,17 +119,9 @@
 				</tr>
 			</table>
 			<div id="bCont_menu">
-				<input type="button" value="답변"
-					onclick="location=
-'board_cont?no=${b.board_no}&page=${page}&state=reply';" />
-				<input type="button" value="수정"
-					onclick="location=
-'board_cont?no=${b.board_no}&page=${page}&state=edit';" />
-				<input type="button" value="삭제"
-					onclick="location=
-'board_cont?no=${b.board_no}&page=${page}&state=del';" />
-				<input type="button" value="목록"
-					onclick="location='board_list?page=${page}';" />
+				<input type="button" value="수정" 
+				onclick="location= 'board_cont?no=${b.board_no}&page=${page}&state=edit';" />
+				<input type="button" value="목록" onclick="location='board_list?page=${page}';" />
 			</div>
 		</div>
 	</section>

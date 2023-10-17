@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <!-- 더미이미지(데모이미지) 사용시
     <img src="https://placehold.it/가로x세로">
     로 적용 후 확인해보면 자동으로 그 사이즈에 맞게 불러옴
@@ -115,6 +116,13 @@
 				<%--답변글 정렬순서 --%>
 				<%-- 페이징 히든값 --%>
 				<input type="hidden" name="page" value="${page}" />
+
+				<sec:authorize access="isAnonymous()">
+					<script>
+						alert("관리자 권한입니다!")
+						location.href = "/board_list";
+					</script>
+				</sec:authorize>
 
 				<table id="bWrite_t">
 					<tr>

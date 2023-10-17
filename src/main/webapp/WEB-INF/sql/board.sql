@@ -14,12 +14,19 @@ create table board(
 );
 
   ALTER TABLE board MODIFY (board_cont VARCHAR2(4000));
+  
+  --ALTER TABLE [FK를 생성시킬 테이블명]
+--ADD CONSTRAINT [FK명] foreign KEY(FK가 될 컬럼명) references [PK가 위치하는 테이블] ([PK컬럼명]);
 
+alter table board add foreign key(board_name) references users (username);
+  
+drop table board;
+select * from users;
 select * from board order by board_no desc;
 commit;
 
 
-select * from board where board_no=25;
+select * from board where board_no=0;
 commit;
 
 select * from board;

@@ -137,8 +137,7 @@ public class BoardController {
 
 		String board_cont=b.getBoard_cont().replace("\n",
 				"<br/>");
-		//textarea태그 영역에서 엔터키 친부분을 웹브라우에 출력할때 줄바
-		//꿈처리
+		//textarea태그 영역에서 엔터키 친부분을 웹브라우에 출력할때 줄바꿈처리
 
 		m.addAttribute("b",b);
 		m.addAttribute("bcont",board_cont);
@@ -181,6 +180,7 @@ public class BoardController {
 	/* 수정완료 */
 	@RequestMapping("/board_edit_ok")
 	public String board_edit_ok(@ModelAttribute BoardVO eb,
+			@RequestParam("board_pwd") String board_pwd,
 			HttpServletResponse response,
 			HttpServletRequest request) throws Exception{
 		response.setContentType("text/html;charset=UTF-8");
@@ -191,10 +191,9 @@ public class BoardController {
 		if(request.getParameter("page") != null) {
 			page=Integer.parseInt(request.getParameter("page"));			
 		}
-		BoardVO db_pwd=
-				this.boardService.getBoardCont2(eb.getBoard_no());
+		BoardVO db_pwd=this.boardService.getBoardCont2(eb.getBoard_no());
 		//게시물 번호를 기준으로 디비로 부터 비번을 가져옴.
-		if(!db_pwd.getBoard_pwd().equals(eb.getBoard_pwd())) {
+		if(!passwordEncoder.matches(board_pwd, db_pwd.getBoard_pwd())) {
 			out.println("<script>");
 			out.println("alert('비번이 다릅니다!');");
 			out.println("history.back();");

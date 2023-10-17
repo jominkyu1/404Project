@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <!-- 더미이미지(데모이미지) 사용시
     <img src="https://placehold.it/가로x세로">
     로 적용 후 확인해보면 자동으로 그 사이즈에 맞게 불러옴
@@ -105,12 +106,17 @@
 				onsubmit="return bw_check();">
 				<input type="hidden" name="board_no" value="${b.board_no}" /> <input
 					type="hidden" name="page" value="${page}" />
+
+
 				<table id="bWrite_t">
-					<tr>
-						<th>이름</th>
-						<td><input name="board_name" id="board_name" size="14"
-							value="${b.board_name}" /></td>
-					</tr>
+					<sec:authorize access="isAuthenticated()">
+						<sec:authentication property="principal.user" var="user" />
+						<tr>
+							<th>이름</th>
+							<td><input name="board_name" id="board_name" size="14"
+								value="${user.username}" readonly/></td>
+						</tr>
+					</sec:authorize>
 					<tr>
 						<th>제목</th>
 						<td><input name="board_title" id="board_title" size="35"

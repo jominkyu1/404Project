@@ -115,6 +115,7 @@
 							size="14" /></td>
 					</tr>
 				</table>
+				
 				<div id="bDel_menu">
 					<input type="submit" value="삭제" /> <input type="reset" value="취소"
 						onclick="$('#del_pwd').focus();" /> <input type="button"
