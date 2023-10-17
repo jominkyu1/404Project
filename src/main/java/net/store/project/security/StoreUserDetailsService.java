@@ -2,6 +2,7 @@ package net.store.project.security;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import net.store.project.api.CartHandler;
 import net.store.project.repository.CartRepository;
 import net.store.project.repository.UserRepository;
 import net.store.project.vo.cart.CartVO;
@@ -21,6 +22,7 @@ import java.util.Optional;
 public class StoreUserDetailsService implements UserDetailsService {
     private final UserRepository userRepository;
     private final CartRepository cartRepository;
+    private final CartHandler cartHandler;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -32,7 +34,7 @@ public class StoreUserDetailsService implements UserDetailsService {
             StoreUserDetails storeUserDetails = new StoreUserDetails(foundUsername.get());
 
             // 시큐리티세션에 storeUserDetails의 cart_id를 저장 (카트가 없으면 생성 후 저장)
-            settingSessionCartId(storeUserDetails);
+            cartHandler.setSessionCartId(storeUserDetails);
             return storeUserDetails;
         } else {
             log.info("로그인 실패: {} ", username);

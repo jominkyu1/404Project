@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!-- 더미이미지(데모이미지) 사용시
     <img src="https://placehold.it/가로x세로">
     로 적용 후 확인해보면 자동으로 그 사이즈에 맞게 불러옴
@@ -35,6 +36,18 @@
     <jsp:include page="include/header.jsp" />
         <!-- 매인 섹션 -->
         <section class="py-5">
+            
+            <sec:authorize access="isAuthenticated()">
+                <sec:authentication property="principal.user" var="user"/>
+                
+                <c:if test="${!empty user.providerId and empty user.address1}">
+                    <script>
+                        alert('사이트 이용에 필요한 정보를 입력해주세요!');
+                        location.href = '/user/${user.user_id}/edit';
+                    </script>
+                </c:if>
+            </sec:authorize>
+            
             <div class="text-center"><h3>추천 받고싶은 제품을 선택해 보세요!</h3></div> <br>
 
             <div class="container mt-5">

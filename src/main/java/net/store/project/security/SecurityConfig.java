@@ -22,6 +22,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final StoreUserDetailsService storeUserDetailsService;
     private final StoreLoginFailureHandler storeLoginFailureHandler;
+    //OAuth2.0 서비스
+    private final StoreOauth2UserService storeOauth2UserService;
 
     //password Encoder
     @Bean
@@ -39,7 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
+        http.csrf().disable()
                 .authorizeRequests() //URL별 권한 관리를 설정하는 옵션의 시작점
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/user/**").hasAnyRole("USER", "ADMIN")
@@ -60,7 +62,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .invalidateHttpSession(true) //로그아웃시 세션제거
                 .and()
 
-                .csrf().disable(); //임시 CSRF 비활성화
+                .oauth2Login()
+                .loginPage("/login")
+                .userInfoEndpoint()
+                .userService(storeOauth2UserService)
+        ;
         
         //remember me
         http.rememberMe()

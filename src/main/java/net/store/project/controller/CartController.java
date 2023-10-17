@@ -57,7 +57,6 @@ public class CartController {
                           @RequestParam int quantity,
                           @AuthenticationPrincipal StoreUserDetails storeUserDetails){
         if(storeUserDetails == null) return "redirect:/login";
-        
         //아이템번호(PK), 유저번호(PK), 아이템수량을 받아서 카트에 추가
         Long cart_id = cartService.addCart(item_id, storeUserDetails.getUser().getUser_id(), quantity);
         //TODO Security UsersDetails에 cart_id담기!

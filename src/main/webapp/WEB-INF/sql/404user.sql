@@ -1,4 +1,9 @@
 select * from users;
+--password에 null값을 허용
+alter table users modify password varchar2(100) null;
+
+delete from users where user_id = 32;
+commit;
 
 select *
 from orders;
@@ -8,6 +13,7 @@ from item;
 
 select *
 from item_qna;
+
 
 select * from item_qna where answered = 1;
 
