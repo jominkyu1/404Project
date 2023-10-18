@@ -17,4 +17,6 @@ public interface ItemQnaRepository extends JpaRepository<ItemQnaVO, Long> {
    List<ItemQnaVO> findAllByItemVO(ItemVO itemVO);
 
    List<ItemQnaVO> findAllByAnswered(int answered);
+
+
 }

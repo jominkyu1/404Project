@@ -4,12 +4,14 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import net.store.project.vo.admin.PageVO;
 import net.store.project.vo.user.UserVO;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Getter
 @Setter
@@ -49,5 +51,6 @@ public class ItemQnaVO {
         this.userVO = userVO;
         this.contents = contents;
     }
+
 
 }
