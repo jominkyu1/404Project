@@ -114,11 +114,12 @@
 				<div class="bList_count">글개수: ${listcount} 개</div>
 				<table id="bList_t" style="max-width: 35%">
 					<tr>
-						<th width="6%" height="26">번호</th>
-						<th width="50%">제목</th>
-						<th width="14%">작성자</th>
-						<th width="17%">작성일</th>
-						<th width="14%">조회수</th>
+					<th width="6%" height="26">번호</th>
+					<th width="34%">제목</th>
+					<th width="14%">작성자</th>
+					<th width="18%">작성일</th>
+					<th width="10%">조회수</th>
+					<th width="18%">수정/삭제</th>
 					</tr>
 					<c:if test="${!empty blist}">
 						<c:forEach var="b" items="${blist}">
@@ -140,6 +141,19 @@ get방식으로 &구분하면서 전달된다. --%></td>
 								<td align="center">${b.board_name}</td>
 								<td align="center">${fn:substring(b.board_date,0,10)}</td>
 								<td align="center">${b.board_hit}</td>
+								<!-- 관리자 로그인일때 수정/삭제 뜨게하기 -->
+								<sec:authorize access="hasRole('ROLE_ADMIN')" >
+								<sec:authentication property="principal.user" var="user" />
+								<td align="center"><input type="button" value="수정"
+								onclick="location=
+								'admin_board_cont?no=${b.board_no}&page=${page}&state=edit';" />
+								<input type="button" value="삭제"
+								onclick="if(confirm('정말로 삭제할까요?') == true){
+								location='admin_board_del?no=${b.board_no}&page=${page}';}else{ return ;}" />
+								</td>
+								</sec:authorize>
+								
+								
 							</tr>
 						</c:forEach>
 					</c:if>
