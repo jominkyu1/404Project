@@ -1,7 +1,6 @@
 package net.store.project.security;
 
 import lombok.Getter;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import net.store.project.vo.user.UserVO;
 import org.springframework.security.core.GrantedAuthority;
@@ -39,7 +38,7 @@ public class StoreUserDetails extends User implements OAuth2User {
      * OAuth2.0 소셜 로그인
      * */
     public StoreUserDetails(UserVO userVO, Map<String, Object> attributes){
-        super(userVO.getUsername(), "null", setAuthorities(userVO.getUsergrade().getValue()));
+        super(userVO.getUsername(), userVO.getPassword(), setAuthorities(userVO.getUsergrade().getValue()));
         this.user=userVO;
         this.attributes = attributes;
         System.out.println(attributes);
@@ -59,7 +58,7 @@ public class StoreUserDetails extends User implements OAuth2User {
     }
     public void setUser_cart_id(Long cart_id){
         this.user_cart_id=cart_id;
-    };
+    }
 
     
     /**

@@ -26,7 +26,7 @@ select *
 from user_cart_items;
 
 --장바구니 아이템 제거
-delete from user_cart_items where cart_id = 유저카트번호 and item_id = 삭제할아이템번호;
+--delete from user_cart_items where cart_id = 유저카트번호 and item_id = 삭제할아이템번호;
 
 
 
@@ -58,17 +58,7 @@ where item_id = (select item_id
                                   from user_cart
                                            join users on users.user_id = user_cart.user_id));
 
-select * from user_cart right join users on users.user_id = 1;
 
-  select * from (
-        select rowNum, item_qna_id, answered, answered_text, contents, regdate, item_id, user_id
-        from ITEM_QNA
-                  )
-  where rowNum between 1 and 15 order by rowNum desc;
-    
-    
-    select rowNum, item_qna_id, answered, answered_text, contents, regdate, item_id, user_id
-        from ITEM_QNA;
 
 
 select sum(user_cart_items.QUANTITY * ITEM.PRICE) from user_cart_items join ITEM on user_cart_items.ITEM_ID = ITEM.ITEM_ID where user_cart_items.cart_id=2;
