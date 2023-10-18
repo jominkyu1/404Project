@@ -6,5 +6,9 @@
 <configuration>
   <typeAliases>
     <typeAlias type="net.store.project.vo.user.UserVO" alias="userVO" />
+    
+    <typeAlias type="net.store.project.vo.item.ItemQnaVO" alias="qna" />
+    <typeAlias type="net.store.project.vo.admin.PageVO" alias="page" />
+
   </typeAliases>
 </configuration>
