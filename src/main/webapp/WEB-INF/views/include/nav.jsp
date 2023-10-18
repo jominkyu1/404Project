@@ -10,12 +10,31 @@
     href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
     rel="stylesheet"
 />
+<!-- jQuery CDN -->
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
 
-
-
-
-
-
+<!-- 로그인한 유저의 장바구니 갯수 표시 -->
+<sec:authorize access="isAuthenticated()">
+    <sec:authentication property="principal.user_cart_id" var="cart_id"/>
+    <script>
+        var cartId = ${cart_id};
+        
+        $(document).ready(function () {
+            
+            $.ajax({
+                type: "GET",
+                url: "/cart/count",
+                data: {"cart_id" : cartId},
+                success: function (count){
+                    $("#cartCount").text(count);
+                },
+                error: function (){
+                    alert("장바구니 호출 오류");
+                }
+            })
+        });
+    </script>
+</sec:authorize>
 
 
 <nav class="navbar navbar-expand-lg" style="background-color: rgba(211, 211, 211, 0.38);">
@@ -33,7 +52,7 @@
                 <!-- <li class="nav-item"><a class="nav-link" href="/recommand">추천</a></li> -->
                 <li class="nav-item"><a class="nav-link" href="/guide">구매가이드</a></li>
                 <li class="nav-item"><a class="nav-link" href="/specialstore">특가스토어</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">고객센터</a></li>
+                <li class="nav-item"><a class="nav-link" href="/help">고객센터</a></li>
             </ul>
             <!-- 오른쪽 위 네비게이션 링크 추가 -->
             <ul class="navbar-nav mx-2 ms-auto">
@@ -65,7 +84,9 @@
                 <button class="btn btn-outline-dark" type="submit">
                     <i class="bi-cart-fill me-1"></i>
                     장바구니
-                    <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                    <span class="badge bg-dark text-white ms-1 rounded-pill" id="cartCount">
+                        0
+                    </span>
                 </button>
             </form>
         </div>

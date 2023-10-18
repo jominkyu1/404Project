@@ -4,6 +4,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <html>
 <head>
@@ -49,10 +50,12 @@
                   if(data === true){
                       alert('이미 사용중인 아이디입니다.');
                       checkUser.focus();
+                      document.getElementById('idChanged').value = false;
                   }
                   else{
                       alert('사용 가능한 아이디입니다.');
                       checkUser.focus();
+                      document.getElementById('idChanged').value = true;
                   }
               },
               error: function(){
@@ -75,6 +78,16 @@
           </div>
         </div>
         <div class="col-8">
+          <sec:authentication property="principal.user" var="user" />
+          <c:if test="${!empty user.providerId}">
+            <script>
+              $(document).ready(function(){
+                  // 소셜 로그인사용자는 비밀번호 변경 불가
+                  $('#password').attr('disabled', true);
+                  $('#pwChangeBtn').attr('disabled', true);
+              })
+            </script>
+          </c:if>
           
           <form:form modelAttribute="userRegisterForm"
                      method="post">
@@ -95,6 +108,7 @@
               <td>
                 <div class="input-group">
                   <form:input path="username" type="text" cssClass="input-group-text" />
+                  <input type="hidden" name="idChanged" id="idChanged" value="false">
                 <input type="button" class="btn btn-outline-secondary mx-2" value="중복확인"
                        onclick="idCheck()">
                 </div>
@@ -105,8 +119,8 @@
               <td>
                 <div class="input-group">
                   <form:input path="password" type="password" cssClass="input-group-text" readonly="true" />
-                  <input type="hidden" name="passwordChanged" id="passwordChanged" value="false" />
-                <input type="button" class="btn btn-outline-secondary mx-2" value="비밀번호 변경"
+                  <input type="hidden" name="passwordChanged" id="passwordChanged" value="false">
+                <input type="button" class="btn btn-outline-secondary mx-2" value="비밀번호 변경" id="pwChangeBtn"
                        onclick="enablePasswordInput()">
                 </div>
               </td>

@@ -14,9 +14,24 @@ public class CartItemService {
 
     private final CartItemRepository cartItemRepository;
 
-//    @Transactional
-//    public void modifyQuantity(Long cartId, Long itemId, int orderQuantity) {
-//        cartItemRepository.findByCartVOCart_idAndItemVOItem_id(cartId, itemId)
-//                .ifPresent(cartItemVO -> cartItemVO.setQuantity(orderQuantity));
-//    }
+    @Transactional
+    public int modifyQuantity(Long cartId, Long itemId, int orderQuantity) {
+        CartItemVO cartItemVO = cartItemRepository.findCartItemVOByCartIdAndItemId(cartId, itemId)
+                .orElseThrow(() -> new IllegalArgumentException("장바구니의 아이템을 찾을 수 없습니다."));
+
+        //장바구니페이지에서 +, -버튼을눌러 변경된 수량의 값을 DB에 저장
+        cartItemVO.setQuantity(orderQuantity);
+        
+        //변경된 수량 리턴
+        return cartItemVO.getQuantity();
+    }
+
+    public Long totalOrderedPrice(Long cart_id){
+        return cartItemRepository.findTotalOrderedPriceByCartId(cart_id);
+    }
+
+    @Transactional
+    public void deleteCartItem(Long cartId, Long itemId) {
+        cartItemRepository.deleteCartItemFromCartIdAndItemId(cartId, itemId);
+    }
 }

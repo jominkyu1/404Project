@@ -74,6 +74,7 @@ public class UserController {
     public String userEditDone(@Validated @ModelAttribute UserRegisterForm user,
                                BindingResult bindingResult,
                                @PathVariable Long id,
+                               @RequestParam Boolean idChanged,
                                @RequestParam Boolean passwordChanged,
                                Model model,
                                @AuthenticationPrincipal StoreUserDetails storeUserDetails){
@@ -86,7 +87,7 @@ public class UserController {
         }
         
         //username(아이디)가 이미 있다면 예외발생
-        if(userRepository.findByUsername(user.getUsername()).isPresent()) {
+        if(userRepository.findByUsername(user.getUsername()).isPresent() && idChanged) {
             throw new IllegalArgumentException("이미 존재하는 아이디입니다.");
         }
 

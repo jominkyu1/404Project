@@ -21,12 +21,12 @@ public class TestDB {
     @PostConstruct
     public void initDB(){
         UserVO user = new UserVO("user", "1234", "test@gmail.com", "01012345678"
-        ,"서울시 종로구", "단성사빌딩", "404호", 12345);
+        ,"서울시 종로구", "단성사빌딩", "404호", 12345, null, null);
         user.setUsergrade(UserGrade.USER);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         UserVO admin = new UserVO("admin", "1234", "test@gmail.com", "01012345678"
-                ,"서울시 종로구", "단성사빌딩", "404호", 12345);
+                ,"서울시 종로구", "단성사빌딩", "404호", 12345, null, null);
         admin.setUsergrade(UserGrade.ADMIN);
         admin.setPassword(passwordEncoder.encode(admin.getPassword()));
 

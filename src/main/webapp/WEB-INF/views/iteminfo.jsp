@@ -59,13 +59,13 @@
           </div>
 
           <div class="col-md-6">
-            <h1 class="display-5 fw-bolder">${item.name}</h1>
+            <h1 class="display-5 fw-bolder text-center">${item.name}</h1>
             <div class="fs-5 mb-5">
-              <span class="text-decoration-line-through">500,000원</span>
+              <!-- <span class="text-decoration-line-through">500,000원</span> -->
               <span>
-                <fmt:formatNumber type="number" maxFractionDigits="3" value="${item.price}" var="price"/>
+                가격: <fmt:formatNumber type="number" maxFractionDigits="3" value="${item.price}" var="price"/>
                 ${price}원
-              </span> <br>
+              </span> <br> <hr>
               <span>재고: <b>${item.stockQuantity}</b>개</span>
             </div>
             

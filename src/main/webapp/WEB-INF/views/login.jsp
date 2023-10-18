@@ -73,10 +73,18 @@
                                 <a href="/register" class="btn btn-secondary float-end">회원가입</a>
                             </div>
                         </form>
-                        <!-- 소셜 로그인 TODO
-                        <img src="/images/login/naverbtn.png" class="img-fluid my-4 d-block mx-auto " style="width:150px;">
-                        <img src="/images/login/kakaobtn.png" class="img-fluid my-4 d-block mx-auto " style="width:150px;">
-                        -->
+                        <!-- 소셜 로그인 폼 TODO 위치 수정해야함... -->
+                        <div class="border border-5 p-3">
+                            <a href="/oauth2/authorization/google">
+                                <img src="/images/login/googlebtn.png" style="width:150px;" alt="GoogleLogin">
+                            </a>
+                            <a href="/oauth2/authorization/naver">
+                                <img src="/images/login/naverbtn.png" style="width:150px;" alt="NaverLogin">
+                            </a>
+                            <a href="#">
+                                <img src="/images/login/kakaobtn.png" style="width:150px;" alt="KakaoLogin">
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -86,5 +94,5 @@
     </body>
 
     <!-- Bootstrap core JS-->
-    <script src="js/bootstrap.bundle.js"></script>
+    <script src="/js/bootstrap.bundle.js"></script>
 </html>
