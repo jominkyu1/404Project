@@ -10,12 +10,12 @@
             </a>
         </li>
         <li>
-            <a href="#" class="nav-link text-black fw-bolder">
+            <a href="/admin/members" class="nav-link text-black fw-bolder">
                 회원관리
             </a>
         </li>
         <li>
-            <a href="#" class="nav-link text-black fw-bolder">
+            <a href="/admin/item" class="nav-link text-black fw-bolder">
                 상품문의
             </a>
         </li>

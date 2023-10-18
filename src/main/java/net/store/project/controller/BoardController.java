@@ -209,7 +209,7 @@ public class BoardController {
 	}
 	
 	//삭제 완료
-		@RequestMapping("/board_del_ok")
+		/*@RequestMapping("/board_del_ok")
 		public String board_del_ok(
 				@RequestParam("board_no") int board_no,
 				@RequestParam("del_pwd") String del_pwd,
@@ -234,5 +234,5 @@ public class BoardController {
 				return "redirect:/board_list?page="+page;
 			}
 			return null;
-		}//board_del_ok()
+		}//board_del_ok()*/
 }

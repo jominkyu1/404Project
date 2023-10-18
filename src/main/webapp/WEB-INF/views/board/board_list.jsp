@@ -105,7 +105,12 @@
 	<section>
 		<form method="get" action="board_list">
 			<div id="bList_wrap">
-				<h2 class="bList_title">게시판 목록</h2>
+				<h2 class="bList_title">게시판 목록</h2><br>
+				<sec:authorize access="hasRole('ROLE_ADMIN')">
+					<h4><a href="/admin_board_list">게시판 관리</a></h4>
+					<h4><a href="/admin_board_list">게시판</a></h4>
+					<h4><a href="/admin_board_list">게시판</a></h4>
+				</sec:authorize>
 				<div class="bList_count">글개수: ${listcount} 개</div>
 				<table id="bList_t" style="max-width: 35%">
 					<tr>
@@ -135,13 +140,6 @@ get방식으로 &구분하면서 전달된다. --%></td>
 								<td align="center">${b.board_name}</td>
 								<td align="center">${fn:substring(b.board_date,0,10)}</td>
 								<td align="center">${b.board_hit}</td>
-								<!-- 관리자 권한일때 글 삭제  -->
-								<sec:authorize access="hasRole('ROLE_ADMIN')">
-									<td align="center">
-									<input type="button" value="삭제"
-										onclick="location='board_cont?no=${b.board_no}&page=${page}&state=del';">
-									</td>
-								</sec:authorize>
 							</tr>
 						</c:forEach>
 					</c:if>

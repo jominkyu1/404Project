@@ -6,5 +6,9 @@
 <configuration>
   <typeAliases>
     <typeAlias type="net.store.project.vo.user.UserVO" alias="userVO" />
+<<<<<<< HEAD
+=======
+
+>>>>>>> b602ee83f5095280186106d44c17b0af0badf8ae
   </typeAliases>
 </configuration>

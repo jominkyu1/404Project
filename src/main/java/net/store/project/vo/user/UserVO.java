@@ -33,7 +33,6 @@ public class UserVO {
     @Column(nullable = false, unique = true)
     private String username; //login id
 
-    @Column(nullable = false)
     private String password;
 
     private String email;
@@ -59,10 +58,19 @@ public class UserVO {
     @ColumnDefault("'USER'")
     private UserGrade usergrade; //USER, ADMIN
 
+    /**
+     * OAuth 2.0
+     * provider = "google", "kakao", "naver"
+     * providerId = google:sub값, kakao:id값, naver:response의 id값
+     * */
+    private String provider;
+
+    @Column(name = "provider_id")
+    private String providerId;
 
     @Builder
     public UserVO(String username, String password, String email, String userphone, String address1,
-                  String address2, String address_detail, Integer postcode) {
+                  String address2, String address_detail, Integer postcode, String provider, String providerId) {
         this.username = username;
         this.password = password;
         this.email = email;
@@ -72,6 +80,8 @@ public class UserVO {
         this.address_detail = address_detail;
         this.postcode = postcode;
         this.usergrade = UserGrade.USER;
+        this.provider = provider;
+        this.providerId = providerId;
     }
     
     /**

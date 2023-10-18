@@ -85,11 +85,6 @@
 		board_title=#{board_title},board_cont=#{board_cont}
 		where board_no=#{board_no}
 	</update>
-	
-	<!-- 게시판 삭제 -->
-    <delete id="board_del" parameterType="int">
-     delete from board where board_no=#{board_no}
-    </delete>
     
     <!-- 답변 저장 -->
     <insert id="reply_in">

@@ -17,8 +17,11 @@ create table board(
   
   --ALTER TABLE [FK를 생성시킬 테이블명]
 --ADD CONSTRAINT [FK명] foreign KEY(FK가 될 컬럼명) references [PK가 위치하는 테이블] ([PK컬럼명]);
-
 alter table board add foreign key(board_name) references users (username);
+
+--컬럼 크기변경 하는 쿼리
+--ALTER TABLE [테이블명] MODIFY ([컬럼명] VARCHAR2(2000));
+alter table board modify board_pwd varchar2(100);
   
 drop table board;
 select * from users;

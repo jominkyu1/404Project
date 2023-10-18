@@ -10,12 +10,20 @@
             </a>
         </li>
         <li>
+<<<<<<< HEAD
             <a href="#" class="nav-link text-black fw-bolder">
+=======
+            <a href="/admin/members" class="nav-link text-black fw-bolder">
+>>>>>>> b602ee83f5095280186106d44c17b0af0badf8ae
                 회원관리
             </a>
         </li>
         <li>
+<<<<<<< HEAD
             <a href="#" class="nav-link text-black fw-bolder">
+=======
+            <a href="/admin/item" class="nav-link text-black fw-bolder">
+>>>>>>> b602ee83f5095280186106d44c17b0af0badf8ae
                 상품문의
             </a>
         </li>

@@ -1,10 +1,12 @@
 package net.store.project.service;
 
 import lombok.RequiredArgsConstructor;
+import net.store.project.dao.QnaDao;
 import net.store.project.repository.ItemQnaRepository;
-import net.store.project.repository.ItemRepository;
+import net.store.project.vo.admin.PageVO;
 import net.store.project.vo.item.ItemQnaVO;
 import net.store.project.vo.item.ItemVO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,6 +18,9 @@ import java.util.NoSuchElementException;
 public class ItemQnaService {
 
     private final ItemQnaRepository itemQnaRepository;
+
+    @Autowired
+    private QnaDao qnaDao;
 
     @Transactional
     public void applyQna(ItemQnaVO itemQnaVO){
@@ -44,4 +49,19 @@ public class ItemQnaService {
     public List<ItemQnaVO> findAllQna(ItemVO itemVO){
         return itemQnaRepository.findAllByItemVO(itemVO);
     }
+
+
+    //검색 전 총 레코드
+    public int getRowCount(PageVO p) {
+        return this.qnaDao.getRowCount(p);
+    }
+
+    //검색전 목록
+    public List<ItemQnaVO> getBbsList(PageVO p) {
+
+        return qnaDao.getBbsList(p);
+    }
+
+
 }
+
