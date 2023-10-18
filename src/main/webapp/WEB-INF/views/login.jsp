@@ -81,7 +81,7 @@
                             <a href="/oauth2/authorization/naver">
                                 <img src="/images/login/naverbtn.png" style="width:150px;" alt="NaverLogin">
                             </a>
-                            <a href="#">
+                            <a href="/oauth2/authorization/kakao">
                                 <img src="/images/login/kakaobtn.png" style="width:150px;" alt="KakaoLogin">
                             </a>
                         </div>
