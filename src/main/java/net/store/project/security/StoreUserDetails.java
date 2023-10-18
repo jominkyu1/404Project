@@ -18,16 +18,12 @@ import java.util.Map;
  * */
 @Slf4j
 @Getter
-<<<<<<< HEAD
-public class StoreUserDetails extends User {
-    private UserVO user; //로그인시 스프링 시큐리티 세션에 저장될 유저
-=======
 public class StoreUserDetails extends User implements OAuth2User {
     private UserVO user;
     private Long user_cart_id;
     //OAuth2.0 소셜로그인
     private Map<String, Object> attributes;
->>>>>>> b602ee83f5095280186106d44c17b0af0badf8ae
+
 
     /**
      * 소셜로그인이 아닌 기본로그인
