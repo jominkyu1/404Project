@@ -39,8 +39,6 @@ public class StoreOauth2UserService extends DefaultOAuth2UserService {
 
         //소셜 구분 코드 (google, naver, kakao)
         String provider = userRequest.getClientRegistration().getRegistrationId();
-
-        //TODO KAKAO LOGIN
         //각 소셜미디어에따라 가져온 유저정보 값들을 한곳에 통일시키는 인터페이스
         OAuth2UserInfo oAuth2UserInfo = getOAuth2UserInfo(provider, oAuth2User.getAttributes());
 
@@ -89,7 +87,7 @@ public class StoreOauth2UserService extends DefaultOAuth2UserService {
             log.info("소셜로그인 GOOGLE");
             return new OAuth2GoogleInfo(attributes);
         } else if(provider.equals("kakao")){
-            //TODO KAKAO LOGIN
+            log.info("소셜로그인 KAKAO");
             return new OAuth2KakaoInfo(attributes);
         } else {
             throw new OAuth2AuthenticationException("소셜로그인 인증에 실패했습니다.");
