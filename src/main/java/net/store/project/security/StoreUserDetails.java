@@ -24,6 +24,7 @@ public class StoreUserDetails extends User implements OAuth2User {
     //OAuth2.0 소셜로그인
     private Map<String, Object> attributes;
 
+
     /**
      * 소셜로그인이 아닌 기본로그인
      * */
