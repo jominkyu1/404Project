@@ -4,6 +4,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.store.project.api.CartHandler;
 import net.store.project.repository.UserRepository;
+import net.store.project.security.dto.OAuth2GoogleInfo;
+import net.store.project.security.dto.OAuth2KakaoInfo;
+import net.store.project.security.dto.OAuth2NaverInfo;
+import net.store.project.security.dto.OAuth2UserInfo;
 import net.store.project.vo.user.UserVO;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,6 +17,7 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -33,13 +38,18 @@ public class StoreOauth2UserService extends DefaultOAuth2UserService {
         OAuth2User oAuth2User = super.loadUser(userRequest);
         log.info("OAuth2.0 Service - getAttributes ::: {}", oAuth2User.getAttributes());
 
-        //로그인 진행중인 서비스 구분 코드 (google, naver, kakao)
+        //소셜 구분 코드 (google, naver, kakao)
         String provider = userRequest.getClientRegistration().getRegistrationId();
 
-        //TODO 구글, 네이버, 카카오 로그인 구분 후 UserVO객체에 provider, providerId 할당
-        String providerId = oAuth2User.getAttribute("sub");
-        String email = oAuth2User.getAttribute("email");
-        String username = "G_"+oAuth2User.getAttribute("name");
+        //TODO KAKAO LOGIN
+        //각 소셜미디어에따라 가져온 유저정보 값들을 한곳에 통일시키는 인터페이스
+        OAuth2UserInfo oAuth2UserInfo = getOAuth2UserInfo(provider, oAuth2User.getAttributes());
+
+        String providerId = oAuth2UserInfo.getProviderId();
+        String email = oAuth2UserInfo.getEmail();
+        String username = oAuth2UserInfo.getUsername();
+        String userphone = oAuth2UserInfo.getMobile();
+
 
         //DB에 해당 소셜로그인 정보가 있는지 확인
         Optional<UserVO> foundUser = userRepository.findByProviderId(providerId);
@@ -52,6 +62,7 @@ public class StoreOauth2UserService extends DefaultOAuth2UserService {
                     .provider(provider)
                     .providerId(providerId)
                     .email(email)
+                    .userphone(userphone)
                     .build();
 
             userRepository.save(userVO);
@@ -61,5 +72,27 @@ public class StoreOauth2UserService extends DefaultOAuth2UserService {
         //세션에 cart_id 저장하기위한 핸들러 호출
         cartHandler.setSessionCartId(storeUserDetails);
         return storeUserDetails;
+    }
+
+    /**
+     * GOOGLE, NAVER, KAKAO 로그인 구분
+     * @param provider: 어느소셜 사이트인지 구분
+     * @param attributes: 로그인성공시 가져온 유저정보               
+     * @return OAuth2UserInfo: 유저정보들을 통일시킨 인터페이스
+     * */
+    private OAuth2UserInfo getOAuth2UserInfo(String provider, Map<String, Object> attributes){
+
+        if(provider.equals("naver")){
+            log.info("소셜로그인 NAVER");
+            return new OAuth2NaverInfo((Map<String, Object>) attributes.get("response"));
+        }else if(provider.equals("google")){
+            log.info("소셜로그인 GOOGLE");
+            return new OAuth2GoogleInfo(attributes);
+        } else if(provider.equals("kakao")){
+            //TODO KAKAO LOGIN
+            return new OAuth2KakaoInfo(attributes);
+        } else {
+            throw new OAuth2AuthenticationException("소셜로그인 인증에 실패했습니다.");
+        }
     }
 }

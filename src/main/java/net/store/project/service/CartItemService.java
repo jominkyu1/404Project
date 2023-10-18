@@ -21,7 +21,6 @@ public class CartItemService {
 
         //장바구니페이지에서 +, -버튼을눌러 변경된 수량의 값을 DB에 저장
         cartItemVO.setQuantity(orderQuantity);
-        System.out.println("장바구니 수량변경 ::: "+cartItemVO.getQuantity());
         
         //변경된 수량 리턴
         return cartItemVO.getQuantity();

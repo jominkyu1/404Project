@@ -22,7 +22,7 @@ import java.util.Map;
 public class StoreUserDetails extends User implements OAuth2User {
     private UserVO user;
     private Long user_cart_id;
-    //OAuth2.0 소셜로그인에 필요한 필드
+    //OAuth2.0 소셜로그인
     private Map<String, Object> attributes;
 
     /**
@@ -40,8 +40,6 @@ public class StoreUserDetails extends User implements OAuth2User {
      * */
     public StoreUserDetails(UserVO userVO, Map<String, Object> attributes){
         super(userVO.getUsername(), "null", setAuthorities(userVO.getUsergrade().getValue()));
-
-        log.info("OAuth2.0 소셜로그인");
         this.user=userVO;
         this.attributes = attributes;
         System.out.println(attributes);
