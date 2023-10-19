@@ -1,0 +1,43 @@
+@charset "UTF-8";
+
+/* pwd_find.jsp ui */
+#pFind_wrap{
+    width:250px; height:200px; border:1px solid skyblue;
+    box-shadow:15px 15px 15px #ccc;
+    border-radius:15px; margin-left:auto;
+    margin-right:auto; margin-top:37px;
+}
+#pFind_wrap .pFind_title{
+    margin:30px 0 0 70px; width:100px; font-size:19px;
+    background:pink; border-radius:15px; padding:3px;
+    text-align:center;
+}
+#pFind_t{
+    margin:25px 0 0 10px;
+}
+#pFind_t th{
+    background:pink; border-radius:15px;
+}
+#pFind_menu{
+    margin:20px 0 0 80px;
+}
+
+/*pwd_find_ok.jsp ui*/
+#pOK_wrap{
+    width:280px; height:180px;
+    border:1px solid skyblue; border-radius:15px;
+    box-shadow:5px 5px 5px #ccc;
+    margin-left:auto; margin-right:auto;
+    margin-top:30px;
+}
+#pOK_wrap .pOK_title{
+    margin:20px 0 0 70px; width:130px; font-size:19px;
+    text-align:center; background:pink;
+    border-radius:15px; padding:3px;
+}
+#pOK_t{
+    margin:20px 0 0 3px;
+}
+#pOK_menu{
+    margin:20px 0 0 116px;
+}
