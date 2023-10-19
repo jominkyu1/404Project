@@ -16,6 +16,7 @@ public class QnaDaoImpl implements QnaDao {
 
 
 
+
     @Override
     public void insertBbs(PageVO b) {
 
