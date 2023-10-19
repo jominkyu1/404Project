@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.store.project.repository.mapper.TestMapper">
+    <!-- 비번찾기 : 아이디와 회원이름을 기준으로 회원정보 검색 -->
+    <select id = "p_find" resultType="userVO">
+        select * from users where USERNAME = #{username} and  EMAIL= #{email}
+    </select>
+
+    <!--암호화된 임시비번으로 수정 -->
+    <update id = "p_edit" >
+        update users set password = #{password} where username=#{username}
+    </update>
+</mapper>

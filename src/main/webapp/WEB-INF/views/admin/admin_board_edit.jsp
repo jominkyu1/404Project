@@ -126,13 +126,6 @@
      </td>
     </tr>
     <tr>
-     <th>비밀번호</th>
-     <td>
-     <input type="password" name="board_pwd" id="board_pwd"
-     size="14" />
-     </td>    
-    </tr>
-    <tr>
      <th>내용</th>
      <td>
      <textarea name="board_cont" id="board_cont" rows="9"

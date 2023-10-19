@@ -12,7 +12,8 @@ create table board(
  ,board_level number(38) --답변글 정렬 순서
  ,board_date date --등록날짜
 );
-
+commit;
+ ALTER TABLE board add (board_category VARCHAR2(10));
   ALTER TABLE board MODIFY (board_cont VARCHAR2(4000));
   
   --ALTER TABLE [FK를 생성시킬 테이블명]
@@ -25,14 +26,8 @@ alter table board modify board_pwd varchar2(100);
   
 drop table board;
 select * from users;
-select * from board order by board_no desc;
-commit;
-
-
-select * from board where board_no=0;
-commit;
-
 select * from board;
+commit;
 
 --board_no_seq 시퀀스 생성
 create sequence board_no_seq
@@ -46,17 +41,8 @@ drop sequence board_no_seq;
 alter sequence board_no_seq
 nocache; --nocache로 수정
 
+--시퀀스 다음 번호값 확인
 select board_no_seq.nextval from dual;
-
-select * from tbl_board;
-
-select * from tbl_members2 order by uid2 asc;
-select * from tbl_member_roles;
-delete from tbl_member_roles where fno>=201 and fno<=300;
-
-drop table tbl_member_roles;
-drop table tbl_members2;
-drop sequence member_no_Seq;
 commit;
 
 

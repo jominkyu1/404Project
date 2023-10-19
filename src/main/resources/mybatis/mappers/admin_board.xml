@@ -65,7 +65,7 @@
 	<!-- 관리자 게시판 수정완료 -->
 	<update id="ab_edit">
 		update board set board_name=#{board_name},
-		board_title=#{board_title},board_pwd=#{board_pwd},
+		board_title=#{board_title}, 
 		board_cont=#{board_cont} where board_no=#{board_no}
 	</update>
 	

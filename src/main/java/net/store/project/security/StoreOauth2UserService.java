@@ -72,7 +72,7 @@ public class StoreOauth2UserService extends DefaultOAuth2UserService {
     /**
      * GOOGLE, NAVER, KAKAO 로그인 구분
      * @param provider: 어느소셜 사이트인지 구분
-     * @param attributes: 로그인성공시 가져온 유저정보               
+     * @param attributes: 로그인성공시 가져온 유저정보
      * @return OAuth2UserInfo: 유저정보들을 통일시킨 인터페이스
      * */
     private OAuth2UserInfo getOAuth2UserInfo(String provider, Map<String, Object> attributes){
