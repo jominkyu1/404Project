@@ -2,29 +2,22 @@ package net.store.project.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import net.store.project.security.StoreUserDetails;
 import net.store.project.repository.UserRepository;
+import net.store.project.security.StoreUserDetails;
 import net.store.project.service.UserService;
 import net.store.project.vo.user.UserVO;
 import net.store.project.vo.user.form.UserRegisterForm;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.persistence.Tuple;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
@@ -100,6 +93,23 @@ public class UserController {
         storeUserDetails.updateUserDetails(userVO);
         
         return "redirect:/user/" + id;
+    }
+
+    @GetMapping("/{id}/delete")
+    public String deleteUser(@PathVariable Long id,
+                             @AuthenticationPrincipal StoreUserDetails storeUserDetails,
+                             HttpServletResponse response) throws IOException {
+        UserVO user = storeUserDetails.getUser();
+        //로그인되지않은 유저
+        if(user==null) throw new IllegalStateException("로그인이 필요합니다.");
+        //로그인한유저 != 세션에있는유저
+        if(user.getUser_id() != id) throw new IllegalStateException("올바르지 않은 접근입니다!");
+
+        userService.deleteUser(id);
+        response.setContentType("text/html; charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        out.println("<script>alert('회원탈퇴가 완료되었습니다.'); location.href='/logout';</script>");
+        return null;
     }
 
     /**

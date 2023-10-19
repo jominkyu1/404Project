@@ -37,9 +37,10 @@ public class StoreUserDetails extends User implements OAuth2User {
     
     /**
      * OAuth2.0 소셜 로그인
+     * password는 필요하지않으므로 NULL
      * */
     public StoreUserDetails(UserVO userVO, Map<String, Object> attributes){
-        super(userVO.getUsername(), userVO.getPassword(), setAuthorities(userVO.getUsergrade().getValue()));
+        super(userVO.getUsername(), "NULL", setAuthorities(userVO.getUsergrade().getValue()));
         this.user=userVO;
         this.attributes = attributes;
         System.out.println(attributes);

@@ -49,6 +49,10 @@ public class AdminController {
         model.addAttribute("count", count);
 
         List<ItemQnaVO> notAnsweredQnaList = itemQnaRepository.findAllByAnswered(0);// 0 미답변 1 답변
+        if(notAnsweredQnaList.size() > 10) model.addAttribute("qnaMore", true); // 10개 이상이면 더보기 버튼
+        notAnsweredQnaList.sort(Comparator.comparing(ItemQnaVO::getRegdate).reversed()); // 최신순으로 정렬
+
+        notAnsweredQnaList.subList(0, Math.min(notAnsweredQnaList.size(), 10)); // 10개만 가져오기
         model.addAttribute("notAnsweredQnaList", notAnsweredQnaList);
 
         return "admin/admin_main";
@@ -119,7 +123,7 @@ public class AdminController {
 
     //상품문의
     @GetMapping("/item")                        /* default size = 10 */
-    public String item (Model model, @PageableDefault(size = 5, sort="answered") Pageable pageable){
+    public String item (Model model, @PageableDefault(size = 10, sort={"answered", "regdate"}) Pageable pageable){
         //페이징
         Page<ItemQnaVO> items = itemQnaRepository.findAll(pageable);
         model.addAttribute("items", items);
@@ -140,16 +144,7 @@ public class AdminController {
         model.addAttribute("endPage", endPage);
 
         Long count = itemQnaRepository.count();
-        List<ItemQnaVO> item = itemQnaRepository.findAll();
-
-
-        //답변이 없는 문의글을 위로
-        item.sort(Comparator.comparingInt(ItemQnaVO::getAnswered));
-
-
         model.addAttribute("qnaCount", count); //해당 상품에대한 문의글 갯수
-        model.addAttribute("item", item);
-
 
         return "/admin/admin_item";
     }
