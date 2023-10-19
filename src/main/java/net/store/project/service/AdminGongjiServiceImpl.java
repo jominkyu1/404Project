@@ -34,4 +34,14 @@ public class AdminGongjiServiceImpl implements AdminGongjiService {
 	public BoardVO getGongjiCont(int no) {
 		return this.adminGongjiDAO.getGongjiCont(no);
 	}
+
+	@Override
+	public void editGongji(BoardVO b) {
+		this.adminGongjiDAO.editGongji(b);
+	}
+
+	@Override
+	public void delGongji(int no) {
+		this.adminGongjiDAO.delGongji(no);
+	}
 }

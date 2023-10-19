@@ -92,7 +92,7 @@ public class AdminBoardController {
 			listM.addAttribute("find_field",find_field);
 			listM.addAttribute("find_name", find_name);
 
-			return "admin/admin_board_list";
+			return "board/admin_board_list";
 			//뷰페이지 폴더경로와 파일명 지정		
 		}
 		return null;
@@ -119,7 +119,7 @@ public class AdminBoardController {
 				page=Integer.parseInt(request.getParameter("page"));     		
 			}
 			ModelAndView cm=
-					new ModelAndView("admin/admin_board_write");
+					new ModelAndView("board/admin_board_write");
 			cm.addObject("page",page);
 			return cm;
 		}
@@ -192,9 +192,8 @@ public class AdminBoardController {
 				cm.addObject("page",page);
 
 				if(state.equals("cont")) {//내용보기
-					cm.setViewName("admin/admin_board_cont");
+					cm.setViewName("board/admin_board_cont");
 				}else if(state.equals("edit")) {//수정폼
-					cm.setViewName("admin/admin_board_edit");
 				}
 				return cm;
 			}//if else

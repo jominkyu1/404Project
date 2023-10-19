@@ -15,4 +15,8 @@ public interface AdminGongjiDAO {
 
 	BoardVO getGongjiCont(int no);
 
+	void editGongji(BoardVO b);
+
+	void delGongji(int no);
+
 }

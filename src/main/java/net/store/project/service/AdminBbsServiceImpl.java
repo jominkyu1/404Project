@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import net.store.project.dao.AdminBbsDAO;
-import net.store.project.vo.board.BoardVO;
+import net.store.project.vo.bbs.BbsVO;
 import net.store.project.vo.page.PageVO;
 
 @Service
@@ -21,7 +21,7 @@ public class AdminBbsServiceImpl implements AdminBbsService {
 	}
 
 	@Override
-	public List<BoardVO> getadminBbsList(PageVO p) {
+	public List<BbsVO> getadminBbsList(PageVO p) {
 		return this.adminBbsDAO.getadminBbsList(p);
 	}
 }

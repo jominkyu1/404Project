@@ -52,9 +52,9 @@
 	<insert id="ab_in" parameterType="board">
 		insert into board (board_no,board_name,board_title,
 		board_pwd,board_cont,board_hit,board_ref,board_step,board_level,
-		board_date) values(board_no_seq.nextval,#{board_name},
+		board_date,board_category,board_state) values(board_no_seq.nextval,#{board_name},
 		#{board_title},#{board_pwd},#{board_cont},0,
-		board_no_seq.nextval,0,0,sysdate)
+		board_no_seq.nextval,0,0,sysdate,'qna',1)
 	</insert>
 	
 	<!-- 관리자 게시판 내용보기+수정폼 -->

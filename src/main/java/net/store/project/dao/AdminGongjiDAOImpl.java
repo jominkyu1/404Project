@@ -30,6 +30,21 @@ public class AdminGongjiDAOImpl implements AdminGongjiDAO {
 		this.sqlSession.insert("ag_in", b);
 	}//관리자 게시판 저장
 
+	@Override
+	public BoardVO getGongjiCont(int no) {
+		return this.sqlSession.selectOne("ag_cont",no);
+	}//관리자 공지 수정폼과 상세정보
+
+	@Override
+	public void editGongji(BoardVO b) {
+		this.sqlSession.update("ag_edit",b);
+	}//관리자 공지 수정 완료
+
+	@Override
+	public void delGongji(int no) {
+		this.sqlSession.delete("ag_del", no);
+	}//관리자 공지 삭제
+
 	
 	
 	

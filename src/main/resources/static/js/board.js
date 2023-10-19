@@ -25,12 +25,4 @@
 		return false;
 	}
  }
- 
- function del_check(){
- 	if($.trim($("#del_pwd").val())==""){
-  		alert("비밀번호를 입력하세요!");
-  		$("#del_pwd").val("").focus();
-  		return false;
-  	}
- }
   

@@ -1,6 +1,7 @@
 package net.store.project.controller;
 
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,11 +12,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import net.store.project.api.ImageHandler;
 import net.store.project.security.StoreUserDetails;
 import net.store.project.service.AdminBbsService;
+import net.store.project.service.AdminBoardService;
+import net.store.project.vo.bbs.BbsVO;
 import net.store.project.vo.board.BoardVO;
 import net.store.project.vo.page.PageVO;
 import net.store.project.vo.user.UserVO;
@@ -25,10 +31,14 @@ public class AdminBbsCotroller {
 	
 	@Autowired
 	private AdminBbsService adminBbsService;
+	@Autowired
+	private AdminBoardService adminBoardService;
+	@Autowired
+	private ImageHandler imageHandler;
 	
 	//관리자 자료실 목록
 		@RequestMapping("/admin_bbs_list")
-		public ModelAndView admin_bbs_list(BoardVO b,HttpServletResponse response,
+		public ModelAndView admin_bbs_list(BbsVO b,HttpServletResponse response,
 				@AuthenticationPrincipal StoreUserDetails storeUserDetails,
 				HttpServletRequest request, HttpSession session,PageVO p)
 		throws Exception{
@@ -61,7 +71,7 @@ public class AdminBbsCotroller {
 				p.setStartrow((page-1)*7+1);//시작행번호
 				p.setEndrow(p.getStartrow()+limit-1);//끝행번호
 
-				List<BoardVO> blist=this.adminBbsService.getadminBbsList(p);//검색 전후 목록
+				List<BbsVO> blist=this.adminBbsService.getadminBbsList(p);//검색 전후 목록
 
 				//총페이지수
 				int maxpage=(int)((double)listcount/limit+0.95);
@@ -82,7 +92,7 @@ public class AdminBbsCotroller {
 				listM.addObject("find_field",find_field);
 				listM.addObject("find_name", find_name);
 
-				listM.setViewName("admin/admin_bbs_list");//뷰페이지 경로
+				listM.setViewName("board/admin_bbs_list");//뷰페이지 경로
 				return listM;
 			}
 			return null;
@@ -127,4 +137,25 @@ public class AdminBbsCotroller {
 			}
 			return true;
 		}//isAdminLogin()
+		
+		//파일경로
+		@PostMapping("/ss")
+	    public String insertBoardWithFiles(BoardVO b, List<MultipartFile> multipartFiles) {
+			List<BbsVO> bbsList = new ArrayList<>();
+			// 파일저장로직	
+			for(MultipartFile multipartFile : multipartFiles ) {
+				String dbFilePath = imageHandler.upload(multipartFile);
+				
+				BbsVO bbs = new BbsVO();
+				bbs.setBbs_filepath(dbFilePath);
+				bbs.setBbs_originalFilename(multipartFile.getOriginalFilename());
+				bbs.setBoard_no(b.getBoard_no());
+				
+				bbsList.add(bbs);
+			}
+
+	        this.adminBoardService.insertBoardWithFiles(b, bbsList);
+	        // filePath를 사용하여 파일 경로에 대한 작업 수행
+	        return "글을 작성 후 이동해야할 뷰페이지 경로";
+	    }
 }//AdminBbsController class

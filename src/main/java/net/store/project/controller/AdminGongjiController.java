@@ -65,7 +65,7 @@ public class AdminGongjiController {
 					int endpage=maxpage;
 					if(endpage > startpage+10-1) endpage=startpage+10-1;
 
-					ModelAndView listM=new ModelAndView("admin/admin_gongji_list");
+					ModelAndView listM=new ModelAndView("board/admin_gongji_list");
 
 					listM.addObject("glist",glist);
 					//glist 키이름에 값 저장
@@ -96,7 +96,7 @@ public class AdminGongjiController {
 
 					ModelAndView wm=new ModelAndView();
 					wm.addObject("page",page);//페이징 목록에서 책갈피 기능을 구현하기 위한것
-					wm.setViewName("admin/admin_gongji_write");
+					wm.setViewName("board/admin_gongji_write");
 					return wm;
 				}
 				return null;
@@ -139,18 +139,18 @@ public class AdminGongjiController {
 						page=Integer.parseInt(request.getParameter("page"));		
 					}
 					BoardVO b=this.adminGongjiService.getGongjiCont(no);
-					String g_cont=g.getGongji_cont().replace("\n","<br/>");
+					String b_cont=b.getBoard_cont().replace("\n","<br/>");
 					//textarea영역에서 엔터키 친 부분을 다음줄로 줄바꿈
 
 					ModelAndView cm=new ModelAndView();
-					cm.addObject("g",g);
-					cm.addObject("g_cont",g_cont);
+					cm.addObject("b",b);
+					cm.addObject("b_cont",b_cont);
 					cm.addObject("page",page);
 
 					if(state.equals("cont")) {//내용보기
-						cm.setViewName("admin/admin_gongji_cont");
+						cm.setViewName("board/admin_gongji_cont");
 					}else if(state.equals("edit")) {//수정폼
-						cm.setViewName("admin/admin_gongji_edit");
+						cm.setViewName("board/admin_gongji_edit");
 					}
 					return cm;
 				}
@@ -160,7 +160,7 @@ public class AdminGongjiController {
 
 			//관리자 공지 수정완료
 			@RequestMapping("/admin_gongji_edit_ok")
-			public ModelAndView admin_gongji_edit_ok(GongjiVO g,
+			public ModelAndView admin_gongji_edit_ok(BoardVO b,
 					HttpServletRequest request,
 					HttpServletResponse response,@AuthenticationPrincipal StoreUserDetails storeUserDetails)
 							throws Exception{
@@ -171,7 +171,7 @@ public class AdminGongjiController {
 					if(request.getParameter("page") != null) {
 						page=Integer.parseInt(request.getParameter("page"));
 					}
-					this.adminGongjiService.editGongji(g);//공지 수정
+					this.adminGongjiService.editGongji(b);//공지 수정
 					return new ModelAndView("redirect:/admin_gongji_list?page="+page);
 				}
 				return null;

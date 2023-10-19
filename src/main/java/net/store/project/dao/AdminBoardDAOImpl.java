@@ -43,7 +43,7 @@ public class AdminBoardDAOImpl implements AdminBoardDAO {
 	@Override
 	public void deleteBoard(int no) {
 		this.sqlSession.delete("ab_del", no);
-	}
+	}//삭제
 	
 	
 }

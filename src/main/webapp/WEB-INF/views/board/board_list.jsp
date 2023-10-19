@@ -115,10 +115,10 @@
 						<a href="/admin_board_list">게시판 관리</a>
 					</h5>
 					<h5>
-						<a href="/admin_board_list">자료실</a>
+						<a href="/admin_bbs_list">자료실</a>
 					</h5>
 					<h5>
-						<a href="/admin_board_list">공지사항</a>
+						<a href="/admin_gongji_list">공지사항</a>
 					</h5>
 				</sec:authorize>
 				<table id="bList_t">
@@ -128,7 +128,9 @@
 						<th width="14%">작성자</th>
 						<th width="17%">작성일</th>
 						<th width="14%">조회수</th>
+						<sec:authorize access="hasRole('ROLE_ADMIN')">
 						<th width="18%">수정/삭제</th>
+						</sec:authorize>
 					</tr>
 					<c:if test="${!empty blist}">
 						<c:forEach var="b" items="${blist}">

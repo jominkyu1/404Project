@@ -2,15 +2,11 @@ package net.store.project.vo.board;
 
 import java.sql.Timestamp;
 
-import org.hibernate.annotations.CreationTimestamp;
-
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
 public class BoardVO {
 	
 	private int board_no;
@@ -23,7 +19,7 @@ public class BoardVO {
 	private int board_ref;
 	private int board_step;
 	private int board_level;
+	private int board_state; //게시판 1, 자료실 2,공지상항 3
 	
-	@CreationTimestamp //@CreationTiestamp 는 하이버네이트의 특별한 기능으로 등록시점 날짜값을 기록,mybatis로 실행할 때는 구동 안됨.
 	private Timestamp board_date;
 }

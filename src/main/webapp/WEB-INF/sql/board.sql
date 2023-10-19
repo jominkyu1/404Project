@@ -14,7 +14,9 @@ create table board(
 );
 commit;
  ALTER TABLE board add (board_category VARCHAR2(10));
+ alter table board add (board_state int);
   ALTER TABLE board MODIFY (board_pwd VARCHAR2(4000));
+  alter table board 
   
   --ALTER TABLE [FK를 생성시킬 테이블명]
 --ADD CONSTRAINT [FK명] foreign KEY(FK가 될 컬럼명) references [PK가 위치하는 테이블] ([PK컬럼명]);
@@ -49,11 +51,43 @@ commit;
 
 select * from admin;
 
+--bbs1 테이블 생성
+create table bbs1(
+    bbs_no int primary key,
+    bbs_filepath varchar2(255), --실제 서버에 저장된 경로/파일명
+    bbs_originalFilename varchar2(255), --원본파일명
+    board_no int,
+    
+    foreign key(board_no) references board (board_no)
+);
+
+drop table bbs1;
+
+--bbs1_no_seq 시퀀스 생성
+create sequence bbs1_no_seq
+start with 1 --1부터 시작
+increment by 1 --1씩 증가옵션
+nocache
+nocycle;
+
+drop table bbs1;
 
 
+select * from board;
 
+select * from item;
 
+SELECT *
+FROM board
+JOIN bbs1 ON board.board_no = bbs1.board_no
+WHERE board.board_no = 32;
 
+select * from bbs1;
+
+insert into bbs1 values (1, '사과', 32);
+insert into bbs1 values (2, '복숭아', 32);
+insert into bbs1 values (3, '배', 32);
+commit;
 
 
 

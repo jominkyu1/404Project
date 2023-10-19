@@ -6,7 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import net.store.project.vo.board.BoardVO;
+import net.store.project.vo.bbs.BbsVO;
 import net.store.project.vo.page.PageVO;
 
 @Repository
@@ -21,7 +21,15 @@ public class AdminBbsDAOImpl implements AdminBbsDAO {
 	}//관리자 자료실 검색전후 레코드 개수	
 
 	@Override
-	public List<BoardVO> getadminBbsList(PageVO p) {
+	public List<BbsVO> getadminBbsList(PageVO p) {
 		return this.sqlSession.selectList("abbs_list", p);
 	}
+
+	@Override
+	public void insertBoardWithFiles(List<BbsVO> bbsList) {
+		for(BbsVO bbs : bbsList) {
+			this.sqlSession.insert("insert_files", bbs);
+		}
+	}
+
 }

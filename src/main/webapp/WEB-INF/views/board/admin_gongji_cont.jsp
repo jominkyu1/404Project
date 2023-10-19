@@ -102,31 +102,26 @@
 	<!-- 배너(header) 로드 -->
 	<jsp:include page="../include/header.jsp" />
 	<section>
-		<div id="bCont_wrap">
-			<h2 class="bCont_title">게시판 내용보기</h2>
-			<table id="bCont_t">
-				<tr>
-					<th>제목</th>
-					<td>${b.board_title}</td>
-				</tr>
-				<tr>
-					<th>내용</th>
-					<td>${bcont}</td>
-				</tr>
-				<tr>
-					<th>조회수</th>
-					<td>${b.board_hit}</td>
-				</tr>
-			</table>
-			<div id="bCont_menu">
-			<div id="bCont_menu">
-				<input type="button" value="답변"
-				onclick="location= 'board_cont?no=${b.board_no}&page=${page}&state=reply';" />
-				<input type="button" value="수정" 
-				onclick="location= 'board_cont?no=${b.board_no}&page=${page}&state=edit';" />
-				<input type="button" value="목록" onclick="location='board_list?page=${page}';" />
-			</div>
-		</div>
+		<div id="aMain_cont">
+ <div id="aBc_wrap">
+  <h2 class="aBc_title">관리자 공지 내용</h2>
+  <table id="aBc_t">
+   <tr>
+    <th>제목</th> <td>${b.board_title}</td>
+   </tr>
+   <tr>
+    <th>내용</th> <td>${b_cont}</td>
+   </tr>
+   <tr>
+    <th>조회수</th> <td>${b.board_hit}</td>
+   </tr>
+  </table>
+  <div id="aBc_menu">
+  <input type="button" value="목록"
+  onclick="location='admin_gongji_list?page=${page}';" />  
+  </div>
+ </div>
+</div>
 	</section>
 	<!-- 푸터 (footer.html) -->
 	<jsp:include page="../include/footer.jsp" />
