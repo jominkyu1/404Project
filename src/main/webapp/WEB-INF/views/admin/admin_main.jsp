@@ -92,6 +92,13 @@
                             <td class="overflow-hidden text-nowrap">${qna.regdate}</td>
                         </tr>
                     </c:forEach>
+                    <c:if test="${qnaMore == true}">
+                        <tr>
+                            <td colspan="4" class="overflow-hidden text-nowrap">
+                                <a href="/admin/item" class="btn btn-outline-secondary">더보기</a>
+                            </td>
+                        </tr>
+                    </c:if>
                 </tbody>
             </table>
             <table class="table table-striped text-center mx-auto table-hover" style="table-layout: fixed;">
