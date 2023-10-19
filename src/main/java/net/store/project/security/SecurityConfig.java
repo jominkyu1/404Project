@@ -2,7 +2,6 @@ package net.store.project.security;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,7 +18,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
     private final StoreUserDetailsService storeUserDetailsService;
     private final StoreLoginFailureHandler storeLoginFailureHandler;
     //OAuth2.0 서비스
@@ -30,7 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(); //BCrypt 암호화
     }
-    
+
     @Override
     public void configure(WebSecurity web) throws Exception {
         //static 디렉터리의 하위 파일 목록은 인증 무시(=항상통과)
@@ -67,7 +65,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .userInfoEndpoint()
                 .userService(storeOauth2UserService)
         ;
-        
+
         //remember me
         http.rememberMe()
                 .rememberMeParameter("remember-me") //기본 파라미터명 remember-me
