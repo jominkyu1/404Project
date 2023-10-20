@@ -14,9 +14,9 @@
 		<!-- parameterType속성은 전달인자 타입.생략가능 -->
 		insert into board (board_no,board_name,board_title,
 		board_pwd,board_cont,board_hit,board_ref,board_step,
-		board_level,board_date, board_category,board_state) values(board_no_seq.nextval,
+		board_level,board_date, board_category) values(board_no_seq.nextval,
 		#{board_name},#{board_title},#{board_pwd},#{board_cont},0,
-		board_no_seq.nextval,0,0,sysdate,'qna',1)
+		board_no_seq.nextval,0,0,sysdate,'qna')
 	</insert>
 
 	<!-- 게시판 목록 -->

@@ -117,6 +117,8 @@
    </tr>
   </table>
   <div id="aBc_menu">
+  <input type="button" value="답변"
+  onclick="location= 'board_cont?no=${b.board_no}&page=${page}&state=reply';" />
   <input type="button" value="목록"
   onclick="location='admin_board_list?page=${page}';" />  
   </div>

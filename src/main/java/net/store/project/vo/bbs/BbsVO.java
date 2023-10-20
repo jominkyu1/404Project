@@ -1,7 +1,5 @@
 package net.store.project.vo.bbs;
 
-import java.sql.Timestamp;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,7 +8,7 @@ import lombok.Setter;
 public class BbsVO {
 	 
 	private int bbs_no;
-	private String bbs_originalFilename; //원본 파일명
 	private String bbs_filepath; //서버에 저장되는 경로/파일명
+	private String bbs_originalFilename; //원본 파일명
 	private int board_no;
 }

@@ -11,4 +11,6 @@ public interface AdminBbsService {
 
 	List<BbsVO> getadminBbsList(PageVO p);
 
+	void adminInsertBbs(BbsVO b);
+
 }

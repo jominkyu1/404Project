@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
 <!-- 더미이미지(데모이미지) 사용시
     <img src="https://placehold.it/가로x세로">
@@ -120,8 +121,6 @@
 			</table>
 			<div id="bCont_menu">
 			<div id="bCont_menu">
-				<input type="button" value="답변"
-				onclick="location= 'board_cont?no=${b.board_no}&page=${page}&state=reply';" />
 				<input type="button" value="수정" 
 				onclick="location= 'board_cont?no=${b.board_no}&page=${page}&state=edit';" />
 				<input type="button" value="목록" onclick="location='board_list?page=${page}';" />

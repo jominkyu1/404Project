@@ -1,5 +1,6 @@
 package net.store.project.controller;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
@@ -7,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import net.store.project.security.StoreUserDetails;
 import net.store.project.service.BoardService;
 import net.store.project.vo.board.BoardVO;
 import net.store.project.vo.page.PageVO;
@@ -48,18 +51,36 @@ public class BoardController {
 			method=RequestMethod.POST)
 	//POST방식으로 접근하는 매핑주소를 처리
 	public ModelAndView board_write_ok(
-		@ModelAttribute BoardVO b) {
+		@ModelAttribute BoardVO b,
+		@RequestParam("board_pwd") String board_pwd,
+		@AuthenticationPrincipal StoreUserDetails storeUserDetails,
+		HttpServletResponse response) throws Exception {
 		
 		//비밀번호 암호화
 		String encodedPassword = passwordEncoder.encode(b.getBoard_pwd());
 		b.setBoard_pwd(encodedPassword);
 		
+		response.setContentType("text/html;charset=UTF-8");
+		PrintWriter out=response.getWriter();
+		
+		String encodedAdminPassword = storeUserDetails.getUser().getPassword();
+		//게시글의 비밀번호가 유저의 비밀번호와 일치하는지 확인
+		if(!passwordEncoder.matches(board_pwd, encodedAdminPassword)) {
+			out.println("<script>");
+			out.println("alert('비밀 번호가 다릅니다!');");
+			out.println("location='board_list';");
+			out.println("</script>");
+		}else {
+			this.boardService.insertBoard(b);
+			return new ModelAndView("redirect:/board_list");
+			//board_list로 이동
+		}
+		return null;
 		
 		//@ModelAttribute BoardVO b라고 하면 네임피라미터 이름과
 		//빈클래스 변수명이 같으면 b객체에 값이 벌써 저장됨.
-		this.boardService.insertBoard(b);//게시판 저장
-		return new ModelAndView("redirect:/board_list");
-		//board_list로 이동
+		//this.boardService.insertBoard(b);//게시판 저장
+		
 	}//board_write_ok()
 
 	//목록보기

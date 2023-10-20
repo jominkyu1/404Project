@@ -117,17 +117,13 @@
 				<%-- 페이징 히든값 --%>
 				<input type="hidden" name="page" value="${page}" />
 
-				<sec:authorize access="isAnonymous()">
-					<script>
-						alert("관리자 권한입니다!")
-						location.href = "/board_list";
-					</script>
-				</sec:authorize>
-
 				<table id="bWrite_t">
 					<tr>
+					<sec:authorize access="hasRole('ROLE_ADMIN')" >
+                    <sec:authentication property="principal.user" var="user"/>
 						<th>이름</th>
-						<td><input name="board_name" id="board_name" size="14" /></td>
+						<td><input name="board_name" id="board_name" size="14" value="${user.username}" readonly/></td>
+					</sec:authorize>
 					</tr>
 					<tr>
 						<th>제목</th>
@@ -146,7 +142,8 @@
 					</tr>
 				</table>
 				<div id="bWrite_menu">
-					<input type="submit" value="답변" /> <input type="reset" value="취소"
+					<input type="submit" value="답변" />
+					 <input type="reset" value="취소"
 						onclick="$('#board_name').focus();" /> <input type="button"
 						value="목록" onclick="location='board_list?page=${page}';" />
 				</div>

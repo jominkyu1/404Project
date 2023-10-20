@@ -22,6 +22,5 @@ public interface AdminBoardService {
 
 	void deleteBoard(int no);
 
-	//void insertBoardWithFiles(BoardVO b);
 
 }

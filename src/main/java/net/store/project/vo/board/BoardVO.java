@@ -19,7 +19,7 @@ public class BoardVO {
 	private int board_ref;
 	private int board_step;
 	private int board_level;
-	private int board_state; //게시판 1, 자료실 2,공지상항 3
-	
+    private String board_category;
+    
 	private Timestamp board_date;
 }
