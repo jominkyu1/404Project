@@ -1,8 +1,10 @@
 package net.store.project;
 
 import net.store.project.repository.CartItemRepository;
+import net.store.project.repository.CartRepository;
 import net.store.project.service.CartService;
 import net.store.project.vo.cart.CartItemVO;
+import net.store.project.vo.cart.CartVO;
 import net.store.project.vo.cart.form.UserCartForm;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,8 @@ public class CartTest {
     CartService cartService;
     @Autowired
     CartItemRepository cartItemRepository;
+    @Autowired
+    CartRepository cartRepository;
 
     @Test
     @Rollback(value = false)
@@ -46,6 +50,12 @@ public class CartTest {
     void 카트에담긴아이템의갯수(){
         int count = cartItemRepository.countByCartId(2L);
         System.out.println(count);
+    }
+
+    @Test
+    void 카트정보찾기(){
+        Optional<CartVO> byId = cartRepository.findById(2L);
+        System.out.println(byId.get());
     }
 
 }

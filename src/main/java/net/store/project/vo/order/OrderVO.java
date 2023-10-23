@@ -18,7 +18,7 @@ import java.util.List;
  */
 @Getter
 @Setter
-@ToString
+//@ToString
 @Entity
 @Table(name = "orders")
 public class OrderVO {
@@ -40,4 +40,29 @@ public class OrderVO {
     //주문한 아이템들의 정보
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItemVO> orderItems = new ArrayList<>();
+
+    private String merchant_uid; //카카오페이결제시 필요한 주문번호
+
+    /**
+     * 주문생성 편의 메소드
+     * */
+    public static OrderVO createOrder(UserVO userVO, String merchant_uid, List<OrderItemVO> orderItems){
+        OrderVO orderVO = new OrderVO();
+        orderVO.setUser(userVO);
+        orderVO.setMerchant_uid(merchant_uid);
+
+
+        for(OrderItemVO orderItemVO : orderItems) {
+            orderVO.addOrderItem(orderItemVO);
+        }
+
+        orderVO.setStatus(OrderStatus.ORDER);
+        return orderVO;
+    }
+
+    private void addOrderItem(OrderItemVO orderItemVO){
+        orderItems.add(orderItemVO);
+        orderItemVO.setOrder(this);
+    }
+
 }
