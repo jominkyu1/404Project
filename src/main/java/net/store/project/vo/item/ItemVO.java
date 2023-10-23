@@ -18,10 +18,19 @@ import java.util.List;
 @Getter
 @Entity
 @ToString
+@SequenceGenerator(
+        name="item_seq_gename",
+        sequenceName="item_seq",
+        initialValue=1,
+        allocationSize=1
+)
 @Table(name = "item")
 public class ItemVO {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(
+            strategy=GenerationType.SEQUENCE,
+            generator="item_seq_gename"
+    )
     private Long item_id;
 
     private String name; //상품이름
