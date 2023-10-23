@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.store.project.repository.mapper.TestMapper">
+    <!-- item정보 가져오기  -->
+
+
+    <resultMap id = "itemMap" type="item">
+        <!-- type속성은 반환 자료형으로 MemberVO 타입 별칭 member를 지정 -->
+
+        <result property="stockQuantity" column="stock_quantity" />
+
+    </resultMap>
+
+
+    <select id = "findByItemId" resultMap="itemMap">
+        select * from item where ITEM_ID = #{itemId}
+    </select>
+
+    <update id = "updateItem">
+        update item set name=#{name}, DESCRIPTION=#{description}, price=#{price}, STOCK_QUANTITY=#{stockQuantity} where ITEM_ID = #{item_id}
+    </update>
+
+</mapper>
