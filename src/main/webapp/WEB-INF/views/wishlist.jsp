@@ -88,7 +88,7 @@
                             <input type="text" class="form-control" placeholder="할인코드/쿠폰 입력">
                             <button class="btn btn-secondary w-25">적용</button>
                         </div>
-
+                        
                         <!-- 총 금액 -->
                         <div class="text-end fw-bolder">
                             <span id="totalP">
@@ -100,8 +100,10 @@
                                 총 가격: <fmt:formatNumber maxFractionDigits="3" type="number" value="${totalPrice}" />원
                             </span>
                         </div>
+                        
+                        <!-- 결제처리 폼 -->
                         <div class="d-grid my-5">
-                            <button class="btn btn-outline-secondary btn-lg" type="button">결제하기</button>
+                            <a href="/order/${cart_id}" class="btn btn-outline-secondary btn-lg" >결제하기</a>
                         </div>
                     </div>
                 </div>

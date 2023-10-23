@@ -13,7 +13,7 @@ import javax.persistence.*;
  * */
 @Getter
 @Setter
-@ToString
+//@ToString
 @Entity
 @Table(name = "order_items")
 public class OrderItemVO {
@@ -32,4 +32,18 @@ public class OrderItemVO {
 
     private int quantity; //수량
     private int price; //가격
+
+    /**
+     * 주문생성 편의 메소드
+     * */
+    public static OrderItemVO createOrderItem(ItemVO itemVO, int orderPrice, int count){
+        OrderItemVO orderItemVO = new OrderItemVO();
+        orderItemVO.setItemVO(itemVO);
+        orderItemVO.setPrice(orderPrice);
+        orderItemVO.setQuantity(count);
+
+        itemVO.removeStock(count); //주문한 만큼 재고 감소
+        return orderItemVO;
+    }
+
 }

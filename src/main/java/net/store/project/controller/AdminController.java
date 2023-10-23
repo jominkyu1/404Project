@@ -15,18 +15,19 @@ import net.store.project.vo.item.ItemVO;
 import net.store.project.vo.item.form.ItemUploadForm;
 import net.store.project.vo.user.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.*;
+
 
 @Controller
 @RequestMapping("/admin")
@@ -53,6 +54,10 @@ public class AdminController {
         model.addAttribute("count", count);
 
         List<ItemQnaVO> notAnsweredQnaList = itemQnaRepository.findAllByAnswered(0);// 0 미답변 1 답변
+        if(notAnsweredQnaList.size() > 10) model.addAttribute("qnaMore", true); // 10개 이상이면 더보기 버튼
+        notAnsweredQnaList.sort(Comparator.comparing(ItemQnaVO::getRegdate).reversed()); // 최신순으로 정렬
+
+        notAnsweredQnaList.subList(0, Math.min(notAnsweredQnaList.size(), 10)); // 10개만 가져오기
         model.addAttribute("notAnsweredQnaList", notAnsweredQnaList);
 
         return "admin/admin_main";
@@ -150,14 +155,11 @@ public class AdminController {
     //회원관리
     @GetMapping("/members")
     public String members(Model model){
-
-
         Long count = userRepository.count();
         List<UserVO> list = userRepository.findAll();
 
         model.addAttribute("userList", list);
         model.addAttribute("memberCount", count); //회원수
-
 
         return "/admin/admin_members";
     }
@@ -165,99 +167,32 @@ public class AdminController {
 
 
     //상품문의
-    @GetMapping("/item")
-    public String item (Model model){
+    @GetMapping("/item")                        /* default size = 10 */
+    public String item (Model model, @PageableDefault(size = 10, sort={"answered", "regdate"}) Pageable pageable){
+        //페이징
+        Page<ItemQnaVO> items = itemQnaRepository.findAll(pageable);
+        model.addAttribute("items", items);
 
+        int previous = pageable.previousOrFirst().getPageNumber();
+        int next = pageable.next().getPageNumber();
 
+        model.addAttribute("previous", previous);
+        model.addAttribute("next", next);
+        model.addAttribute("hasPrevious", items.hasPrevious());
+        model.addAttribute("hasNext", items.hasNext());
 
+        int blockLimit = 3;
+        int startPage = Math.max(1, (((int) Math.ceil((double) pageable.getPageNumber() / blockLimit)) -1) * blockLimit +1);
+        int endPage = Math.min((startPage + blockLimit -1), items.getTotalPages());
+
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
 
         Long count = itemQnaRepository.count();
-        List<ItemQnaVO> item = itemQnaRepository.findAll();
-
-
-        //답변이 없는 문의글을 위로
-        item.sort(Comparator.comparingInt(ItemQnaVO::getAnswered));
-
-
         model.addAttribute("qnaCount", count); //해당 상품에대한 문의글 갯수
-        model.addAttribute("item", item);
-
 
         return "/admin/admin_item";
     }
-
-
-    //상품문의의페이징과 검색기능
-    @RequestMapping("/item2")
-    public ModelAndView bbs_list(Model model,HttpServletRequest request,
-                                 PageVO p) {
-                        //,@AuthenticationPrincipal StoreUserDetails storeUserDetails)
-
-
-        Long count = itemQnaRepository.count();
-        List<ItemQnaVO> item = itemQnaRepository.findAll();
-
-
-        //답변이 없는 문의글을 위로
-        item.sort(Comparator.comparingInt(ItemQnaVO::getAnswered));
-
-
-        model.addAttribute("qnaCount", count); //해당 상품에대한 문의글 갯수
-        model.addAttribute("item", item);
-
-        int page=1;
-        int limit = 10; //한페이지에 보여지는 목록개수를 10개로함
-        if(request.getParameter("page")!=null) {
-            page=Integer.parseInt(request.getParameter("page"));
-        }
-
-        //검색과 관련된 부분
-        String find_name = request.getParameter("find_name"); //검색어
-        String find_field = request.getParameter("find_field"); //검색필드(select의 option)
-
-        p.setFind_name("%"+find_name+"%"); // %검색어%
-        p.setFind_field(find_field);
-
-        int totalCount = this.itemQnaService.getRowCount(p);//검색전 총 레코드 개수,검색이후 레코드갯수
-//       long totalCount = itemQnaRepository.count();
-       System.out.println("레코드 개수 : " + totalCount);
-
-        p.setStartrow((page-1)*10+1);//시작행 번호
-        p.setEndrow(p.getStartrow()+limit-1);//끝행번호
-
-        //페이지가 1일땐 startRow 1 endRow 10
-        //페이지가 2일땐 startRow 11 endRow 20
-
-
-        List<ItemQnaVO> blist = itemQnaService.getBbsList(p); //검색전 전체 목록, 검색이후 목록
-
-        System.out.println("목록 갯수 : " + blist.size());
-
-
-        //총 페이지수
-        int maxpage=(int)((double)totalCount/limit+0.95);
-        //시작페이지(1,11,21 ..)
-        int startpage=(((int)((double)page/10+0.9))-1)*10+1;
-        //현재 페이지에 보여질 마지막 페이지(10,20 ..)
-        int endpage=maxpage;
-        if(endpage>startpage+10-1) endpage=startpage+10-1;
-
-        ModelAndView listM = new ModelAndView("admin/admin_item2");
-        //생성자 인자값으로 뷰페이지 경로 설정
-        listM.addObject("item", blist); //blist 키이름에 목록 저장
-        listM.addObject("page", page);
-        listM.addObject("startpage", startpage); //시작페이지
-        listM.addObject("endpage", endpage); //마지막페이지
-        listM.addObject("maxpage", maxpage); //최대 페이지
-        listM.addObject("totalCount", totalCount); //검색전후 레코드 개수
-        listM.addObject("find_field", find_field); //검색필드
-        listM.addObject("find_name", find_name); //검색제목
-
-        return listM;
-
-
-    }//bbs_list()
-
 
     private Map<String, Long> userCounts() {
         Map<String, Long> count = new HashMap<>();

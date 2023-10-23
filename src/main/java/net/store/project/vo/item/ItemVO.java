@@ -54,4 +54,13 @@ public class ItemVO {
         this.stockQuantity = stockQuantity;
         this.image_path = image_path;
     }
+
+    //주문시 재고 감소
+    public void removeStock(int count){
+        int restStock = this.stockQuantity - count;
+        if(restStock < 0){
+            throw new IllegalStateException("재고가 부족합니다.");
+        }
+        this.stockQuantity = restStock;
+    }
 }

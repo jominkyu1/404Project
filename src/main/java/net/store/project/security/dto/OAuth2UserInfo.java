@@ -9,7 +9,7 @@ public interface OAuth2UserInfo {
     String getEmail();
     String getUsername();
 
-    //Google -> NULL
+    //Google, Kakao -> NULL
     String getMobile();
 
     Map<String, Object> getAttributes();

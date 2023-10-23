@@ -9,6 +9,9 @@ select *
 from orders;
 
 select *
+from order_items;
+
+select *
 from item;
 
  update item set name=#{}, DESCRIPTION=#{description}, price=#{price}, STOCK_QUANTITY=#{stockQuantity} where ITEM_ID = #{item_id};
