@@ -23,12 +23,7 @@
       <artifactId>spring-boot-starter-oauth2-client</artifactId>
     </dependency>
     
-    <!-- Spring boot Devtools -->
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-devtools</artifactId>
-      <optional>true</optional>
-    </dependency>
+
     
     <!-- Validation(유효성 검증 어노테이션) -->
     <dependency>

@@ -44,6 +44,7 @@
                     <th>상품가격</th>
                     <th>남은개수</th>
                     <th>등록일자</th>
+                      <th>수정</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -53,6 +54,7 @@
                       <td>${item.price}</td>
                       <td>${item.stockQuantity}</td>
                       <td>${item.regdate}</td>
+                        <td><a href="/admin/item/${item.item_id}/edit">수정하기</a></td>
                     </tr>
                   </c:forEach>
                     <tr class="table-light" >

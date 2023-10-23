@@ -3,21 +3,18 @@ package net.store.project.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.store.project.api.ImageHandler;
-import net.store.project.dao.QnaDao;
 import net.store.project.repository.ItemQnaRepository;
 import net.store.project.repository.ItemRepository;
 import net.store.project.repository.UserRepository;
-import net.store.project.security.StoreUserDetails;
 import net.store.project.service.ItemQnaService;
+import net.store.project.service.ItemService;
 import net.store.project.service.UserService;
-import net.store.project.vo.QnaVO;
 import net.store.project.vo.admin.PageVO;
 import net.store.project.vo.item.ItemQnaVO;
 import net.store.project.vo.item.ItemVO;
 import net.store.project.vo.item.form.ItemUploadForm;
 import net.store.project.vo.user.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.*;
 
 @Controller
@@ -42,6 +40,9 @@ public class AdminController {
     private final ImageHandler imageHandler;
     private final ItemQnaRepository itemQnaRepository;
     private final ItemQnaService itemQnaService;
+
+    @Autowired
+    private ItemService itemService;
 
 
     @GetMapping
@@ -106,6 +107,46 @@ public class AdminController {
         return "redirect:/admin/store";
     }
 
+
+    //상품수정 폼 표시
+    @GetMapping("/item/{itemId}/edit")
+    public String editProductForm(@PathVariable Long itemId, Model model){
+
+        //GET요청일경우 처리
+        ItemVO item = this.itemService.findById(itemId);
+        System.out.println("상품정보:" + item);
+        model.addAttribute("item", item);
+
+        //select update 구현
+
+        //id ->쿼리로 객체 가져오기 -> jsp로 뿌려주기 ->submit 시 update문
+
+    //아이템의 id jsp에서 넘기기
+
+        return "/admin/admin_store_edit";
+    }
+
+
+
+    // 상품 수정 처리
+    @RequestMapping(value = "/item/{itemId}/edit", method = RequestMethod.POST)
+    public String editProduct(@PathVariable Long itemId, @ModelAttribute ItemVO item) {
+        // 상품 정보를 수정하고, 수정이 성공하면 상품 목록 페이지로 리다이렉트
+        System.out.println("수정ID::: " + itemId);
+        System.out.println("수정할아이템::: " + item);
+
+
+        item.setItem_id(itemId);
+        this.itemService.editProduct(item);
+
+
+        return "redirect:/admin/store";
+    }
+
+
+
+
+
     //회원관리
     @GetMapping("/members")
     public String members(Model model){
@@ -126,6 +167,8 @@ public class AdminController {
     //상품문의
     @GetMapping("/item")
     public String item (Model model){
+
+
 
 
         Long count = itemQnaRepository.count();
@@ -225,6 +268,8 @@ public class AdminController {
 
         return count;
     }
+
+
 
 
 }

@@ -25,6 +25,10 @@
         <%-- login창으로 이동--%>
     </div>
 </div>
+    </div>
+</div>
+
+
 
 </body>
 </html>
