@@ -13,10 +13,19 @@ import java.util.List;
 @Getter
 @ToString
 @Entity
+@SequenceGenerator(
+        name="users_cart_seq_gename",
+        sequenceName="users_cart_seq",
+        initialValue=1,
+        allocationSize=1
+)
 @Table(name = "user_cart")
 public class CartVO {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(
+            strategy=GenerationType.SEQUENCE,
+            generator="users_cart_seq_gename"
+    )
     private Long cart_id;
 
     //단방향

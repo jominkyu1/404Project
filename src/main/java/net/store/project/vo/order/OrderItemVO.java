@@ -15,11 +15,20 @@ import javax.persistence.*;
 @Setter
 //@ToString
 @Entity
+@SequenceGenerator(
+        name="order_items_seq_gename",
+        sequenceName="order_items_seq",
+        initialValue=1,
+        allocationSize=1
+)
 @Table(name = "order_items")
 public class OrderItemVO {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(
+            strategy=GenerationType.SEQUENCE,
+            generator="order_items_seq_gename"
+    )
     private Long order_item_id;
 
     @ManyToOne(fetch = FetchType.LAZY) //Order의 PK를 FK로 가짐
