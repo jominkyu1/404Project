@@ -62,7 +62,7 @@
                 </sec:authorize>
                 <sec:authorize access="hasRole('ROLE_USER')" >
                     <sec:authentication property="principal.user" var="user"/>
-                    <li class="nav-link" style="color: lightseagreen">${user.username}</li>
+                    <li class="nav-item"><a class="nav-link" href="/user/orders">주문정보</a></li>
                     <li class="nav-item"><a class="nav-link" href="/user/${user.user_id}">회원정보</a></li>
                     <li class="nav-item"><a class="nav-link" href="/logout">로그아웃</a></li>
                 </sec:authorize>

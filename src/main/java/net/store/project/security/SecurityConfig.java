@@ -28,7 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(); //BCrypt 암호화
     }
-    
+
     @Override
     public void configure(WebSecurity web) throws Exception {
         //static 디렉터리의 하위 파일 목록은 인증 무시(=항상통과)
@@ -65,7 +65,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .userInfoEndpoint()
                 .userService(storeOauth2UserService)
         ;
-        
+
         //remember me
         http.rememberMe()
                 .rememberMeParameter("remember-me") //기본 파라미터명 remember-me

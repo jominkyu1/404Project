@@ -112,7 +112,7 @@
                    </c:if>
                 >이전</a>
                 <c:forEach begin="${startPage}" end="${endPage}" var="num">
-                    <a href="?page=${num}" style="margin: 0 5px;"
+                    <a href="?page=${num - 1}" style="margin: 0 5px;"
                        <c:if test="${num == items.number+1}">
                            class="text-warning"
                            onclick="return false;"
