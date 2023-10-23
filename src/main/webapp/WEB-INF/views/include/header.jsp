@@ -14,18 +14,15 @@
         <div class="carousel-inner mx-auto" style="height: 35vh;">
             <div class="carousel-item active">
                 <img src="/images/banner1.webp"
-                     class="d-block mx-auto h-100" alt="Slide 1"
-                     style="min-height: 80%">
+                     class="d-block mx-auto img-fluid" alt="Slide 1">
             </div>
             <div class="carousel-item">
                 <img src="/images/dummybanner2.png"
-                     class="d-block mx-auto h-auto" alt="Slide 2"
-                     style="min-height: 80%">
+                     class="d-block mx-auto img-fluid" alt="Slide 2">
             </div>
             <div class="carousel-item">
                 <img src="https://placehold.it/1900x320"
-                     class="d-block mx-auto h-auto" alt="Slide 3"
-                     style="min-height: 80%">
+                     class="d-block mx-auto img-fluid" alt="Slide 3">
             </div>
         </div>
         <!-- 배너 좌우 버튼 -->
