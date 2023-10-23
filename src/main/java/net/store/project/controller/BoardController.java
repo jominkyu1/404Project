@@ -1,6 +1,5 @@
 package net.store.project.controller;
 
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
@@ -30,6 +29,7 @@ public class BoardController {
 	private BoardService boardService;
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
 
 	//사용자 게시판 글쓰기 폼
 	@RequestMapping(value="/board_write"
@@ -180,22 +180,39 @@ public class BoardController {
 	//답변 저장+레벨증가
 	@RequestMapping("/board_reply_ok")
 	public String board_reply_ok(
-			@ModelAttribute BoardVO rb,
+			HttpServletResponse response,
+			@AuthenticationPrincipal StoreUserDetails storeUserDetails,
 			HttpServletRequest request, @ModelAttribute BoardVO b)
 					throws Exception{
-		//비밀번호 암호화
-				String encodedPassword = passwordEncoder.encode(b.getBoard_pwd());
-				b.setBoard_pwd(encodedPassword);
+		response.setContentType("text/html;charset=UTF-8");
+		PrintWriter out=response.getWriter();
 		
-		/* 1. @ModelAttribute BoardVO rb라고 하면 네임피라미터 이름과
-		 * 빈클래스 변수명이 일치하면 rb객체에 값이 저장되어져 있다. 		
-		 */
-		int page=1;
-		if(request.getParameter("page") != null) {
-			page=Integer.parseInt(request.getParameter("page"));			
+		String board_pwd = b.getBoard_pwd();
+
+		//비밀번호 암호화
+		String encodedPassword = passwordEncoder.encode(b.getBoard_pwd());
+		b.setBoard_pwd(encodedPassword);
+		
+		String encodedAdminPassword = storeUserDetails.getUser().getPassword();
+		//게시물 번호를 기준으로 디비로 부터 비번을 가져옴.
+		if(!passwordEncoder.matches(board_pwd, encodedAdminPassword)) {
+			out.println("<script>");
+			out.println("alert('비번이 다릅니다!');");
+			out.println("history.back();");
+			out.println("</script>");
+		} else {
+			/* 1. @ModelAttribute BoardVO rb라고 하면 네임피라미터 이름과
+			 * 빈클래스 변수명이 일치하면 rb객체에 값이 저장되어져 있다. 		
+			 */
+			int page=1;
+			if(request.getParameter("page") != null) {
+				page=Integer.parseInt(request.getParameter("page"));			
+			}
+			this.boardService.replyBoard(b);//답변저장+레벨증가
+			return "redirect:/board_list?page="+page;//목록보기로 이동
 		}
-		this.boardService.replyBoard(rb);//답변저장+레벨증가
-		return "redirect:/board_list?page="+page;//목록보기로 이동
+		return null;
+		
 	}
 
 	/* 수정완료 */
@@ -207,7 +224,9 @@ public class BoardController {
 		response.setContentType("text/html;charset=UTF-8");
 		//웹브라우저로 출력되는 파일형태와 언어코딩 타입을 설정
 		PrintWriter out=response.getWriter();
-
+		//비밀번호 암호화
+		String encodedPassword = passwordEncoder.encode(eb.getBoard_pwd());
+		eb.setBoard_pwd(encodedPassword);
 		int page=1;
 		if(request.getParameter("page") != null) {
 			page=Integer.parseInt(request.getParameter("page"));			
@@ -229,31 +248,4 @@ public class BoardController {
 		return null;
 	}
 	
-	//삭제 완료
-		/*@RequestMapping("/board_del_ok")
-		public String board_del_ok(
-				@RequestParam("board_no") int board_no,
-				@RequestParam("del_pwd") String del_pwd,
-				HttpServletResponse response,
-				HttpServletRequest request)
-						throws Exception{
-			response.setContentType("text/html;charset=UTF-8");
-			PrintWriter out=response.getWriter();
-			int page=1;
-			if(request.getParameter("page") != null) {
-				page=Integer.parseInt(request.getParameter("page"));
-			}
-			BoardVO db_pwd=this.boardService.getBoardCont(board_no);
-			//오라클 디비로 부터 비번을 가져옴.
-			if(!passwordEncoder.matches(del_pwd, db_pwd.getBoard_pwd())) {
-				out.println("<script>");
-				out.println("alert('비번이 다릅니다!');");
-				out.println("history.back();");
-				out.println("</script>");
-			}else {
-				this.boardService.delBoard(board_no);//게시판 삭제
-				return "redirect:/board_list?page="+page;
-			}
-			return null;
-		}//board_del_ok()*/
 }

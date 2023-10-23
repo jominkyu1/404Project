@@ -44,4 +44,11 @@ public interface CartItemRepository extends JpaRepository<CartItemVO, Long> {
     @Query("delete from CartItemVO ci " +
            "where ci.cartVO.cart_id = :cartId and ci.itemVO.item_id = :itemId")
     void deleteCartItemFromCartIdAndItemId(Long cartId, Long itemId);
+
+    List<CartItemVO> findAllByCartVO(CartVO cartVO);
+    
+    //해당 카트에 담긴 아이템들의 총 가격
+    @Query("select sum(ci.quantity * i.price) from CartItemVO ci join ItemVO i on ci.itemVO.item_id = i.item_id " +
+           "where ci.cartVO = :cartVO")
+    Long sumByCartVO(CartVO cartVO);
 }

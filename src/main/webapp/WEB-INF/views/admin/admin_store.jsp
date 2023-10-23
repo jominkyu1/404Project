@@ -55,12 +55,6 @@
                       <td>${item.regdate}</td>
                     </tr>
                   </c:forEach>
-                    <tr class="table-light" >
-                      <td scope="row">갤럭시 버즈2</td>
-                      <td>180,000</td>
-                      <td>5</td>
-                      <td>2023. 09. 13</td>
-                    </tr>
                   </tbody>
                   <tfooter>
                     <a href="/admin/store/write" class="btn btn-dark my-2">제품등록</a>

@@ -62,6 +62,9 @@
           <div class="mt-2 w-100">
             <a href="" class="btn btn-outline-secondary">프로필사진 업로드</a>
             <a href="/user/${user.user_id}/edit" class="btn btn-outline-secondary">정보수정</a>
+            <a href="/user/orders" class="btn btn-outline-secondary">주문정보</a>
+            <button class="btn btn-dark"
+                    onclick="deleteMessage()">회원탈퇴 </button>
           </div>
         </div>
       </div>
@@ -69,6 +72,13 @@
   </section>
   <jsp:include page="../include/footer.jsp" />
 </body>
+<script>
+  function deleteMessage(){
+    if(confirm("정말로 탈퇴하시겠습니까? 개인정보는 즉시 삭제되며 복구될 수 없습니다.")){
+      location.href="/user/${user.user_id}/delete";
+    }
+  }
+</script>
 <!-- Bootstrap core JS-->
 <script src="/js/bootstrap.bundle.js"></script>
 </html>

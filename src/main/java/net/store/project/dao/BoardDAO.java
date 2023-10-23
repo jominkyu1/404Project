@@ -26,6 +26,7 @@ public interface BoardDAO {
 
 	void delBoard(int board_no);
 
+
 	
 
 	

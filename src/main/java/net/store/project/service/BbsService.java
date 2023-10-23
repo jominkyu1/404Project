@@ -5,12 +5,11 @@ import java.util.List;
 import net.store.project.vo.bbs.BbsVO;
 import net.store.project.vo.page.PageVO;
 
-public interface AdminBbsService {
+public interface BbsService {
 
-	int getListCount(PageVO p);
+	int getRowCount(PageVO p);
 
-	List<BbsVO> getadminBbsList(PageVO p);
+	List<BbsVO> getBbsList(PageVO p);
 
-	void adminInsertBbs(BbsVO b);
 
 }

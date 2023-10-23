@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 <!-- 더미이미지(데모이미지) 사용시
     <img src="https://placehold.it/가로x세로">
     로 적용 후 확인해보면 자동으로 그 사이즈에 맞게 불러옴
@@ -106,46 +107,57 @@
 		<!-- isAuthenticated() -> 로그인 한 유저라면(인가받은 유저라면) -->
 		<!-- 게시판 글쓰면 해당 로그인한 유저가 글작성시 해당유저 아이디 자동입력 되게하고 username 외래키 참조 boardVO에서 유저네임참조
 		nav.jsp 파일 참조해서 코딩하기 -->
-		
-		<div id="bWrite_wrap">
-			<h2 class="bWrite_title">게시판 글쓰기</h2>
-			<form method="post" action="board_write_ok"
-				onsubmit="return bw_check();">
-				<table id="bWrite_t">
-					<sec:authorize access="isAnonymous()">
-					  <script>
- 					    alert("로그인후 이용해 주세요!")
- 					    location.href = "/login";
-					  </script>
-					</sec:authorize>
-					<sec:authorize access="isAuthenticated()">
-					<sec:authentication property="principal.user" var="user" />
-					<tr>
-						<th>이름</th>
-						<td><input name="board_name" id="board_name" value="${user.username}" size="14" readonly/></td>
-					</tr>
-					</sec:authorize>
-					<tr>
-						<th>제목</th>
-						<td><input name="board_title" id="board_title" size="35" /></td>
-					</tr>
-					<tr>
-						<th>비밀번호</th>
-						<td><input type="password" name="board_pwd" id="board_pwd"
-							size="14" /></td>
-					</tr>
-					<tr>
-						<th>내용</th>
-						<td><textarea name="board_cont" id="board_cont" rows="9"
-								cols="36"></textarea></td>
-					</tr>
-				</table>
-				<div id="bWrite_menu">
-					<input type="submit" value="저장" /> <input type="reset" value="취소"
-						onclick="$('#board_name').focus();" /> <input type="button"
-						value="목록" onclick="location='board_list?page=${page}';" />
-				</div>
-			</form>
+		<div style="display: flex; justify-content: center;">
+			<div id="bWrite_wrap">
+				<h2 class="bWrite_title" style="text-align: center;">게시판 글쓰기</h2>
+
+				<br>
+				<form method="post" action="board_write_ok"
+					onsubmit="return bw_check();">
+					<table id="bWrite_t" style="text-align: center;"
+						class="table table-bordered">
+						<sec:authorize access="isAnonymous()">
+							<script>
+								alert("로그인 후 이용해 주세요!");
+								location.href = "/login";
+							</script>
+						</sec:authorize>
+						<sec:authentication property="principal.user" var="user" />
+						<tr>
+							<th>이름</th>
+							<td><input name="board_name" id="board_name"
+								value="${user.username}" size="30" readonly /></td>
+						</tr>
+						<tr>
+							<th>제목</th>
+							<td><input name="board_title" id="board_title" size="30" /></td>
+						</tr>
+						<tr>
+							<th>비밀번호</th>
+							<td><input type="password" name="board_pwd" id="board_pwd"
+								size="30" /></td>
+						</tr>
+						<tr>
+							<th style="text-align: center;">내용</th>
+							<td><textarea name="board_cont" id="board_cont" rows="9"
+									cols="31"></textarea></td>
+						</tr>
+
+
+
+					</table>
+					<br>
+					<div
+						style="display: flex; justify-content: center; align-items: center;">
+						<div id="bWrite_menu">
+							<input type="submit" value="저장" /> <input type="reset"
+								value="취소" onclick="$('#board_name').focus();" /> <input
+								type="button" value="목록"
+								onclick="location='board_list?page=${page}';" />
+						</div>
+					</div>
+				</form>
+			</div>
 		</div>
 	</section>
 	<!-- 푸터 (footer.html) -->

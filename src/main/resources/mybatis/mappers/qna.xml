@@ -26,7 +26,7 @@
         select rowNum, item_qna_id, answered, answered_text, contents, regdate, item_id, user_id
         from ITEM_QNA
                   )
-    where rowNum between #{startrow} and #{endrow} order by rowNum desc
+    where rowNum  between #{startrow} and #{endrow} order by rowNum desc
 
 
 <!--        select * from (-->

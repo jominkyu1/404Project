@@ -95,7 +95,22 @@
 	border-collapse: collapse;
 	border: 1px solid black;
 }
-;
+
+#bCont_t {
+	width: 60%;
+	margin: auto;
+	border-collapse: collapse;
+	text-align: left;
+}
+
+#bCont_t th, #bCont_t td {
+	padding: 10px;
+	border-bottom: 1px solid #ddd;
+}
+
+#bCont_t th {
+	background-color: #f2f2f2;
+}
 </style>
 <body>
 	<!-- 네비게이션(nav) 로드 -->
@@ -103,29 +118,53 @@
 	<!-- 배너(header) 로드 -->
 	<jsp:include page="../include/header.jsp" />
 	<section>
-		<div id="bCont_wrap">
-			<h2 class="bCont_title">게시판 내용보기</h2>
-			<table id="bCont_t">
+		<div id="bCont_wrap" style="text-align: center;">
+			<h3 class="bCont_title" style="letter-spacing: 1px;">게시판 내용보기</h3>
+			<br>
+
+			<table id="bCont_t" class="table table-bordered"
+				style="text-align: center; border-collapse: collapse;">
 				<tr>
-					<th>제목</th>
-					<td>${b.board_title}</td>
+					<th width="80"
+						style="letter-spacing: 1px; border: 1px solid black; vertical-align: middle;">제목</th>
+					<td width="250" style="border: 1px solid black;">${b.board_title}</td>
 				</tr>
 				<tr>
-					<th>내용</th>
-					<td>${bcont}</td>
+					<th width="80"
+						style="letter-spacing: 1px; border: 1px solid black; vertical-align: middle; ">내용</th>
+					<td width="250" style="border: 1px solid black;">${bcont}</td>
 				</tr>
 				<tr>
-					<th>조회수</th>
-					<td>${b.board_hit}</td>
+					<th width="80"
+						style="letter-spacing: 1px; border: 1px solid black; vertical-align: middle;">조회수</th>
+					<td width="250" style="border: 1px solid black;">${b.board_hit}</td>
 				</tr>
 			</table>
-			<div id="bCont_menu">
-			<div id="bCont_menu">
-				<input type="button" value="수정" 
-				onclick="location= 'board_cont?no=${b.board_no}&page=${page}&state=edit';" />
-				<input type="button" value="목록" onclick="location='board_list?page=${page}';" />
+
+			<br>
+
+			<div style="text-align: center;">
+				<div id="bCont_menu" class="btn-group" role="group"
+					aria-label="Basic outlined example">
+					<input type="button" value="수정" class="btn btn-outline-dark"
+						style="font-size: 14; border-radius: 5px; margin-right: 5px;"
+						onclick="location= 'board_cont?no=${b.board_no}&page=${page}&state=edit';" />
+					<input type="button" value="목록" class="btn btn-outline-dark"
+						style="font-size: 14; border-radius: 5px; margin-left: 5px;"
+						onclick="location='board_list?page=${page}';" />
+					<sec:authorize access="hasRole('ROLE_ADMIN')">
+					<input type="submit" value="답변" class="btn btn-outline-dark"
+						style="font-size: 14; border-radius: 5px; margin-left: 10px;" 
+						onclick = "location = 'board_cont?no=${b.board_no}&page=${page}&state=reply';"/>
+					</sec:authorize> 
+				</div>
+				</div>
 			</div>
 		</div>
+
+
+		<br>
+
 	</section>
 	<!-- 푸터 (footer.html) -->
 	<jsp:include page="../include/footer.jsp" />

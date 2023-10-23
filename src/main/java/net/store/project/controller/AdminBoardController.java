@@ -242,6 +242,7 @@ public class AdminBoardController {
 				HttpServletResponse response,
 				HttpServletRequest request)
 						throws Exception{
+			System.out.println("게시글 삭제 요청");
 			response.setContentType("text/html;charset=UTF-8");
 			PrintWriter out=response.getWriter();
 			UserVO u = storeuserDetails.getUser();
@@ -252,8 +253,9 @@ public class AdminBoardController {
 				out.println("location='login';");
 				out.println("</script>");
 			}else {
+				System.out.println("실제 삭제 서비스실행");
 				this.adminBoardService.deleteBoard(no);//게시물 삭제
-				return "redirect:/admin_board_list?page="+page;
+				return "redirect:/board_list?page="+page;
 			}		  
 			return null;
 		}

@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import net.store.project.dao.AdminBbsDAO;
+import net.store.project.dao.BbsDAO;
 import net.store.project.dao.AdminBoardDAO;
 import net.store.project.vo.bbs.BbsVO;
 import net.store.project.vo.board.BoardVO;
@@ -19,7 +19,7 @@ public class AdminBoardServiceImpl implements AdminBoardService {
 	private AdminBoardDAO adminBoardDAO;
 	
 	@Autowired
-	private AdminBbsDAO adminBbsDAO;
+	private BbsDAO bbsDAO;
 
 	@Override
 	public int getListCount(PageVO p) {
@@ -58,7 +58,7 @@ public class AdminBoardServiceImpl implements AdminBoardService {
 		
 		//TODO Board의 DAO와 Bbs의 DAO에있는 insert 호출
 		this.adminBoardDAO.insertBoard(b);
-		this.adminBbsDAO.insertBoardWithFiles(bbsList);
+		this.bbsDAO.insertBoardWithFiles(bbsList);
 	}
 
 	

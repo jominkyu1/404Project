@@ -25,6 +25,8 @@ public interface BoardService {
 
 	void delBoard(int board_no);
 
+	
+
 
 
 	

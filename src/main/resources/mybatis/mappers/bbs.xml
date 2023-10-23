@@ -3,16 +3,14 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-
-<mapper namespace="Admin_Bbs"> <!-- 관리자 자료실 매퍼태그 -->
+<mapper namespace="Bbs"> <!-- 관리자 자료실 매퍼태그 -->
 	
 	<!--자료실 저장 -->
 	<insert id="insert_files" parameterType="bbs">
 	 insert into bbs1(bbs_no,bbs_filepath,bbs_originalFilename,board_no) 
-	 value(bbs1_no_seq.nextval,#{bbs_filepath},#{bbs_originalFilename,#{board_no})
+	 values(bbs1_no_seq.nextval, #{bbs_filepath}, #{bbs_originalFilename}, #{board_no})
 	</insert>
-
-
+	
 	<!-- 검색전후 레코드 개수 -->
 	<select id="abbs_count"  resultType="int">
 		select count(bbs_no) from board
@@ -31,10 +29,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<!-- 검색 전후 목록 -->
-	<select id="abbs_list" resultType="board">
+	<select id="abbs_list" parameterType="page" resultType="board">
 		<!-- resultType 속성은 반환 타입 -->
-		select * from
-		(select rowNum rNum,bbs_no,board_name,board_title,
+		select * from board
+		(select rowNum rNum,board_no,board_name,board_title,
 		board_hit,board_ref,board_step,board_level,board_date
 		from (select * from board
 		<where>
@@ -55,33 +53,5 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<!-- &gt;은 ~보다 크다(>), &lt;은 ~보다 작다(<) -->
 	</select>
 	
-	<!-- 관리자 게시판 저장 
-	<insert id="abbs_in" parameterType="bbs">
-		insert into bbs (bbs_no,board_name,board_title,
-		board_pwd,board_cont,board_hit,board_ref,board_step,board_level,
-		board_date,board_category,board_state) values(board_no_seq.nextval,#{board_name},
-		#{board_title},#{board_pwd},#{board_cont},0,
-		board_no_seq.nextval,0,0,sysdate,'bbs',2)
-	</insert> -->
-
-	
-	<!-- 관리자 게시판 내용보기+수정폼 -->
-	<select id="abbs_cont" parameterType="int" resultType="bbs">
-		SELECT * FROM board JOIN bbs1 ON board.board_no = bbs1.board_no
-		WHERE board.board_no = bbs1.board_no;
-	</select>
-	
-	<!-- 관리자 게시판 수정완료 -->
-	<update id="abbs_edit">
-		update bbs1 set board_name=#{board_name},
-		board_title=#{board_title}, 
-		board_cont=#{board_cont} where board_no=#{board_no}
-	</update>
-	
-	<!-- 관리자 게시판 삭제 -->
-	<delete id="abbs_del">
-		delete from bbs1 where bbs_no=#{no}
-	</delete>
-  
    
 </mapper>

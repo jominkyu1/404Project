@@ -12,6 +12,9 @@ create table board(
  ,board_level number(38) --답변글 정렬 순서
  ,board_date date --등록날짜
 );
+
+select * from board;
+
 commit;
  ALTER TABLE board add (board_category VARCHAR2(10));
  alter table board add (board_state int);
@@ -26,6 +29,8 @@ alter table board add foreign key(board_name) references users (username);
 --ALTER TABLE [테이블명] MODIFY ([컬럼명] VARCHAR2(2000));
 alter table board modify board_pwd varchar2(100);
   
+alter table board drop column board_state;  
+
 drop table board;
 select * from users;
 select * from board;
@@ -60,6 +65,12 @@ create table bbs1(
     
     foreign key(board_no) references board (board_no)
 );
+select * from bbs1;
+
+insert into bbs1(bbs_no,bbs_filepath,bbs_originalFilename,board_no) 
+	 values(bbs1_no_seq.nextval,'1', '1', '43');
+    
+    select * from board;
 
 drop table bbs1;
 
@@ -80,13 +91,17 @@ select * from item;
 SELECT *
 FROM board
 JOIN bbs1 ON board.board_no = bbs1.board_no
-WHERE board.board_no = 32;
+WHERE board.board_no = bbs1.board_no;
+
+update bbs1
+ set board_no = (select board_no from board where board.board_no = bbs1.board_no);
+
 
 select * from bbs1;
 
-insert into bbs1 values (1, '사과', 32);
-insert into bbs1 values (2, '복숭아', 32);
-insert into bbs1 values (3, '배', 32);
+insert into bbs1 values (1,'파일', '사과', 32);
+insert into bbs1 values (2,'파일', '복숭아', 32);
+insert into bbs1 values (3,'파일', '배', 32);
 commit;
 
 

@@ -34,12 +34,13 @@ public class StoreUserDetails extends User implements OAuth2User {
         //아이디 비밀번호 권한
         log.info("StoreUserDetails객체의 권한: {}", user.getUsergrade().getValue());
     }
-    
+
     /**
      * OAuth2.0 소셜 로그인
+     * password는 필요하지않으므로 NULL
      * */
     public StoreUserDetails(UserVO userVO, Map<String, Object> attributes){
-        super(userVO.getUsername(), userVO.getPassword(), setAuthorities(userVO.getUsergrade().getValue()));
+        super(userVO.getUsername(), "NULL", setAuthorities(userVO.getUsergrade().getValue()));
         this.user=userVO;
         this.attributes = attributes;
         System.out.println(attributes);
@@ -61,7 +62,7 @@ public class StoreUserDetails extends User implements OAuth2User {
         this.user_cart_id=cart_id;
     }
 
-    
+
     /**
      * OAuth2.0를위한 OAuth2User 메소드 구현
      * */

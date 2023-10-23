@@ -69,7 +69,7 @@
                             
                             <div class="p-2">
                                 <input type="submit" class="btn btn-outline-secondary" value="로그인">
-                                <input type="button" class="btn btn-outline-secondary" value="아이디/비밀번호 찾기">
+                                <a href="/find/pwd_find" class="btn btn-outline-secondary">아이디/비밀번호 찾기</a>
                                 <a href="/register" class="btn btn-secondary float-end">회원가입</a>
                             </div>
                         </form>
@@ -81,7 +81,7 @@
                             <a href="/oauth2/authorization/naver">
                                 <img src="/images/login/naverbtn.png" style="width:150px;" alt="NaverLogin">
                             </a>
-                            <a href="#">
+                            <a href="/oauth2/authorization/kakao">
                                 <img src="/images/login/kakaobtn.png" style="width:150px;" alt="KakaoLogin">
                             </a>
                         </div>

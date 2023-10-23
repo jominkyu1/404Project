@@ -60,7 +60,8 @@
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach items="${item}" var="qna">
+                <!-- Pageable content속성에 실제 순회할 수 있는 객체가 담겨있음-->
+                <c:forEach items="${items.content}" var="qna">
                     <tr>
                         <td>
                             <fmt:formatDate value="${qna.regdate}" pattern="yy-MM-dd" />
@@ -68,14 +69,9 @@
                         <td>${qna.userVO.username}</td>
                         <td>${qna.itemVO.name}</td>
                         <td class="overflow-hidden text-nowrap">
-
-
-
                             <a href="#" data-bs-toggle="modal" data-bs-target="#answerModal" data-qna-id="${qna.item_qna_id}">
                                     ${qna.contents}
                             </a>
-
-
                             <button
                                     class="btn btn-outline-secondary btn-sm dropdown-toggle float-end"
                                     type="button"
@@ -107,87 +103,34 @@
                 </c:forEach>
                 </tbody>
             </table>
-        </div>
-
-        <%--페이징(쪽나누기)--%>
-        <div id="bList_paging">
-            <%--검색전 페이징 --%>
-            <c:if test="${(empty find_field)&&(empty find_name)}">
-                <c:if test="${page <=1}">
-                    [이전]&nbsp;
-                </c:if>
-                <c:if test="${page >1}">
-                    <a href="bbs_list?page=${page-1}">[이전]</a>&nbsp;
-                </c:if>
-
-                <%--쪽번호 출력부분 --%>
-                <c:forEach var="a" begin="${startpage}" end="${endpage}" step="1">
-                    <c:if test="${a == page}"><${a}></c:if>
-
-                    <c:if test="${a != page}">
-                        <a href="bbs_list?page=${a}">[${a}]</a>&nbsp;
-                    </c:if>
+            <!-- 페이징 처리 -->
+            <div class="pagination">
+                <a href="?page=${previous}"
+                   <c:if test="${hasPrevious == false }">
+                       class="text-warning"
+                       onclick="return false;"
+                   </c:if>
+                >이전</a>
+                <c:forEach begin="${startPage}" end="${endPage}" var="num">
+                    <a href="?page=${num - 1}" style="margin: 0 5px;"
+                       <c:if test="${num == items.number+1}">
+                           class="text-warning"
+                           onclick="return false;"
+                       </c:if>
+                    >${num}</a>
                 </c:forEach>
-
-                <c:if test="${page>=maxpage}">[다음]</c:if>
-                <c:if test="${page<maxpage}">
-                    <a href="bbs_list?page=${page+1}">[다음]</a>
-                </c:if>
-            </c:if>
-
-            <%-- 검색후 페이징(쪽나누기) --%>
-            <c:if test="${(!empty find_field) || (!empty find_name)}">
-                <c:if test="${page <=1}">
-                    [이전]&nbsp;
-                </c:if>
-                <c:if test="${page >1}">
-                    <a href="bbs_list?page=${page-1}&find_field=${find_field}&find_name=${find_name}">[이전]</a>&nbsp;
-                    <%--검색이후 페이징목록 유지 --%>
-                </c:if>
-
-                <%--쪽번호 출력부분 --%>
-                <c:forEach var="a" begin="${startpage}" end="${endpage}" step="1">
-                    <c:if test="${a == page}"><${a}></c:if>
-
-                    <c:if test="${a != page}">
-                        <a href="bbs_list?page=${a}&find_field=${find_field}&find_name=${find_name}">[${a}]</a>&nbsp;
+                
+                <a href="?page=${next}"
+                    <c:if test="${hasNext == false}">
+                        class="text-warning"
+                        onclick="return false;"
                     </c:if>
-                </c:forEach>
-
-                <c:if test="${page>=maxpage}">[다음]</c:if>
-                <c:if test="${page<maxpage}">
-                    <a href="bbs_list?page=${page+1}&find_field=${find_field}&find_name=${find_name}">[다음]</a>
-                </c:if>
-            </c:if>
+                >다음</a>
+            </div>
+            <!-- 페이징 처리 -->
         </div>
-
-        <div id="bList_menu">
-
-            <c:if test="${(!empty find_field)&& (!empty find_name)}">
-                <input type="button" value="전체목록"
-                       onclick="location='bbs_list?page=${page}';" >
-                <%-- c:if; get으로 전달한 쪽번호만 전달하면 책갈피 기능 구현  --%>
-            </c:if>
-        </div>
-
-        <%--검색 폼 추가 --%>
-        <div id="bFind_wrap">
-            <select name="find_field">
-                <option value="bbs_title"
-                        <c:if test="${find_field == 'item_id'}"> ${'selected'} </c:if>>
-                    <%--find_field가 bbs_cont와 같다면 해당목록을 선택되게 함 --%>
-                    제품명</option>
-                <option value="bbs_cont"
-                        <c:if test="${find_field =='contents'}">${'selected'}
-                        </c:if>>글내용</option>
-            </select> <input type="search" name="find_name" id="find_name"
-                             size="16" value="${find_name}" >
-            <input type="submit" value="검색">
-        </div>
+        
     </div>
-
-
-
 </section>
 <!-- 푸터 (footer.html) -->
 <jsp:include page="../include/footer.jsp" />

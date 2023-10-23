@@ -61,9 +61,5 @@ public class BoardDAOImpl implements BoardDAO {
 		this.sqlSession.delete("board_del",board_no);
 	}//게시물 삭제
 	
-
 	
-	
-	
-
 }
