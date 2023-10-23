@@ -9,6 +9,9 @@ select *
 from orders;
 
 select *
+from order_items;
+
+select *
 from item;
 
 select *

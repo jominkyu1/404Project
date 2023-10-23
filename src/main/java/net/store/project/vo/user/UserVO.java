@@ -1,6 +1,7 @@
 package net.store.project.vo.user;
 
 import lombok.*;
+import net.store.project.vo.order.OrderVO;
 import net.store.project.vo.user.form.UserRegisterForm;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
@@ -10,11 +11,12 @@ import org.springframework.util.StringUtils;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.sql.Timestamp;
+import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Setter
-@ToString
+//@ToString
 @Table(name = "users")
 @SequenceGenerator(
         name="users_seq_gename",
@@ -57,6 +59,9 @@ public class UserVO {
     @Column(nullable = false)
     @ColumnDefault("'USER'")
     private UserGrade usergrade; //USER, ADMIN
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    List<OrderVO> orders;
 
     /**
      * OAuth 2.0

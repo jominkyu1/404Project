@@ -62,7 +62,9 @@
           <div class="mt-2 w-100">
             <a href="" class="btn btn-outline-secondary">프로필사진 업로드</a>
             <a href="/user/${user.user_id}/edit" class="btn btn-outline-secondary">정보수정</a>
-            <button class="btn btn-outline-secondary" onclick="deleteMessage()">회원탈퇴 </button>
+            <a href="/user/orders" class="btn btn-outline-secondary">주문정보</a>
+            <button class="btn btn-dark"
+                    onclick="deleteMessage()">회원탈퇴 </button>
           </div>
         </div>
       </div>
