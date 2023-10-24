@@ -4,10 +4,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import net.store.project.dao.BbsDAO;
 import net.store.project.dao.AdminBoardDAO;
+import net.store.project.dao.BbsDAO;
 import net.store.project.vo.bbs.BbsVO;
 import net.store.project.vo.board.BoardVO;
 import net.store.project.vo.page.PageVO;
@@ -51,13 +50,14 @@ public class AdminBoardServiceImpl implements AdminBoardService {
 		this.adminBoardDAO.deleteBoard(no);
 	}
 
-	@Transactional
+	
 	@Override
 	public void insertBoardWithFiles(BoardVO b, List<BbsVO> bbsList) {
-		//TODO b의 PK 값을 각 List에 담아야함
+		int sequence = this.adminBoardDAO.insertBoard(b);
 		
-		//TODO Board의 DAO와 Bbs의 DAO에있는 insert 호출
-		this.adminBoardDAO.insertBoard(b);
+		bbsList.forEach(bbsVO -> bbsVO.setBoard_no(sequence));
+		
+		//TODO BbsVO에 BoardVO의 PK를 넣어줘야함
 		this.bbsDAO.insertBoardWithFiles(bbsList);
 	}
 

@@ -24,20 +24,20 @@ import net.store.project.vo.board.BoardVO;
 import net.store.project.vo.page.PageVO;
 import net.store.project.vo.user.UserVO;
 
-@Controller
-public class AdminBoardController {
+//@Controller
+//public class AdminBoardController {
 	
-	@Autowired
-	private AdminBoardService adminBoardService;
+//	@Autowired
+//	private AdminBoardService adminBoardService;
 	
-	@Autowired
-	private BoardService boardService;
+//	@Autowired
+//	private BoardService boardService;
 	
-	@Autowired
-	private PasswordEncoder passwordEncoder;
+	//@Autowired
+	//private PasswordEncoder passwordEncoder;
 	
 	/*관리자 게시판 목록*/
-	@RequestMapping("/admin_board_list")
+	/*@RequestMapping("/admin_board_list")
 	public String admin_board_list(Model listM,
 			@ModelAttribute PageVO p,
 			@AuthenticationPrincipal StoreUserDetails storeUserDetails,
@@ -259,4 +259,4 @@ public class AdminBoardController {
 			}		  
 			return null;
 		}
-}
+} */

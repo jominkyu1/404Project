@@ -1,6 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
-<%@ include file="../include/admin_header.jsp" %>
 <!-- 더미이미지(데모이미지) 사용시
     <img src="https://placehold.it/가로x세로">
     로 적용 후 확인해보면 자동으로 그 사이즈에 맞게 불러옴
@@ -104,7 +103,7 @@
 		<%--관리자 메인 본문 --%>
   <div id="aMain_cont">
     <div id="aBw_wrap">
-     <h2 class="aBw_title">관리자 자료실 수정</h2>
+     <h2 class="aBw_title">자료실 수정</h2>
      <form method="post" action="admin_bbs_edit_ok"
      onsubmit="return write_check();" enctype="multipart/form-data">
      <input type="hidden" name="bbs_no" value="${b.bbs_no}" />
@@ -148,7 +147,7 @@
     <input type="reset" value="취소" 
     onclick="$('#board_name').focus();" />
     <input type="button" value="목록"
-    onclick="location='admin_bbs_list?page=${page}';" />
+    onclick="location='bbs_list?page=${page}';" />
    </div>
      </form>
     </div>

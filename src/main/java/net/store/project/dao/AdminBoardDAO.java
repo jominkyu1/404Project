@@ -11,7 +11,7 @@ public interface AdminBoardDAO {
 
 	List<BoardVO> getBoardList(PageVO p);
 
-	void insertBoard(BoardVO b);
+	int insertBoard(BoardVO b);
 
 	BoardVO getAdminBoardCont(int board_no);
 

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import net.store.project.dao.BbsDAO;
 import net.store.project.vo.bbs.BbsVO;
+import net.store.project.vo.board.BoardVO;
 import net.store.project.vo.page.PageVO;
 
 @Service
@@ -23,6 +24,11 @@ public class BbsServiceImpl implements BbsService {
 	@Override
 	public List<BbsVO> getBbsList(PageVO p) {
 		return this.bbsDAO.getBbsList(p);
+	}
+
+	@Override
+	public List<BoardVO> getBoardList(PageVO p) {
+		return this.bbsDAO.getBoardList(p);
 	}
 
 

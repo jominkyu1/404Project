@@ -13,7 +13,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 검색전후 레코드 개수 -->
 	<select id="abbs_count"  resultType="int">
-		select count(bbs_no) from board
+		select count(board_no) from board
 		<where>
 			<if test="find_field == ''">
 				<!-- 검색조건이 없어서 총레코드 개수 -->
@@ -31,7 +31,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 검색 전후 목록 -->
 	<select id="abbs_list" parameterType="page" resultType="board">
 		<!-- resultType 속성은 반환 타입 -->
-		select * from board
+		select * from
 		(select rowNum rNum,board_no,board_name,board_title,
 		board_hit,board_ref,board_step,board_level,board_date
 		from (select * from board

@@ -50,11 +50,15 @@
 	
 	<!-- 관리자 게시판 저장 -->
 	<insert id="ab_in" parameterType="board">
+	<selectKey keyProperty="board_no" order="AFTER" resultType="int">
+        SELECT board_no_seq.currval FROM dual
+    </selectKey>
+    
 		insert into board (board_no,board_name,board_title,
 		board_pwd,board_cont,board_hit,board_ref,board_step,board_level,
 		board_date,board_category) values(board_no_seq.nextval,#{board_name},
 		#{board_title},#{board_pwd},#{board_cont},0,
-		board_no_seq.nextval,0,0,sysdate,'qna')
+		board_no_seq.nextval,0,0,sysdate,'bbs')
 	</insert>
 	
 	<!-- 관리자 게시판 내용보기+수정폼 -->

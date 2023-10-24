@@ -1,6 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
-<%@ taglib prefix="sec"
-	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <!-- 더미이미지(데모이미지) 사용시
     <img src="https://placehold.it/가로x세로">
     로 적용 후 확인해보면 자동으로 그 사이즈에 맞게 불러옴
@@ -110,24 +109,25 @@
 		<div style="display: flex; justify-content: center;">
 			<div id="bWrite_wrap">
 				<h2 class="bWrite_title" style="text-align: center;">게시판 글쓰기</h2>
-
 				<br>
 				<form method="post" action="board_write_ok"
 					onsubmit="return bw_check();">
-					<table id="bWrite_t" style="text-align: center;"
-						class="table table-bordered">
-						<sec:authorize access="isAnonymous()">
+					<sec:authorize access="isAnonymous()">
 							<script>
 								alert("로그인 후 이용해 주세요!");
 								location.href = "/login";
 							</script>
 						</sec:authorize>
-						<sec:authentication property="principal.user" var="user" />
+					<table id="bWrite_t" style="text-align: center;"
+						class="table table-bordered">
+						<sec:authorize access="isAuthenticated()">
+							<sec:authentication property="principal.user" var="user"/>
 						<tr>
 							<th>이름</th>
 							<td><input name="board_name" id="board_name"
 								value="${user.username}" size="30" readonly /></td>
 						</tr>
+						</sec:authorize>
 						<tr>
 							<th>제목</th>
 							<td><input name="board_title" id="board_title" size="30" /></td>

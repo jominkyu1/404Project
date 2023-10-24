@@ -3,6 +3,7 @@ package net.store.project.dao;
 import java.util.List;
 
 import net.store.project.vo.bbs.BbsVO;
+import net.store.project.vo.board.BoardVO;
 import net.store.project.vo.page.PageVO;
 
 public interface BbsDAO {
@@ -12,6 +13,8 @@ public interface BbsDAO {
 	int getRowCount(PageVO p);
 
 	List<BbsVO> getBbsList(PageVO p);
+
+	List<BoardVO> getBoardList(PageVO p);
 
 	
 

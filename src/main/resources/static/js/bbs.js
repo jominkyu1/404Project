@@ -1,26 +1,26 @@
 /**
- * bbs.js : 자료실 유효성 검증(Validate:2023년 09월 26일 18:01)
+ * board.js
  */
  
  function write_check(){
-	if($.trim($("#bbs_name").val())==""){
-		alert("글쓴이를 입력하세요!");
-		$("#bbs_name").val("").focus();
+	if($.trim($("#board_name").val())==""){
+		alert("이름을 입력하세요!");
+		$("#board_name").val("").focus();
 		return false;
 	}
-	if($.trim($("#bbs_title").val())==""){
-		alert("글제목을 입력하세요!");
-		$("#bbs_title").val("").focus();
+	if($.trim($("#board_title").val())==""){
+		alert("제목을 입력하세요!");
+		$("#board_title").val("").focus();
 		return false;
 	}
-	if($.trim($("#bbs_pwd").val())==""){
+	if($.trim($("#board_pwd").val())==""){
 		alert("비밀번호를 입력하세요!");
-		$("#bbs_pwd").val("").focus();
+		$("#board_pwd").val("").focus();
 		return false;
 	}
-	if($.trim($("#bbs_cont").val())==""){
-		alert("글내용을 입력하세요!");
-		$("#bbs_cont").val("").focus();
+	if($.trim($("#board_cont").val())==""){
+		alert("내용을 입력하세요!");
+		$("#board_cont").val("").focus();
 		return false;
 	}
 }

@@ -14,7 +14,7 @@
 
 <title>404 Store</title>
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
-<script src="/js/board.js"></script>
+<script src="/js/bbs.js"></script>
 <!--부트스트랩 아이콘 CSS
             https://icons.getbootstrap.com/ 이곳에서 아이콘 확인! 클래스명에 아이콘 적으면됨!
         -->
@@ -102,19 +102,29 @@
 	<!-- 배너(header) 로드 -->
 	<jsp:include page="../include/header.jsp" />
 	<section>
-		<%--관리자 메인 본문 --%>
+
 <div id="aMain_cont">
 	<div id="aBw_wrap">
-		<h2 class="aBw_title">관리자 자료실 글쓰기</h2>
-		<form method="post" action="admin_bbs_write_ok"
+		<h2 class="aBw_title">자료실 글쓰기</h2>
+		<form method="post" action="bbs_write_ok"
 			onsubmit="return write_check();" enctype="multipart/form-data">
 			<table id="aBw_t">
+			<sec:authorize access="isAnonymous()">
+				<script>
+					alert("로그인 후 이용해 주세요!");
+					location.href = "/login";
+				</script>
+			</sec:authorize>
+			<sec:authorize access="isAuthenticated()">
+				<sec:authentication property="principal.user" var="user"/>
 				<tr>
-					<th>글쓴이</th>
-					<td><input name="board_name" id="board_name" size="14" /></td>
+					<th>이름</th>
+					<td><input name="board_name" id="board_name"
+						value="${user.username}" size="30" readonly /></td>
 				</tr>
+				</sec:authorize>
 				<tr>
-					<th>글제목</th>
+					<th>제목</th>
 					<td><input name="board_title" id="board_title" size="35" /></td>
 				</tr>
 				<tr>
@@ -123,19 +133,19 @@
 						size="14" /></td>
 				</tr>
 				<tr>
-					<th>글내용</th>
+					<th>내용</th>
 					<td><textarea name="board_cont" id="board_cont" rows="9" cols="36"></textarea>
 					</td>
 				</tr>
 				<tr>
 					<th>파일첨부</th>
-					<td><input type="file" name="bbs_file" /></td>
+					<td><input type="file" name="bbs_file" multiple="multiple"/></td>
 				</tr>
 			</table>
 			<div id="aBw_menu">
-				<input type="submit" value="저장" /> <input type="reset" value="취소"
-					onclick="$('#board_name').focus();" /> <input type="button"
-					value="목록" onclick="location='admin_bbs_list?page=${page}';" />
+				<input type="submit" value="저장" /> 
+				<input type="reset" value="취소" onclick="$('#board_name').focus();" /> 
+				<input type="button" value="목록" onclick="location='bbs_list?page=${page}';" />
 			</div>
 		</form>
 	</div>

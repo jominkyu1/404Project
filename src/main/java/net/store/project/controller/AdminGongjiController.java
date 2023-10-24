@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -33,7 +32,7 @@ public class AdminGongjiController {
 					@AuthenticationPrincipal StoreUserDetails storeUserDetails,HttpServletResponse response) throws Exception{
 				response.setContentType("text/html;charset=UTF-8");
 
-				if(isAdminLogin(response, storeUserDetails)) {//관리자로 로그인 된 경우
+				//if(isAdminLogin(response, storeUserDetails)) {//관리자로 로그인 된 경우
 					int page=1;//쪽번호
 					int limit=7;//한페이지에 보여지는 목록개수
 					if(request.getParameter("page") != null) {
@@ -78,8 +77,8 @@ public class AdminGongjiController {
 					listM.addObject("find_name", find_name);
 
 					return listM;
-				}
-				return null;
+				//}
+				//return null;
 			}//admin_gongji_list()
 			
 			//관리자 공지 작성
@@ -114,9 +113,6 @@ public class AdminGongjiController {
 
 				if(isAdminLogin(response, storeUserDetails)){
 					this.adminGongjiService.insertGongji(b);//공지 저장
-					/* 문제) 스프링 MVC구조 흐름도에 맞게 컨트롤러,서비스,모델 dao,매퍼태그까지 관리자 공지 저장되게 만들어보자.
-					 * 개발자 테스트까지 한다.
-					 */
 
 					return new ModelAndView("redirect:/admin_gongji_list");
 				}

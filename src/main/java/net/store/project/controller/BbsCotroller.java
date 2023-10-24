@@ -1,14 +1,11 @@
 package net.store.project.controller;
 
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,13 +14,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import net.store.project.api.ImageHandler;
-import net.store.project.security.StoreUserDetails;
 import net.store.project.service.AdminBoardService;
 import net.store.project.service.BbsService;
 import net.store.project.vo.bbs.BbsVO;
 import net.store.project.vo.board.BoardVO;
 import net.store.project.vo.page.PageVO;
-import net.store.project.vo.user.UserVO;
 
 @Controller
 public class BbsCotroller {
@@ -55,16 +50,17 @@ public class BbsCotroller {
 
 	//파일경로
 	@PostMapping("/bbs_write_ok")
-    public String insertBoardWithFiles(BoardVO b, List<MultipartFile> multipartFiles) {
+    public String insertBoardWithFiles(BoardVO b, List<MultipartFile> bbs_file) {
 		List<BbsVO> bbsList = new ArrayList<>();
+		System.out.println(bbs_file.isEmpty());
+		System.out.println(bbs_file.size());
 		// 파일저장로직	
-		for(MultipartFile multipartFile : multipartFiles ) {
+		for(MultipartFile multipartFile : bbs_file) {
 			String dbFilePath = imageHandler.upload(multipartFile);
 			
 			BbsVO bbs = new BbsVO();
 			bbs.setBbs_filepath(dbFilePath);
 			bbs.setBbs_originalFilename(multipartFile.getOriginalFilename());
-			bbs.setBoard_no(b.getBoard_no());
 			
 			bbsList.add(bbs);
 		}
@@ -96,7 +92,7 @@ public class BbsCotroller {
 		p.setStartrow((page-1)*10+1);//시작행 번호
 		p.setEndrow(p.getStartrow()+limit-1);//끝행번호
 
-		List<BbsVO> blist=this.bbsService.getBbsList(p);//검색전 목록
+		List<BoardVO> blist=this.bbsService.getBoardList(p);//검색전 목록
 
 		//총 페이지수
 		int maxpage=(int)((double)totalCount/limit+0.95);
@@ -121,7 +117,7 @@ public class BbsCotroller {
 	}//bbs_list()
 
 		//반복적인 관리자 로그인을 안하기 위한 코드 추가
-		public static boolean isAdminLogin(HttpServletResponse response, 
+		/*public static boolean isAdminLogin(HttpServletResponse response, 
 				@AuthenticationPrincipal StoreUserDetails storeUserDetails) throws Exception{
 			
 			PrintWriter out = response.getWriter();
@@ -136,7 +132,7 @@ public class BbsCotroller {
 				return false;
 			}
 			return true;
-		}//isAdminLogin()
+		}//isAdminLogin() */
 		
 		
 		

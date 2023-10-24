@@ -14,7 +14,8 @@
 
 <title>404 Store</title>
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
-<script src="/js/board.js"></script>
+<script src="./js/jquery.js"></script>
+<script src="/js/gongji.js"></script>
 <!--부트스트랩 아이콘 CSS
             https://icons.getbootstrap.com/ 이곳에서 아이콘 확인! 클래스명에 아이콘 적으면됨!
         -->

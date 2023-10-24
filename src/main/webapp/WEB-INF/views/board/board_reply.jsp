@@ -21,6 +21,7 @@
 	rel="stylesheet" />
 
 </head>
+<script src="./js/board.js"></script>
 <style>
 .carousel-inner {
 	width: 80%;

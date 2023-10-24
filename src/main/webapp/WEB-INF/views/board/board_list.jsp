@@ -211,8 +211,8 @@ get방식으로 &구분하면서 전달된다. --%></td>
 				<br>
 
 				<div id="bList_menu">
-					<a href="#" onclick="location.href='board_write?page=${page}';"
-						style="position: absolute; right: 30px; font-size: 12px;"
+					<a href="board_write?page=${page}" onclick="location.href='board_write?page=${page}';"
+					style="position: absolute; right: 30px; font-size: 12px;"
 						class="btn btn-outline-dark btn-lg">글쓰기 <c:if
 							test="${(!empty find_field) && (!empty find_name)}">
 							<input type="button" value="전체목록"
