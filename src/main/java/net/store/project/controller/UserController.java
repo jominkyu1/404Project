@@ -18,7 +18,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.NotActiveException;
@@ -177,6 +179,23 @@ public class UserController {
         
         return Objects.equals(foundUser.getUser_id(), storeUserDetails.getUser().getUser_id());
     }
+
+
+    @GetMapping("/search")
+    public ModelAndView Search(@RequestParam String search){
+
+
+        //form태그로 받기
+        return null;
+    }
+
+
+
+
+
+
+
+
 
 
 }

@@ -75,8 +75,9 @@
                 </sec:authorize>
             </ul>
             <!-- 검색 기능-->
-            <form class="navbar-nav mx-2">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" required tabindex="1">
+            <form class="navbar-nav mx-2" action="/search" method="GET">
+                <input class="form-control me-2" type="search" name="search"
+                       placeholder="Search" aria-label="Search" required tabindex="1">
                 <input class="btn btn-outline-dark text-bg-dark" type="submit" value="검색">
             </form>
             <!-- 장바구니 -->
