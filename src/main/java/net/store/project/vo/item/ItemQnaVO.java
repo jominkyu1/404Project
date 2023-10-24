@@ -17,10 +17,19 @@ import java.util.List;
 @Setter
 @ToString
 @Entity
+@SequenceGenerator(
+        name="item_qna_seq_gename",
+        sequenceName="item_qna_seq",
+        initialValue=1,
+        allocationSize=1
+)
 @Table(name = "item_qna")
 public class ItemQnaVO {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(
+            strategy=GenerationType.SEQUENCE,
+            generator="item_qna_seq_gename"
+    )
     private Long item_qna_id;
 
     @ManyToOne(fetch = FetchType.LAZY)

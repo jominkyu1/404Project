@@ -98,7 +98,7 @@
                 <table class="table align-middle table-nowrap table-centered mb-0 table-striped table-secondary">
                   <thead>
                   <tr >
-                    <th style="width: 70px;">No.</th>
+                    <th style="width: 70px;">#</th>
                     <th>상품명</th>
                     <th>가격</th>
                     <th>수량</th>
@@ -109,10 +109,10 @@
                   
                   <c:set var="totalPrice" value="0"/>
                   <!-- for each -->
-                  <c:forEach var="orderItem" items="${order.orderItems}">
+                  <c:forEach var="orderItem" items="${order.orderItems}" varStatus="status">
                     <c:set var="orderItemTotal" value="0"/>
                   <tr>
-                    <th scope="row">01</th>
+                    <th scope="row">${status.count}</th>
                     <td>
                         <h5 class="text-truncate font-size-14 mb-1">${orderItem.itemVO.name}</h5>
                     </td>

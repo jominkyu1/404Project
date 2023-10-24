@@ -11,10 +11,19 @@ import javax.persistence.*;
 @Getter
 @ToString
 @Entity
+@SequenceGenerator(
+        name="users_cart_items_seq_gename",
+        sequenceName="users_cart_items_seq",
+        initialValue=1,
+        allocationSize=1
+)
 @Table(name = "user_cart_items")
 public class CartItemVO {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(
+            strategy=GenerationType.SEQUENCE,
+            generator="users_cart_items_seq_gename"
+    )
     private Long cart_item_id;
 
     private int quantity; //담은 아이템의 수량
