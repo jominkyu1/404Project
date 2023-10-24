@@ -14,6 +14,18 @@ from order_items;
 select *
 from item;
 
+ update item set name=#{}, DESCRIPTION=#{description}, price=#{price}, STOCK_QUANTITY=#{stockQuantity} where ITEM_ID = #{item_id};
+ 
+ update item set name='사과', description='맛없는 사과', price='100', stock_quantity='4000' where item_id = '1';
+
+    commit;
+    
+    
+
+
+
+
+
 select *
 from item_qna;
 

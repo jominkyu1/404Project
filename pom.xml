@@ -11,6 +11,7 @@
   <groupId>net.404store</groupId>
   <artifactId>404project</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  <packaging>war</packaging>
   <name>404project</name>
   <description>Spring Boot 404Store Project</description>
   <properties>
@@ -23,12 +24,7 @@
       <artifactId>spring-boot-starter-oauth2-client</artifactId>
     </dependency>
     
-    <!-- Spring boot Devtools -->
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-devtools</artifactId>
-      <optional>true</optional>
-    </dependency>
+
     
     <!-- Validation(유효성 검증 어노테이션) -->
     <dependency>

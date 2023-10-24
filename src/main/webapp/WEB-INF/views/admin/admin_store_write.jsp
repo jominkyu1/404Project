@@ -28,6 +28,8 @@
     <h2 class="lead text-center fw-bold">특가스토어</h2><hr>
     
     <form:form modelAttribute="itemUploadForm" method="post" enctype="multipart/form-data">
+
+
       <!-- 에러처리 -->
       <spring:hasBindErrors name="itemUploadForm">
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -37,7 +39,7 @@
           </c:forEach>
         </div>
       </spring:hasBindErrors>
-      
+
       <div class="mb-3">
         <label for="name" class="form-label">상품명</label>
         <form:input path="name" class="form-control" />

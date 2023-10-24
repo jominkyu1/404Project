@@ -10,5 +10,6 @@
     <typeAlias type="net.store.project.vo.item.ItemQnaVO" alias="qna" />
     <typeAlias type="net.store.project.vo.admin.PageVO" alias="page" />
 	<typeAlias type="net.store.project.vo.bbs.BbsVO" alias="bbs"/>
+    <typeAlias type="net.store.project.vo.item.ItemVO" alias="item" />
   </typeAliases>
 </configuration>
