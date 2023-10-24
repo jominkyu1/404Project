@@ -66,7 +66,8 @@ create table bbs1(
     foreign key(board_no) references board (board_no)
 );
 select * from bbs1;
-
+delete from bbs1 where board_no=32;
+commit;
 insert into bbs1(bbs_no,bbs_filepath,bbs_originalFilename,board_no) 
 	 values(bbs1_no_seq.nextval,'1', '1', '43');
     
