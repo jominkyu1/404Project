@@ -20,11 +20,20 @@ import java.util.List;
 @Setter
 //@ToString
 @Entity
+@SequenceGenerator(
+        name="orders_seq_gename",
+        sequenceName="orders_seq",
+        initialValue=1,
+        allocationSize=1
+)
 @Table(name = "orders")
 public class OrderVO {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(
+            strategy=GenerationType.SEQUENCE,
+            generator="orders_seq_gename"
+    )
     private Long order_id;
 
     @CreationTimestamp //주문날짜
