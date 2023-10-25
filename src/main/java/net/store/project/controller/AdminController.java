@@ -5,14 +5,18 @@ import lombok.extern.slf4j.Slf4j;
 import net.store.project.api.ImageHandler;
 import net.store.project.repository.ItemQnaRepository;
 import net.store.project.repository.ItemRepository;
+import net.store.project.repository.OrderRepository;
 import net.store.project.repository.UserRepository;
 import net.store.project.service.ItemQnaService;
 import net.store.project.service.ItemService;
+import net.store.project.service.OrderService;
 import net.store.project.service.UserService;
 import net.store.project.vo.admin.PageVO;
 import net.store.project.vo.item.ItemQnaVO;
 import net.store.project.vo.item.ItemVO;
 import net.store.project.vo.item.form.ItemUploadForm;
+import net.store.project.vo.order.OrderStatus;
+import net.store.project.vo.order.OrderVO;
 import net.store.project.vo.user.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,6 +27,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -41,6 +46,8 @@ public class AdminController {
     private final ImageHandler imageHandler;
     private final ItemQnaRepository itemQnaRepository;
     private final ItemQnaService itemQnaService;
+    private final OrderRepository orderRepository;
+    private final OrderService orderService;
 
     @Autowired
     private ItemService itemService;
@@ -54,11 +61,18 @@ public class AdminController {
         model.addAttribute("count", count);
 
         List<ItemQnaVO> notAnsweredQnaList = itemQnaRepository.findAllByAnswered(0);// 0 미답변 1 답변
-        if(notAnsweredQnaList.size() > 10) model.addAttribute("qnaMore", true); // 10개 이상이면 더보기 버튼
         notAnsweredQnaList.sort(Comparator.comparing(ItemQnaVO::getRegdate).reversed()); // 최신순으로 정렬
 
         notAnsweredQnaList.subList(0, Math.min(notAnsweredQnaList.size(), 10)); // 10개만 가져오기
+        //미답변 상품문의 추가
         model.addAttribute("notAnsweredQnaList", notAnsweredQnaList);
+
+        //배송대기중인 주문만 모델에 담기
+        List<OrderVO> orders = orderRepository.findAll();
+        orders.removeIf(orderVO -> orderVO.getStatus() != OrderStatus.ORDER);
+        model.addAttribute("orders", orders);
+
+        //TODO 미답변 QNA추가
 
         return "admin/admin_main";
     }
@@ -149,9 +163,6 @@ public class AdminController {
     }
 
 
-
-
-
     //회원관리
     @GetMapping("/members")
     public String members(Model model){
@@ -164,7 +175,23 @@ public class AdminController {
         return "/admin/admin_members";
     }
 
+    @GetMapping("/members/delete/{user_id}")
+    public String memberDelete(@PathVariable Long user_id){
+        //진행중인 주문이 존재하면 탈퇴불가!
+        List<OrderVO> orderList = orderRepository.findAllByUser_Id(user_id);
 
+        if(!orderList.isEmpty()){
+            orderList.forEach(orderVO -> {
+                if(orderVO.getStatus() != OrderStatus.COMPLETE && orderVO.getStatus() != OrderStatus.CANCEL){
+                    throw new RuntimeException("진행중인 주문이 존재하므로 탈퇴할 수 없습니다.");
+                }
+            });}
+
+        //탈퇴시키는 로직
+        userService.deleteUser(user_id);
+
+        return "redirect:/admin/members";
+    }
 
     //상품문의
     @GetMapping("/item")                        /* default size = 10 */
@@ -194,6 +221,52 @@ public class AdminController {
         return "/admin/admin_item";
     }
 
+    //주문관리
+    @GetMapping("/orders")
+    public String orders(Model model,@RequestParam(defaultValue="all") String status){
+
+        List<OrderVO> orders = orderRepository.findAll();
+
+        // status -> all, order, delivery, complete, cancel
+        switch(status){
+            case "order": // 주문완료
+                orders.removeIf(orderVO -> orderVO.getStatus() != OrderStatus.ORDER);
+                status = "주문완료된 ";
+                break;
+            case "delivery": //배송중
+                orders.removeIf(orderVO -> orderVO.getStatus() != OrderStatus.DELIVERY);
+                status = "배송중인 ";
+                break;
+            case "complete": //배송완료
+                orders.removeIf(orderVO -> orderVO.getStatus() != OrderStatus.COMPLETE);
+                status = "배송완료된 ";
+                break;
+            case "cancel": //주문취소
+                orders.removeIf(orderVO -> orderVO.getStatus() != OrderStatus.CANCEL);
+                status = "주문취소된 ";
+                break;
+            case "all":
+                status = "전체 ";
+                break;
+        }
+
+        model.addAttribute("status", status);
+        model.addAttribute("orders", orders);
+
+        return "/admin/admin_orders";
+    }
+
+    //배송처리
+    @PostMapping("/orders")
+    public void orderProcess(Long order_id, HttpServletResponse response) throws IOException {
+        String trackingNum = orderService.setToDelivery(order_id);
+
+        response.setContentType("text/html; charset=UTF-8");
+        PrintWriter out = response.getWriter();
+
+        out.println("<script>alert('배송처리 되었습니다! \\n송장번호: " + trackingNum + "'); location.href='/admin/orders';</script>");
+    }
+
     private Map<String, Long> userCounts() {
         Map<String, Long> count = new HashMap<>();
 
@@ -203,8 +276,4 @@ public class AdminController {
 
         return count;
     }
-
-
-
-
 }
