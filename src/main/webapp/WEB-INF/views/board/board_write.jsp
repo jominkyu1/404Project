@@ -122,12 +122,14 @@
 								location.href = "/login";
 							</script>
 						</sec:authorize>
+						<sec:authorize access="isAuthenticated()">
 						<sec:authentication property="principal.user" var="user" />
 						<tr>
 							<th>이름</th>
 							<td><input name="board_name" id="board_name"
 								value="${user.username}" size="30" readonly /></td>
 						</tr>
+						</sec:authorize>
 						<tr>
 							<th>제목</th>
 							<td><input name="board_title" id="board_title" size="30" /></td>

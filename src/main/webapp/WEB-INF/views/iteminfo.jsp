@@ -72,7 +72,7 @@
             <p class="lead">
               ${item.description}
             </p>
-            <form method="get" action="/cart/add/${item.item_id}">
+            <form method="get" action="/cart/add/${item.item_id}" style="white-space: nowrap;">
             <div class="d-flex">
               <!--  -->
               <input
@@ -111,7 +111,7 @@
         <hr class="my-5">
         <!-- 상품 문의-->
         <div>
-          <table class="table">
+          <table class="table" style="white-space: nowrap;">
             <caption class="caption-top mb-3 text-center"><b>상품문의: ${qnaCount}개</b></caption>
             <thead class="table-light ">
               <tr>
