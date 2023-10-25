@@ -24,7 +24,7 @@ import net.store.project.vo.page.PageVO;
 
 @Controller
 @RequiredArgsConstructor
-public class BbsCotroller {
+public class BbsController {
 	
 	@Autowired
 	private BbsService bbsService;
