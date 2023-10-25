@@ -2,10 +2,12 @@ package net.store.project.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import lombok.RequiredArgsConstructor;
 import net.store.project.api.ImageHandler;
 import net.store.project.service.AdminBoardService;
 import net.store.project.service.BbsService;
@@ -21,6 +24,7 @@ import net.store.project.vo.board.BoardVO;
 import net.store.project.vo.page.PageVO;
 
 @Controller
+@RequiredArgsConstructor
 public class BbsCotroller {
 	
 	@Autowired
@@ -30,7 +34,9 @@ public class BbsCotroller {
 	@Autowired
 	private AdminBoardService adminBoardService;
 	
-
+	private final PasswordEncoder passwordEncoder;
+	
+	
 	//자료실 글쓰기 폼
 	@GetMapping("/bbs_write") // bbs_write라는 매핑주소 등록
 	public ModelAndView bbs_write(HttpServletRequest request) {
@@ -52,8 +58,11 @@ public class BbsCotroller {
 	@PostMapping("/bbs_write_ok")
     public String insertBoardWithFiles(BoardVO b, List<MultipartFile> bbs_file) {
 		List<BbsVO> bbsList = new ArrayList<>();
-		System.out.println(bbs_file.isEmpty());
-		System.out.println(bbs_file.size());
+
+		//게시판 비밀번호 암호화
+		String encodedPassword = passwordEncoder.encode(b.getBoard_pwd());
+		b.setBoard_pwd(encodedPassword);
+		
 		// 파일저장로직	
 		for(MultipartFile multipartFile : bbs_file) {
 			String dbFilePath = imageHandler.upload(multipartFile);
@@ -93,7 +102,8 @@ public class BbsCotroller {
 		p.setEndrow(p.getStartrow()+limit-1);//끝행번호
 
 		List<BoardVO> blist=this.bbsService.getBoardList(p);//검색전 목록
-
+				
+		
 		//총 페이지수
 		int maxpage=(int)((double)totalCount/limit+0.95);
 		//시작페이지(1,11,21 ..)

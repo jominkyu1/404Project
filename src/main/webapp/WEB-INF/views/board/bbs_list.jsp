@@ -103,9 +103,9 @@
 	<!-- 배너(header) 로드 -->
 	<jsp:include page="../include/header.jsp" />
 	<section>
-		<form method="get" action="board_list">
+		<form method="get" action="bbs_list">
 	<div id="bList_wrap">
-		<h2 class="bList_title">사용자 자료실 목록</h2>
+		<h2 class="bList_title">자료실 목록</h2>
 		<div class="bList_count">글개수: ${listcount}</div>
 		<table id="bList_t">
 			<tr>
@@ -158,7 +158,7 @@
    [이전]&nbsp;
    </c:if>
 				<c:if test="${page >1}">
-					<a href="board_list?page=${page-1}">[이전]</a>&nbsp;
+					<a href="bbs_list?page=${page-1}">[이전]</a>&nbsp;
    </c:if>
 
 				<%--쪽번호 출력부분 --%>
@@ -166,13 +166,13 @@
 					<c:if test="${a == page}"><${a}></c:if>
 
 					<c:if test="${a != page}">
-						<a href="board_list?page=${a}">[${a}]</a>&nbsp;
+						<a href="bbs_list?page=${a}">[${a}]</a>&nbsp;
     </c:if>
 				</c:forEach>
 
 				<c:if test="${page>=maxpage}">[다음]</c:if>
 				<c:if test="${page<maxpage}">
-					<a href="board_list?page=${page+1}">[다음]</a>
+					<a href="bbs_list?page=${page+1}">[다음]</a>
 				</c:if>
 			</c:if>
 
@@ -182,7 +182,7 @@
    [이전]&nbsp;
    </c:if>
 				<c:if test="${page >1}">
-					<a href="board_list?page=${page-1}&find_field=${find_field}&find_name=${find_name}">[이전]</a>&nbsp;
+					<a href="bbs_list?page=${page-1}&find_field=${find_field}&find_name=${find_name}">[이전]</a>&nbsp;
    </c:if>
 
 				<%--쪽번호 출력부분 --%>
@@ -190,13 +190,13 @@
 					<c:if test="${a == page}"><${a}></c:if>
 
 					<c:if test="${a != page}">
-						<a href="board_list?page=${a}&find_field=${find_field}&find_name=${find_name}">[${a}]</a>&nbsp;
+						<a href="bbs_list?page=${a}&find_field=${find_field}&find_name=${find_name}">[${a}]</a>&nbsp;
     </c:if>
 				</c:forEach>
 
 				<c:if test="${page>=maxpage}">[다음]</c:if>
 				<c:if test="${page<maxpage}">
-					<a href="board_list?page=${page+1}&find_field=${find_field}&find_name=${find_name}">[다음]</a>
+					<a href="bbs_list?page=${page+1}&find_field=${find_field}&find_name=${find_name}">[다음]</a>
 				</c:if>
 			</c:if>
 		</div>
@@ -206,7 +206,7 @@
 				onclick="location='bbs_write?page=${page}';" />
 			<c:if test="${(!empty find_field) &&  (!empty find_name)}">
 			  <input type="button" value="전체목록"
-			  onclick="location='board_list?page=${page}';" >
+			  onclick="location='bbs_list?page=${page}';" >
 			</c:if>			
 		</div>
 

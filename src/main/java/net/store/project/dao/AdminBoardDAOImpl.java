@@ -29,8 +29,7 @@ public class AdminBoardDAOImpl implements AdminBoardDAO {
 	public int insertBoard(BoardVO b) {
 		this.sqlSession.insert("ab_in", b);
 		int sequence = b.getBoard_no();
-		System.out.println("sequence::: " + sequence);
-		//TODO INSERT문 실행 후 PK값 반환받아서 리턴해주기
+
 		return sequence;
 	}//관리자 게시판 저장
 
