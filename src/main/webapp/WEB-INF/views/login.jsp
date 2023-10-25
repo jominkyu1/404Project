@@ -31,16 +31,9 @@
 	width: 100%;
 	height: 100%;
 }
-    .btn-container {
-        white-space: nowrap;
-        overflow: auto; /* 가로 스크롤바 표시 */
-    }
-    .btn {
-        display: inline-block;
-        min-width: 150px; /* 원하는 크기로 조절 */
-        margin-right: 10px; /* 버튼 사이 간격 설정 */
-    }
-
+.btn {
+    margin-right: 12px; /* 원하는 여백 크기로 조정 */
+}
 </style>
 <script>
 	function alertUpdated() {
@@ -74,42 +67,46 @@
 								aria-label="Close"></button>
 						</div>
 					</c:if>
-					<form method="post" class="col-auto p-3 border border2">
-						<label for="form-id" class="fw-bolder">아이디</label> <input
-							type="text" class="form-control mb-4" id="form-id"
-							name="username" required> <label for="form-pw"
-							class="fw-bolder ">비밀번호</label> <input type="password"
-							class="form-control mb-4" id="form-pw" name="password" required>
-						<!-- remember-me -->
-						<input type="checkbox" name="remember-me" id="remember-me"
-							class="form-check-input"> <label for="remember-me">자동
-							로그인</label>
+					<div style="max-width: 700px; margin: 0 auto; text-align: center;">
+						<form method="post" class="col-auto p-3 border border2"
+							style="white-space: nowrap; display: inline-block; text-align: left;">
+							<label for="form-id" class="fw-bolder">아이디</label> <input
+								type="text" class="form-control mb-4" id="form-id"
+								name="username" required> <label for="form-pw"
+								class="fw-bolder">비밀번호</label> <input type="password"
+								class="form-control mb-4" id="form-pw" name="password" required>
+							<input type="checkbox" name="remember-me" id="remember-me"
+								class="form-check-input"> <label for="remember-me">자동
+								로그인</label>
+							<hr>
+							<div class="p-2"
+								style="display: flex; justify-content: space-between; align-items: center;">
+								<input type="submit" class="btn btn-outline-secondary"
+									value="로그인" style="white-space: nowrap;"> <a
+									href="/find/pwd_find" class="btn btn-outline-secondary">아이디/비밀번호
+									찾기</a> <a href="/register" class="btn btn-secondary float-end">회원가입</a>
+							</div>
+						</form>
 
-						<hr>
-
-						<div class="p-2" style="white-space: nowrap; /* 줄 바꿈 방지 */">
-							<input type="submit" class="btn btn-outline-secondary"
-								value="로그인" style="white-space: nowrap;"> <a href="/find/pwd_find"
-								class="btn btn-outline-secondary">아이디/비밀번호 찾기</a> <a
-								href="/register" class="btn btn-secondary float-end">회원가입</a>
+						<!-- 소셜 로그인 폼 -->
+						<div style="text-align: center; white-space: nowrap;">
+							<a href="/oauth2/authorization/google"
+								style="margin-right: 10px; text-decoration: none;"> <img
+								src="/images/login/googlebtn.png" style="width: 130px;"
+								alt="GoogleLogin">
+							</a> <a href="/oauth2/authorization/naver"
+								style="margin-right: 10px; text-decoration: none; white-space: nowrap;">
+								<img src="/images/login/naverbtn.png" style="width: 130px;"
+								alt="NaverLogin">
+							</a> <a href="/oauth2/authorization/kakao"
+								style="text-decoration: none; white-space: nowrap;"> <img
+								src="/images/login/kakaobtn.png" style="width: 130px;"
+								alt="KakaoLogin">
+							</a>
 						</div>
-					</form>
-					<!-- 소셜 로그인 폼 TODO 위치 수정해야함... -->
-					<div style="text-align: center; white-space: nowrap; /* 줄 바꿈 방지 */">
-						<a href="/oauth2/authorization/google"
-							style="margin-right: 10px; text-decoration: none;"> <img
-							src="/images/login/googlebtn.png" style="width: 150px;"
-							alt="GoogleLogin">
-						</a> <a href="/oauth2/authorization/naver"
-							style="margin-right: 10px; text-decoration: none; white-space: nowrap; /* 줄 바꿈 방지 */"> <img
-							src="/images/login/naverbtn.png" style="width: 150px;"
-							alt="NaverLogin">
-						</a> <a href="/oauth2/authorization/kakao"
-							style="text-decoration: none; white-space: nowrap; /* 줄 바꿈 방지 */"> <img
-							src="/images/login/kakaobtn.png" style="width: 150px;"
-							alt="KakaoLogin">
-						</a>
 					</div>
+
+
 				</div>
 			</div>
 		</div>
