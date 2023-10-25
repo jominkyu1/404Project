@@ -10,6 +10,11 @@
             </a>
         </li>
         <li>
+            <a href="/admin/orders" class="nav-link text-black fw-bolder">
+                주문관리
+            </a>
+        </li>
+        <li>
             <a href="/admin/members" class="nav-link text-black fw-bolder">
                 회원관리
             </a>
@@ -26,17 +31,7 @@
         </li>
 
         <hr>
-
-        <li>
-            <a href="#" class="nav-link text-black fw-bolder">
-                추천
-            </a>
-        </li>
-        <li>
-            <a href="#" class="nav-link text-black fw-bolder">
-                구매가이드
-            </a>
-        </li>
+ 
         <li>
             <a href="/admin/store" class="nav-link text-black fw-bolder">
                 이번주특가

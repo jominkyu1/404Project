@@ -9,6 +9,7 @@ import net.store.project.vo.cart.CartItemVO;
 import net.store.project.vo.cart.CartVO;
 import net.store.project.vo.item.ItemVO;
 import net.store.project.vo.order.OrderItemVO;
+import net.store.project.vo.order.OrderStatus;
 import net.store.project.vo.order.OrderVO;
 import net.store.project.vo.user.UserVO;
 import org.springframework.stereotype.Service;
@@ -58,5 +59,27 @@ public class OrderService {
         cartItemRepository.deleteAll(cartItems);
 
         return order;
+    }
+
+    
+    /**
+     * 배송대기 -> 배송중으로 변경 후 송장번호 리턴
+     * */
+    @Transactional
+    public String setToDelivery(Long order_id) {
+        OrderVO order =
+                orderRepository.findById(order_id).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 주문입니다."));
+
+        if(order.getStatus().equals(OrderStatus.ORDER)){
+            order.setStatus(OrderStatus.DELIVERY);
+        } else {
+            throw new IllegalStateException("이미 배송 중 이거나 배송이 완료된 상품입니다!");
+        }
+        
+        //랜덤 송장번호 생성
+        String randomTrackingNumber = String.valueOf((int)(Math.random() * 1000000000));
+        order.setTracking(randomTrackingNumber);
+
+        return order.getTracking();
     }
 }
