@@ -111,11 +111,14 @@
      <input type="hidden" name="page" value="${page}" />
      <table id="aBw_t">
     <tr>
+    <sec:authorize access="isAuthenticated()">
+				<sec:authentication property="principal.user" var="user"/>
      <th>이름</th>
      <td>
      <input name="board_name" id="board_name" size="14" 
-     value="${b.board_name}"/>
+     value="${user.username}" readonly/>
      </td>
+     </sec:authorize>
     </tr>
     <tr>
      <th>제목</th>

@@ -2,7 +2,6 @@ package net.store.project.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -126,24 +125,4 @@ public class BbsCotroller {
 		return listM;
 	}//bbs_list()
 
-		//반복적인 관리자 로그인을 안하기 위한 코드 추가
-		/*public static boolean isAdminLogin(HttpServletResponse response, 
-				@AuthenticationPrincipal StoreUserDetails storeUserDetails) throws Exception{
-			
-			PrintWriter out = response.getWriter();
-			UserVO u = storeUserDetails.getUser();
-			
-			if(u == null || !u.getUsername().equals("admin")) {//관리자 로그아웃 되었을 때
-				out.println("<script>");
-				out.println("alert('관리자로 로그인 하세요!');");
-				out.println("location='login';");
-				out.println("</script>");
-				
-				return false;
-			}
-			return true;
-		}//isAdminLogin() */
-		
-		
-		
 }//BbsController class

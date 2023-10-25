@@ -8,12 +8,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import lombok.RequiredArgsConstructor;
 import net.store.project.security.StoreUserDetails;
 import net.store.project.service.AdminGongjiService;
 import net.store.project.vo.board.BoardVO;
@@ -21,10 +23,13 @@ import net.store.project.vo.page.PageVO;
 import net.store.project.vo.user.UserVO;
 
 @Controller
+@RequiredArgsConstructor
 public class AdminGongjiController {
 	
 	@Autowired
 	private AdminGongjiService adminGongjiService;
+	
+	private final PasswordEncoder passwordEncoder;
 	
 	//관리자 공지목록
 			@RequestMapping("/admin_gongji_list")
@@ -110,6 +115,10 @@ public class AdminGongjiController {
 				 * 저장되어 있다.
 				 */
 				response.setContentType("text/html;charset=UTF-8");
+				
+				//공지사항 비밀번호 암호화
+				String encodedPassword = passwordEncoder.encode(b.getBoard_pwd());
+				b.setBoard_pwd(encodedPassword);
 
 				if(isAdminLogin(response, storeUserDetails)){
 					this.adminGongjiService.insertGongji(b);//공지 저장

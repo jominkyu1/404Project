@@ -48,7 +48,7 @@
 		<!-- &gt;은 ~보다 크다(>), &lt;은 ~보다 작다(<) -->
 	</select>
 	
-	<!-- 관리자 게시판 저장 -->
+	<!-- 자료실 저장 -->
 	<insert id="ab_in" parameterType="board">
 	<selectKey keyProperty="board_no" order="AFTER" resultType="int">
         SELECT board_no_seq.currval FROM dual

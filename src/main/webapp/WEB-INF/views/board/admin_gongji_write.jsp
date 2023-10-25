@@ -116,6 +116,11 @@
 					<td><input name="board_name" id="board_name" value="${user.username}" size="14" readonly/></td>
 					</sec:authorize>
 				</tr>
+				<!-- 비밀번호 Hidden <th>비밀번호</th> -->
+				<tr>
+					<td><input type="hidden" name="board_pwd" id="board_pwd"
+					size="14" value="1234"/></td>
+				</tr>
 				<tr>
 					<th>제목</th>
 					<td><input name="board_title" id="board_title" size="35" />

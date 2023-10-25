@@ -17,12 +17,12 @@ public class AdminGongjiDAOImpl implements AdminGongjiDAO {
 
 	@Override
 	public int getListCount(PageVO p) {
-		return this.sqlSession.selectOne("ab_count",p);
+		return this.sqlSession.selectOne("ag_count",p);
 	}//검색전후 레코드 개수	
 
 	@Override
 	public List<BoardVO> getGongjiList(PageVO p) {
-		return this.sqlSession.selectList("ab_list", p);
+		return this.sqlSession.selectList("ag_list", p);
 	}//검색전후 목록
 
 	@Override

@@ -133,9 +133,16 @@
 							<td><input name="board_title" id="board_title" size="30" /></td>
 						</tr>
 						<tr>
+							<sec:authorize access="hasRole('ROLE_ADMIN')">
+							<!-- 비밀번호 Hidden <th>비밀번호</th> -->
+								<td><input type="hidden" name="board_pwd" id="board_pwd"
+								size="14" value="1234"/></td>
+							</sec:authorize>
+							<sec:authorize access="hasRole('ROLE_USER')">
 							<th>비밀번호</th>
-							<td><input type="password" name="board_pwd" id="board_pwd"
-								size="30" /></td>
+								<td><input type="password" name="board_pwd" id="board_pwd" size="30" />
+								</td>
+							</sec:authorize>
 						</tr>
 						<tr>
 							<th style="text-align: center;">내용</th>

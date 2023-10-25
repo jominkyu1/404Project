@@ -132,9 +132,9 @@
 							value="Re:${b.board_title}" /></td>
 					</tr>
 					<tr>
-						<th>비밀번호</th>
-						<td><input type="password" name="board_pwd" id="board_pwd"
-							size="14" /></td>
+						<!-- 비밀번호 Hidden <th>비밀번호</th> -->
+						<td><input type="hidden" name="board_pwd" id="board_pwd"
+						size="14" value="1234"/></td>
 					</tr>
 					<tr>
 						<th>내용</th>

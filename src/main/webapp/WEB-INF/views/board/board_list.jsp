@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
@@ -128,8 +128,6 @@
 				<ul class="nav nav-tabs">
 					<li class="nav-item"><a class="nav-link active"
 						aria-current="page" href="board_list" style="color: black;">게시판</a></li>
-					<%-- <li class="nav-item"><a class="nav-link" href="/admin_board_list"
-						style="color: black;">게시판</a></li> --%>
 					<li class="nav-item"><a class="nav-link" href="/bbs_list"
 						style="color: black;">자료실</a></li>
 					<li class="nav-item"><a class="nav-link" href="/admin_gongji_list"
@@ -148,7 +146,10 @@
 						<th width="14%" style="text-align: center;">작성자</th>
 						<th width="18%" style="text-align: center;">작성일</th>
 						<th width="10%" style="text-align: center;">조회수</th>
+						<sec:authorize access="hasRole('ROLE_ADMIN') ">
 						<th width="18%" style="text-align: center;">수정/삭제</th>
+						
+						</sec:authorize>
 					</tr>
 					<c:if test="${!empty blist}">
 						<c:forEach var="b" items="${blist}">
