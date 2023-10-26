@@ -26,10 +26,6 @@ public interface BoardDAO {
 
 	void delBoard(int board_no);
 
-	
-
-	
-	
-
-
+	//상단바에서 게시판 제목 검색
+	List<BoardVO> searchboard(String search);
 }

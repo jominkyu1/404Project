@@ -11,7 +11,7 @@ import net.store.project.service.ItemQnaService;
 import net.store.project.service.ItemService;
 import net.store.project.service.OrderService;
 import net.store.project.service.UserService;
-import net.store.project.vo.admin.PageVO;
+
 import net.store.project.vo.item.ItemQnaVO;
 import net.store.project.vo.item.ItemVO;
 import net.store.project.vo.item.form.ItemUploadForm;

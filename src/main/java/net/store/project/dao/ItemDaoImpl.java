@@ -5,6 +5,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
+
 @Repository
 public class ItemDaoImpl implements ItemDao{
 
@@ -20,4 +23,10 @@ public class ItemDaoImpl implements ItemDao{
     public void editProduct(ItemVO item) {
         this.sqlSession.update("updateItem", item);
     }
+
+    @Override
+    public List<ItemVO> searchItems(String search) {
+        return this.sqlSession.selectList("search", search);
+    }
+
 }
