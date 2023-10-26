@@ -10,7 +10,7 @@ import net.store.project.vo.board.BoardVO;
 import net.store.project.vo.page.PageVO;
 
 @Repository
-public class AdminGongjiDAOImpl implements AdminGongjiDAO {
+public class GongjiDAOImpl implements GongjiDAO {
 	
 	@Autowired
 	private SqlSession sqlSession;

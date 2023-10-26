@@ -17,8 +17,9 @@ public class BoardDAOImpl implements BoardDAO {
 	public SqlSession sqlSession;
 
 	@Override
-	public void insertBoard(BoardVO b) {
+	public int insertBoard(BoardVO b) {
 		this.sqlSession.insert("board_in",b);
+		return b.getBoard_no();
 		
 	}//게시판 저장
 

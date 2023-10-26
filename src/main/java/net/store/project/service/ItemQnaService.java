@@ -3,7 +3,7 @@ package net.store.project.service;
 import lombok.RequiredArgsConstructor;
 import net.store.project.dao.QnaDao;
 import net.store.project.repository.ItemQnaRepository;
-import net.store.project.vo.admin.PageVO;
+import net.store.project.vo.page.PageVO;
 import net.store.project.vo.item.ItemQnaVO;
 import net.store.project.vo.item.ItemVO;
 import org.springframework.beans.factory.annotation.Autowired;

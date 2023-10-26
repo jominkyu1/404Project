@@ -16,7 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import lombok.RequiredArgsConstructor;
 import net.store.project.api.ImageHandler;
-import net.store.project.service.AdminBoardService;
+//import net.store.project.service.AdminBoardService;
 import net.store.project.service.BbsService;
 import net.store.project.vo.bbs.BbsVO;
 import net.store.project.vo.board.BoardVO;
@@ -31,7 +31,7 @@ public class BbsController {
 	@Autowired
 	private ImageHandler imageHandler;
 	@Autowired
-	private AdminBoardService adminBoardService;
+	//private AdminBoardService adminBoardService;
 	
 	private final PasswordEncoder passwordEncoder;
 	
@@ -61,6 +61,7 @@ public class BbsController {
 		//게시판 비밀번호 암호화
 		String encodedPassword = passwordEncoder.encode(b.getBoard_pwd());
 		b.setBoard_pwd(encodedPassword);
+		b.setBoard_category("bbs");
 		
 		// 파일저장로직	
 		for(MultipartFile multipartFile : bbs_file) {
@@ -73,7 +74,7 @@ public class BbsController {
 			bbsList.add(bbs);
 		}
 
-        this.adminBoardService.insertBoardWithFiles(b, bbsList);
+       // this.adminBoardService.insertBoardWithFiles(b, bbsList);
         // filePath를 사용하여 파일 경로에 대한 작업 수행
         return "redirect:/bbs_list";//자료실 목록보기 매핑주소로 이동
     }

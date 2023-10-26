@@ -1,11 +1,11 @@
-package net.store.project.service;
+package net.store.project.dao;
 
 import java.util.List;
 
 import net.store.project.vo.board.BoardVO;
 import net.store.project.vo.page.PageVO;
 
-public interface AdminGongjiService {
+public interface GongjiDAO {
 
 	int getListCount(PageVO p);
 

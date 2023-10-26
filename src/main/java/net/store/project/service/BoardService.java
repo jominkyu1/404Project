@@ -2,6 +2,7 @@ package net.store.project.service;
 
 import java.util.List;
 
+import net.store.project.vo.bbs.BbsVO;
 import net.store.project.vo.board.BoardVO;
 import net.store.project.vo.page.PageVO;
 
@@ -24,6 +25,8 @@ public interface BoardService {
 	void editBoard(BoardVO eb);
 
 	void delBoard(int board_no);
+	
+	void insertBoardWithFiles(BoardVO b, List<BbsVO> bbsList);
 
 	
 

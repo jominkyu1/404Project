@@ -5,15 +5,15 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import net.store.project.dao.AdminGongjiDAO;
+import net.store.project.dao.GongjiDAO;
 import net.store.project.vo.board.BoardVO;
 import net.store.project.vo.page.PageVO;
 
 @Service
-public class AdminGongjiServiceImpl implements AdminGongjiService {
+public class GongjiServiceImpl implements GongjiService {
 	
 	@Autowired
-	private AdminGongjiDAO adminGongjiDAO;
+	private GongjiDAO adminGongjiDAO;
 
 	@Override
 	public int getListCount(PageVO p) {

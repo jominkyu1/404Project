@@ -130,7 +130,7 @@
 						aria-current="page" href="board_list" style="color: black;">게시판</a></li>
 					<li class="nav-item"><a class="nav-link" href="/bbs_list"
 						style="color: black;">자료실</a></li>
-					<li class="nav-item"><a class="nav-link" href="/admin_gongji_list"
+					<li class="nav-item"><a class="nav-link" href="/gongji_list"
 						style="color: black;">공지사항</a></li>
 				</ul>
 				<br>
@@ -156,7 +156,7 @@
 							<tr>
 								<td align="center"><c:if test="${b.board_step == 0}">
 										<%-- 원본글일때만 그룹번호가 출력 --%>
-     ${b.board_ref}
+     ${b.board_ref}  
     </c:if></td>
 								<td><c:if test="${b.board_step != 0}">
 										<%--답변글일때만 실행--%>
@@ -175,11 +175,10 @@ get방식으로 &구분하면서 전달된다. --%></td>
 								<sec:authorize access="hasRole('ROLE_ADMIN')">
 									<sec:authentication property="principal.user" var="user" />
 									<td align="center"><input type="button" value="수정"
-										onclick="location=
-								'admin_board_cont?no=${b.board_no}&page=${page}&state=edit';" />
+										onclick="location= 'board_cont?no=${b.board_no}&page=${page}&state=edit';" />
 										<input type="button" value="삭제"
 										onclick="if(confirm('정말로 삭제할까요?') == true){
-								location='admin_board_del?no=${b.board_no}&page=${page}';}else{ return ;}" />
+								location='board_del_ok?no=${b.board_no}&page=${page}&state=del';}else{ return ;}" />
 									</td>
 								</sec:authorize>
 
@@ -216,8 +215,6 @@ get방식으로 &구분하면서 전달된다. --%></td>
 					style="position: absolute; right: 30px; font-size: 12px;"
 						class="btn btn-outline-dark btn-lg">글쓰기 <c:if
 							test="${(!empty find_field) && (!empty find_name)}">
-							<input type="button" value="전체목록"
-								onclick="location='board_list?page=${page}';" />
 						</c:if>
 					</a>
 				</div>

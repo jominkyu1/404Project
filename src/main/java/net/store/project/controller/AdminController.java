@@ -9,7 +9,7 @@ import net.store.project.repository.UserRepository;
 import net.store.project.service.ItemQnaService;
 import net.store.project.service.ItemService;
 import net.store.project.service.UserService;
-import net.store.project.vo.admin.PageVO;
+import net.store.project.vo.page.PageVO;
 import net.store.project.vo.item.ItemQnaVO;
 import net.store.project.vo.item.ItemVO;
 import net.store.project.vo.item.form.ItemUploadForm;

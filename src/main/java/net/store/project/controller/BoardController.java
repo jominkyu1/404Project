@@ -11,9 +11,10 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -32,8 +33,7 @@ public class BoardController {
 	
 
 	//사용자 게시판 글쓰기 폼
-	@RequestMapping(value="/board_write"
-			,method=RequestMethod.GET)
+	@GetMapping("/board_write")
 	//get으로 접근하는 매핑주소를 처리한다.
 	public String board_write(HttpServletRequest request,
 			Model m) {
@@ -42,13 +42,14 @@ public class BoardController {
 			page=Integer.parseInt(request.getParameter("page"));			
 		}
 		m.addAttribute("page",page);//키,값 쌍으로 쪽번호 저장
+		
+		
 		return "board/board_write";//WEB-INF/views/board/
 		//board_write.jsp 뷰페이지 경로와 파일명
 	}//board_write()
 
 	//게시판 저장
-	@RequestMapping(value="/board_write_ok",
-			method=RequestMethod.POST)
+	@PostMapping(value="/board_write_ok")
 	//POST방식으로 접근하는 매핑주소를 처리
 	public ModelAndView board_write_ok(
 		@ModelAttribute BoardVO b,
@@ -59,6 +60,7 @@ public class BoardController {
 		//비밀번호 암호화
 		String encodedPassword = passwordEncoder.encode(b.getBoard_pwd());
 		b.setBoard_pwd(encodedPassword);
+		b.setBoard_category("qna");
 		
 		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter out=response.getWriter();
@@ -171,8 +173,8 @@ public class BoardController {
 			return "board/board_reply";
 		}else if(state.equals("edit")) {//수정폼
 			return "board/board_edit";
-		}else if(state.equals("del")) {//삭제폼
-			return "board/board_del";
+		//}else if(state.equals("del")) {//삭제폼
+			//return "board_del_ok";
 		}
 		return null;
 	}//board_cont()
@@ -246,6 +248,25 @@ public class BoardController {
 			//내용보기로 이동.	 
 		}
 		return null;
-	}
+	}//board_edit_ok()
+	
+	//삭제 완료
+		@RequestMapping("/board_del_ok")
+		public String board_del_ok(
+				@RequestParam("no") int board_no,
+				HttpServletResponse response,
+				HttpServletRequest request)
+						throws Exception{
+			response.setContentType("text/html;charset=UTF-8");
+			int page=1;
+			if(request.getParameter("page") != null) {
+				page=Integer.parseInt(request.getParameter("page"));
+			}
+			//오라클 디비로 부터 비번을 가져옴.
+			
+				this.boardService.delBoard(board_no);//게시판 삭제
+				return "redirect:/board_list?page="+page;
+		
+		}//board_del_ok()
 	
 }

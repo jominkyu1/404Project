@@ -10,7 +10,7 @@ import net.store.project.vo.page.PageVO;
 @Repository
 public interface BoardDAO {
 
-	void insertBoard(BoardVO b);
+	int insertBoard(BoardVO b);
 
 	List<BoardVO> getBoardList(PageVO p);
 	

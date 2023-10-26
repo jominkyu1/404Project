@@ -17,23 +17,23 @@ import org.springframework.web.servlet.ModelAndView;
 
 import lombok.RequiredArgsConstructor;
 import net.store.project.security.StoreUserDetails;
-import net.store.project.service.AdminGongjiService;
+import net.store.project.service.GongjiService;
 import net.store.project.vo.board.BoardVO;
 import net.store.project.vo.page.PageVO;
 import net.store.project.vo.user.UserVO;
 
 @Controller
 @RequiredArgsConstructor
-public class AdminGongjiController {
+public class GongjiController {
 	
 	@Autowired
-	private AdminGongjiService adminGongjiService;
+	private GongjiService adminGongjiService;
 	
 	private final PasswordEncoder passwordEncoder;
 	
-	//관리자 공지목록
-			@RequestMapping("/admin_gongji_list")
-			public ModelAndView admin_gongji_list(@ModelAttribute PageVO p,HttpServletRequest request,
+	//공지목록
+			@RequestMapping("/gongji_list")
+			public ModelAndView gongji_list(@ModelAttribute PageVO p,HttpServletRequest request,
 					@AuthenticationPrincipal StoreUserDetails storeUserDetails,HttpServletResponse response) throws Exception{
 				response.setContentType("text/html;charset=UTF-8");
 
@@ -69,7 +69,7 @@ public class AdminGongjiController {
 					int endpage=maxpage;
 					if(endpage > startpage+10-1) endpage=startpage+10-1;
 
-					ModelAndView listM=new ModelAndView("board/admin_gongji_list");
+					ModelAndView listM=new ModelAndView("board/gongji_list");
 
 					listM.addObject("glist",glist);
 					//glist 키이름에 값 저장
@@ -84,7 +84,7 @@ public class AdminGongjiController {
 					return listM;
 				//}
 				//return null;
-			}//admin_gongji_list()
+			}//gongji_list()
 			
 			//관리자 공지 작성
 			@RequestMapping("/admin_gongji_write")
@@ -123,7 +123,7 @@ public class AdminGongjiController {
 				if(isAdminLogin(response, storeUserDetails)){
 					this.adminGongjiService.insertGongji(b);//공지 저장
 
-					return new ModelAndView("redirect:/admin_gongji_list");
+					return new ModelAndView("redirect:/gongji_list");
 				}
 				return null;
 			}//admin_gongji_write_ok()
@@ -177,7 +177,7 @@ public class AdminGongjiController {
 						page=Integer.parseInt(request.getParameter("page"));
 					}
 					this.adminGongjiService.editGongji(b);//공지 수정
-					return new ModelAndView("redirect:/admin_gongji_list?page="+page);
+					return new ModelAndView("redirect:/gongji_list?page="+page);
 				}
 				return null;
 			}//admin_gongji_edit_ok()
@@ -197,7 +197,7 @@ public class AdminGongjiController {
 					}
 					this.adminGongjiService.delGongji(no);//공지 삭제
 
-					return "redirect:/admin_gongji_list?page="+page;
+					return "redirect:/gongji_list?page="+page;
 				}
 				return null;
 			}//admin_gongji_del()
