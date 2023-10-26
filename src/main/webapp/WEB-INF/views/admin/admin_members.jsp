@@ -83,137 +83,21 @@
                     </tr>
                 </c:forEach>
                 </tbody>
-
             </table>
+            <jsp:include page="../paging/paging.jsp">
+                <jsp:param name="paging" value="${paging}"/>
+            </jsp:include>
+            
+            <form class="mb-3">
+                    <input type="text" id="search" name="search" placeholder="ID 검색">
+                    <button type="submit" class="btn btn-outline-secondary btn-sm">검색</button>
+            </form>
         </div>
-
     </div>
-
-
-
-
-
 </section>
 <!-- 푸터 (footer.html) -->
 <jsp:include page="../include/footer.jsp" />
-
-
-<!-- 미답변 상품문의 모달 -->
-<div class="modal fade" id="answerModal" tabindex="-1" aria-labelledby="answerModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="answerModalLabel">답변 작성</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-
-                <form method="post" action="/admin/answer?type=item">
-                    <div class="mb-3">
-                        <label for="answerText" class="form-label">답변 내용</label>
-                        <textarea class="form-control" id="answerText" rows="6" name="answered_text"></textarea>
-                        <!-- ItemQnaVO PK값 -->
-                        <input type="hidden" id="selectedQnaId" name="item_qna_id" value="">
-
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                        <button type="submit" class="btn btn-primary" >답변 작성</button>
-                    </div>
-                </form>
-            </div>
-
-        </div>
-    </div>
-</div>
 </body>
-<script>
-    $(document).on('show.bs.modal', '#answerModal',function(event){
-        var triggerElement = $(event.relatedTarget);
-        var qnaId = triggerElement.data('qna-id');
-        $('#selectedQnaId').val(qnaId);
-
-        $('#answerText').focus();
-    });
-</script>
-
-<%--페이징 즉 쪽나누기 추가 --%>
-<div id="bList_paging">
-    <%-- 검색전 페이징 --%>
-    <c:if test="${(empty find_field) && (empty find_name)}">
-        <c:if test="${page<=1}">
-            [이전]&nbsp;
-        </c:if>
-        <c:if test="${page>1}">
-            <a href="admin_bbs_list?page=${page-1}">[이전]</a>&nbsp;
-        </c:if>
-
-        <%--현재 쪽번호 출력--%>
-        <c:forEach var="a" begin="${startpage}" end="${endpage}" step="1">
-            <c:if test="${a == page}">
-                <%--현재 페이지가 선택되었다면--%>
-                <${a}>
-            </c:if>
-            <c:if test="${a != page}">
-                <%--현재 페이지가 선택되지 않았
-다면 --%>
-                <a href="admin_bbs_list?page=${a}">[${a}]</a>&nbsp;
-            </c:if>
-        </c:forEach>
-
-        <c:if test="${page >= maxpage}">
-            [다음]
-        </c:if>
-        <c:if test="${page<maxpage}">
-            <a href="admin_bbs_list?page=${page+1}">[다음]</a>
-        </c:if>
-    </c:if>
-
-    <%-- 검색후 페이징 --%>
-    <c:if test="${(!empty find_field) || (!empty find_name)}">
-        <c:if test="${page<=1}">
-            [이전]&nbsp;
-        </c:if>
-        <c:if test="${page>1}">
-            <a
-                    href="admin_bbs_list?page=${page-1}&find_field=${find_field}&find_name=${find_name}">[이전]</a>&nbsp;
-        </c:if>
-
-        <%--현재 쪽번호 출력--%>
-        <c:forEach var="a" begin="${startpage}" end="${endpage}" step="1">
-            <c:if test="${a == page}">
-                <%--현재 페이지가 선택되었다면--%>
-                <${a}>
-            </c:if>
-            <c:if test="${a != page}">
-                <%--현재 페이지가 선택되지 않았
-다면 --%>
-                <a
-                        href="admin_bbs_list?page=${a}&find_field=${find_field}&find_name=${find_name}">[${a}]</a>&nbsp;
-            </c:if>
-        </c:forEach>
-
-        <c:if test="${page >= maxpage}">
-            [다음]
-        </c:if>
-        <c:if test="${page<maxpage}">
-            <a
-                    href="admin_bbs_list?page=${page+1}&find_field=${find_field}&find_name=${find_name}">[다음]</a>
-        </c:if>
-    </c:if>
-</div>
-
-<div id="bList_menu">
-    <input type="button" value="글쓰기"
-           onclick="location='admin_bbs_write?page=${page}';" />
-    <c:if test="${(!empty find_field) &&
-   (!empty find_name)}">
-        <input type="button" value="전체목록"
-               onclick="location='admin_bbs_list?page=${page}';" />
-    </c:if>
-</div>
-<!-- 페이징 쪽수 나누기 END-->
 
 <!-- Bootstrap core JS-->
 <script src="/js/bootstrap.bundle.js"></script>

@@ -103,33 +103,11 @@
                 </c:forEach>
                 </tbody>
             </table>
-            <!-- 페이징 처리 -->
-            <div class="pagination">
-                <a href="?page=${previous}"
-                   <c:if test="${hasPrevious == false }">
-                       class="text-warning"
-                       onclick="return false;"
-                   </c:if>
-                >이전</a>
-                <c:forEach begin="${startPage}" end="${endPage}" var="num">
-                    <a href="?page=${num - 1}" style="margin: 0 5px;"
-                       <c:if test="${num == items.number+1}">
-                           class="text-warning"
-                           onclick="return false;"
-                       </c:if>
-                    >${num}</a>
-                </c:forEach>
-                
-                <a href="?page=${next}"
-                    <c:if test="${hasNext == false}">
-                        class="text-warning"
-                        onclick="return false;"
-                    </c:if>
-                >다음</a>
-            </div>
-            <!-- 페이징 처리 -->
+            
+            <jsp:include page="../paging/paging.jsp">
+                <jsp:param name="paging" value="${paging}"/>
+            </jsp:include>
         </div>
-        
     </div>
 </section>
 <!-- 푸터 (footer.html) -->

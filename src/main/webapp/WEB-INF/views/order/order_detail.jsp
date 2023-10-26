@@ -169,7 +169,7 @@
               </div><!-- end table responsive -->
               <div class="d-print-none mt-4">
                 <div class="float-end">
-                  <a href="/user/orders" class="btn btn-secondary">목록으로</a>
+                  <a href="#" class="btn btn-secondary" onclick="history.back()">목록으로</a>
                 </div>
               </div>
             </div>
