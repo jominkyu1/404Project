@@ -5,8 +5,11 @@ import lombok.extern.slf4j.Slf4j;
 import net.store.project.repository.OrderRepository;
 import net.store.project.repository.UserRepository;
 import net.store.project.security.StoreUserDetails;
+import net.store.project.service.ItemQnaService;
+import net.store.project.service.ItemService;
 import net.store.project.service.OrderService;
 import net.store.project.service.UserService;
+import net.store.project.vo.item.ItemVO;
 import net.store.project.vo.order.OrderStatus;
 import net.store.project.vo.order.OrderVO;
 import net.store.project.vo.user.UserVO;
@@ -39,6 +42,7 @@ public class UserController {
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
     private final OrderRepository orderRepository;
+
 
     @GetMapping("/{id}")
     public String userInfo(@PathVariable Long id,
@@ -181,13 +185,7 @@ public class UserController {
     }
 
 
-    @GetMapping("/search")
-    public ModelAndView Search(@RequestParam String search){
 
-
-        //form태그로 받기
-        return null;
-    }
 
 
 
