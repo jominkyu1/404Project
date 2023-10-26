@@ -46,23 +46,23 @@
 
 	<!-- 검색 전후 레코드 개수 -->
 	<select id="board_row" parameterType="page" resultType="int">
-		select count(*) from board
-		<where>
-			<if test="find_field == ''">
-				<!-- 검색조건이 없어서 총레코드 개수 -->
-				 and board_category = 'qna'
-			</if>
-			<if test="find_field == 'board_title'">
-				<!-- 검색 조건이 제목인 경우 -->
-				board_title like #{find_name}  <!-- like는 오라클 검색 연산자 -->
-				and board_category = 'qna'			
-			</if>
-			<if test="find_field == 'board_cont'">
-				board_cont like #{find_name}  
-				and board_category = 'qna'				
-			</if>
-		</where>
-	</select>
+    select count(*) from board
+    <where>
+            <if test="find_field == ''">
+                <!-- 검색조건이 없어서 총레코드 개수 -->
+                and board_category = 'qna'
+            </if>
+            <if test="find_field == 'board_title'">
+                <!-- 검색 조건이 제목인 경우 -->
+                board_title like #{find_name}  <!-- like는 오라클 검색 연산자 -->
+                and board_category = 'qna'         
+            </if>
+            <if test="find_field == 'board_cont'">
+                board_cont like #{find_name}  
+                and board_category = 'qna'            
+            </if>
+    </where>
+</select>
 
 	<!-- 내용보기 -->
 	<select id="board_co" resultType="board">
