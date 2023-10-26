@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!-- 더미이미지(데모이미지) 사용시
     <img src="https://placehold.it/가로x세로">
     로 적용 후 확인해보면 자동으로 그 사이즈에 맞게 불러옴
@@ -86,10 +87,22 @@
                 <c:forEach items="${orders}" var="order">
                     <tr>
                         <td>${order.order_id}</td>
-                        <td>사과 외 2개</td>
-                        <td>500,000원</td>
+                        <td>
+                            ${order.orderItems[0].itemVO.name}
+                            <c:set var="moreCount" value="${fn:length(order.orderItems) -1}" />
+                            <c:if test="${moreCount > 0}">
+                            외 ${moreCount}개
+                            </c:if>
+                        </td>
+                        <!-- 주문 총 금액 -->
+                        <c:set var="totalPrice" value="0" />
+                        <c:forEach items="${order.orderItems}" var="orderItem">
+                            <c:set var="totalPrice" value="${totalPrice + (orderItem.price * orderItem.quantity)}" />
+                            <fmt:formatNumber value="${totalPrice}" type="number" var="totalPrice"/>
+                        </c:forEach>
+                        <td>${totalPrice}원</td>
                         <td>${order.order_date}</td>
-                        <td>주문완료</td>
+                        <td>${order.status.value}</td>
                     </tr>
                 </c:forEach>
                 </tbody>

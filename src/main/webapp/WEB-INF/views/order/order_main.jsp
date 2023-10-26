@@ -201,10 +201,11 @@
       IMP.request_pay({
           pg: 'kakaopay',
           pay_method: 'card',
+          //우리서버에서 사용할 주문식별번호
           merchant_uid: 'merchant' + new Date().getTime(),
           
           name: '404Store 상품결제',
-          amount: totalPrice,
+          amount: totalPrice, //총결제금액
           buyer_email: 'jominkyu@gmail.com',
           buyer_name: '조민규',
           buyer_tel: '010-3678-6474',
@@ -214,7 +215,7 @@
             if(rsp.success){
                 alert('주문이 완료되었습니다.');
                 
-                //TODO : 결제완료 후 주문정보를 DB에 저장하고, 주문완료 페이지로 이동
+                //결제완료 후 주문정보를 DB에 저장하고, 주문완료 페이지로 이동
                 $.ajax(
                     {
                         url: '/order/${cart_id}',

@@ -72,4 +72,9 @@ public class ItemVO {
         }
         this.stockQuantity = restStock;
     }
+
+    //주문취소시 재고 증가
+    public void addStock(int count){
+        this.stockQuantity = this.stockQuantity + count;
+    }
 }

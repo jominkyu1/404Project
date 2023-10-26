@@ -3,6 +3,7 @@ package net.store.project.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.store.project.api.ImageHandler;
+import net.store.project.api.PageableHandler;
 import net.store.project.repository.ItemQnaRepository;
 import net.store.project.repository.ItemRepository;
 import net.store.project.repository.OrderRepository;
@@ -11,12 +12,12 @@ import net.store.project.service.ItemQnaService;
 import net.store.project.service.ItemService;
 import net.store.project.service.OrderService;
 import net.store.project.service.UserService;
-import net.store.project.vo.admin.PageVO;
 import net.store.project.vo.item.ItemQnaVO;
 import net.store.project.vo.item.ItemVO;
 import net.store.project.vo.item.form.ItemUploadForm;
 import net.store.project.vo.order.OrderStatus;
 import net.store.project.vo.order.OrderVO;
+import net.store.project.vo.page.JpaPagingDto;
 import net.store.project.vo.user.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -48,6 +49,7 @@ public class AdminController {
     private final ItemQnaService itemQnaService;
     private final OrderRepository orderRepository;
     private final OrderService orderService;
+    private final PageableHandler pageableHandler;
 
     @Autowired
     private ItemService itemService;
@@ -95,6 +97,8 @@ public class AdminController {
     @GetMapping("/store")
     public String admin_Store(Model model){
         List<ItemVO> itemList = itemRepository.findAll();
+        //최신순으로
+        itemList.sort(Comparator.comparing(ItemVO::getRegdate).reversed());
         model.addAttribute("itemlist", itemList);
         return "admin/admin_store";
     }
@@ -131,16 +135,8 @@ public class AdminController {
     @GetMapping("/item/{itemId}/edit")
     public String editProductForm(@PathVariable Long itemId, Model model){
 
-        //GET요청일경우 처리
         ItemVO item = this.itemService.findById(itemId);
-        System.out.println("상품정보:" + item);
         model.addAttribute("item", item);
-
-        //select update 구현
-
-        //id ->쿼리로 객체 가져오기 -> jsp로 뿌려주기 ->submit 시 update문
-
-    //아이템의 id jsp에서 넘기기
 
         return "/admin/admin_store_edit";
     }
@@ -165,9 +161,24 @@ public class AdminController {
 
     //회원관리
     @GetMapping("/members")
-    public String members(Model model){
-        Long count = userRepository.count();
-        List<UserVO> list = userRepository.findAll();
+    public String members(Model model, @PageableDefault Pageable pageable,
+                          @RequestParam(required = false) String search){
+        Page<UserVO> all;
+
+        //검색결과처리
+        if(search != null){
+            all = userRepository.findByUsernameLike("%" + search + "%", pageable);
+        } else {
+            all = userRepository.findAll(pageable);
+        }
+
+        Long count = all.getTotalElements();
+        List<UserVO> list = all.getContent();
+
+        //페이징
+        JpaPagingDto paging = pageableHandler.makePages(pageable, all, 3);
+        model.addAttribute("paging", paging);
+
 
         model.addAttribute("userList", list);
         model.addAttribute("memberCount", count); //회원수
@@ -195,25 +206,13 @@ public class AdminController {
 
     //상품문의
     @GetMapping("/item")                        /* default size = 10 */
-    public String item (Model model, @PageableDefault(size = 10, sort={"answered", "regdate"}) Pageable pageable){
+    public String item (Model model, @PageableDefault(sort={"answered", "regdate"}) Pageable pageable){
         //페이징
         Page<ItemQnaVO> items = itemQnaRepository.findAll(pageable);
         model.addAttribute("items", items);
 
-        int previous = pageable.previousOrFirst().getPageNumber();
-        int next = pageable.next().getPageNumber();
-
-        model.addAttribute("previous", previous);
-        model.addAttribute("next", next);
-        model.addAttribute("hasPrevious", items.hasPrevious());
-        model.addAttribute("hasNext", items.hasNext());
-
-        int blockLimit = 3;
-        int startPage = Math.max(1, (((int) Math.ceil((double) pageable.getPageNumber() / blockLimit)) -1) * blockLimit +1);
-        int endPage = Math.min((startPage + blockLimit -1), items.getTotalPages());
-
-        model.addAttribute("startPage", startPage);
-        model.addAttribute("endPage", endPage);
+        JpaPagingDto jpaPagingDto = pageableHandler.makePages(pageable, items, 3);
+        model.addAttribute("paging", jpaPagingDto);
 
         Long count = itemQnaRepository.count();
         model.addAttribute("qnaCount", count); //해당 상품에대한 문의글 갯수
@@ -223,35 +222,22 @@ public class AdminController {
 
     //주문관리
     @GetMapping("/orders")
-    public String orders(Model model,@RequestParam(defaultValue="all") String status){
+    public String orders(Model model,
+                         @RequestParam(defaultValue="ALL") String status,
+                         @PageableDefault(sort = "status") Pageable pageable){
 
-        List<OrderVO> orders = orderRepository.findAll();
+        Page<OrderVO> orders = orderService.findAllByStatus(pageable, status);
+        JpaPagingDto jpaPagingDto = pageableHandler.makePages(pageable, orders, 3);
+        
+        List<OrderVO> orderitems = orders.getContent();
 
-        // status -> all, order, delivery, complete, cancel
-        switch(status){
-            case "order": // 주문완료
-                orders.removeIf(orderVO -> orderVO.getStatus() != OrderStatus.ORDER);
-                status = "주문완료된 ";
-                break;
-            case "delivery": //배송중
-                orders.removeIf(orderVO -> orderVO.getStatus() != OrderStatus.DELIVERY);
-                status = "배송중인 ";
-                break;
-            case "complete": //배송완료
-                orders.removeIf(orderVO -> orderVO.getStatus() != OrderStatus.COMPLETE);
-                status = "배송완료된 ";
-                break;
-            case "cancel": //주문취소
-                orders.removeIf(orderVO -> orderVO.getStatus() != OrderStatus.CANCEL);
-                status = "주문취소된 ";
-                break;
-            case "all":
-                status = "전체 ";
-                break;
-        }
+        //Pageable객체에서 sort가 가능하지만 필드명이 언더바(_)가 존재하면 안되므로 직접 정렬
+        List<OrderVO> list = new ArrayList<>(orderitems);
+        list.sort(Comparator.comparing(OrderVO::getOrder_date).reversed());
 
         model.addAttribute("status", status);
-        model.addAttribute("orders", orders);
+        model.addAttribute("orders", list);
+        model.addAttribute("paging", jpaPagingDto);
 
         return "/admin/admin_orders";
     }
@@ -265,6 +251,14 @@ public class AdminController {
         PrintWriter out = response.getWriter();
 
         out.println("<script>alert('배송처리 되었습니다! \\n송장번호: " + trackingNum + "'); location.href='/admin/orders';</script>");
+    }
+
+    //주문취소처리
+    @GetMapping("/orders/cancel/{order_id}")
+    public String orderCancel(@PathVariable Long order_id){
+        //주문의 상태를 취소로 변경 + 주문한 갯수만큼 아이템의 재고 증가처리
+        orderService.cancelOrder(order_id);
+        return "redirect:/admin/orders";
     }
 
     private Map<String, Long> userCounts() {
