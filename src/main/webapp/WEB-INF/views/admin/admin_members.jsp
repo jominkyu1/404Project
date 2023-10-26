@@ -56,13 +56,12 @@
               align-middle">
                 <thead class="table-light">
                 <tr>
+                    <th>#</th>
                     <th>아이디</th>
-                    <th>이름</th>
                     <th>휴대폰</th>
                     <th>가입일</th>
                     <th>권한</th>
                     <th>개인정보</th>
-                    <th>탈퇴현황</th>
                     <th>탈퇴시키기</th>
 
                 </tr>
@@ -76,9 +75,11 @@
                         <td>${user.regdate}</td>
                         <td>${user.usergrade}</td>
                         <td>${user.address1}</td>
-                        <td></td>
-                        <td></td>
-
+                        <td>
+                            <a href="/admin/members/delete/${user.user_id}"
+                               class="btn btn-danger mx-auto"
+                               onclick="return confirm('정말 탈퇴시키시겠습니까? 정보는 즉시삭제되며 복구될 수 없습니다.')">탈퇴</a>
+                        </td>
                     </tr>
                 </c:forEach>
                 </tbody>

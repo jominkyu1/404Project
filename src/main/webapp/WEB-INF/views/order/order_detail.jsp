@@ -63,7 +63,20 @@
               <h4 class="float-end font-size-15">
                 주문번호 #1
                 <span class="badge bg-success font-size-12 ms-2">
-                결제완료
+                  <c:choose>
+                    <c:when test="${order.status == 'ORDER'}">
+                      <span style="color: #0a53be">주문완료</span>
+                    </c:when>
+                    <c:when test="${order.status == 'CANCEL'}">
+                      <span style="color: red">주문취소</span>
+                    </c:when>
+                    <c:when test="${order.status == 'DELIVERY'}">
+                      <span style="color: #ffc107">배송중</span>
+                    </c:when>
+                    <c:when test="${order.status == 'COMPLETE'}">
+                      <span class="fw-bold">배송완료</span>
+                    </c:when>
+                  </c:choose>
                 </span>
               </h4>
               <div class="mb-4">

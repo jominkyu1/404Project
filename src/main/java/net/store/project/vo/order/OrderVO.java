@@ -52,6 +52,8 @@ public class OrderVO {
 
     private String merchant_uid; //카카오페이결제시 필요한 주문번호
 
+    private String tracking; //배송조회번호
+
     /**
      * 주문생성 편의 메소드
      * */

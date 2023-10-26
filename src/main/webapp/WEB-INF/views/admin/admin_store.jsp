@@ -71,5 +71,5 @@
     </body>
 
     <!-- Bootstrap core JS-->
-    <script src="js/bootstrap.bundle.js"></script>
+    <script src="/js/bootstrap.bundle.js"></script>
 </html>
