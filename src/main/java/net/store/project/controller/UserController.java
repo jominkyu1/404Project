@@ -5,8 +5,11 @@ import lombok.extern.slf4j.Slf4j;
 import net.store.project.repository.OrderRepository;
 import net.store.project.repository.UserRepository;
 import net.store.project.security.StoreUserDetails;
+import net.store.project.service.ItemQnaService;
+import net.store.project.service.ItemService;
 import net.store.project.service.OrderService;
 import net.store.project.service.UserService;
+import net.store.project.vo.item.ItemVO;
 import net.store.project.vo.order.OrderStatus;
 import net.store.project.vo.order.OrderVO;
 import net.store.project.vo.user.UserGrade;
@@ -19,7 +22,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.NotActiveException;
@@ -39,6 +44,7 @@ public class UserController {
     private final PasswordEncoder passwordEncoder;
     private final OrderRepository orderRepository;
     private final OrderService orderService;
+
 
     @GetMapping("/{id}")
     public String userInfo(@PathVariable Long id,
@@ -200,6 +206,17 @@ public class UserController {
         
         return Objects.equals(foundUser.getUser_id(), storeUserDetails.getUser().getUser_id());
     }
+
+
+
+
+
+
+
+
+
+
+
 
 
 }

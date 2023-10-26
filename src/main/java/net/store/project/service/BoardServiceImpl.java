@@ -1,5 +1,6 @@
 package net.store.project.service;
 
+import java.beans.Transient;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,8 @@ import org.springframework.stereotype.Service;
 import net.store.project.dao.BoardDAO;
 import net.store.project.vo.board.BoardVO;
 import net.store.project.vo.page.PageVO;
+
+import javax.transaction.Transactional;
 
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -62,6 +65,15 @@ public class BoardServiceImpl implements BoardService {
 		this.boardDao.delBoard(board_no);
 	}
 
+	//상단바에서 게시판 제목 검색
+	@Override
+	public List<BoardVO> searchboard(String search) {return this.boardDao.searchboard(search);}
 
+	@Transactional
+	@Override
+	public BoardVO getBoardCont3(int no) {
+		this.boardDao.updateHit(no);
+		return this.boardDao.getBoardCont(no);
+	}
 
 }
