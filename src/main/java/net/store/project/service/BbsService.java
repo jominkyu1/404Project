@@ -14,5 +14,7 @@ public interface BbsService {
 
 	List<BoardVO> getBoardList(PageVO p);
 
+	List<BbsVO> getFiles(Integer board_no);
+
 
 }

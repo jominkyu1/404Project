@@ -110,20 +110,25 @@
     <th>제목</th> <td>${b.board_title}</td>
    </tr>
    <tr>
-    <th>내용</th> <td>${board_cont}</td>
+    <th>내용</th> <td>${b.board_cont}</td>
    </tr>
    <tr>
     <th>조회수</th> <td>${b.board_hit}</td>
    </tr>
-   <c:if test="${!empty b.board_file}">
-    <tr>
-     <th>첨부파일명</th> <td>${b.board_file}</td>
-    </tr>
-   </c:if>   
+   <c:forEach var="file" items="${files}" >
+   <tr>
+	   <td>
+	      첨부파일: 
+	      <a href="/itemimages/${file.bbs_filepath}" download="${file.bbs_originalFilename}">
+	      ${file.bbs_originalFilename}
+	      </a>
+	   </td>
+   </tr>
+   </c:forEach>   
   </table>
   <div id="abbsCont_menu">
    <input type="button" value="목록"
-   onclick="location='admin_bbs_list?page=${page}';" />
+   onclick="location='bbs_list?page=${page}';" />
   </div>
  </div>
 </div>

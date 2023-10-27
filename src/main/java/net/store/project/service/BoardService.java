@@ -28,6 +28,11 @@ public interface BoardService {
 	
 	void insertBoardWithFiles(BoardVO b, List<BbsVO> bbsList);
 
+	BoardVO getBbsCont(int board_no);
+
+	BoardVO getBbsCont2(int board_no);
+
+
 	
 
 

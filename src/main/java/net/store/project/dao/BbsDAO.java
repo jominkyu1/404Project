@@ -16,6 +16,12 @@ public interface BbsDAO {
 
 	List<BoardVO> getBoardList(PageVO p);
 
+	List<BbsVO> getFiles(Integer board_no);
+
+	
+
+	
+
 	
 
 

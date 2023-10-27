@@ -60,6 +60,8 @@ public class BoardController {
 		//비밀번호 암호화
 		String encodedPassword = passwordEncoder.encode(b.getBoard_pwd());
 		b.setBoard_pwd(encodedPassword);
+		
+		
 		b.setBoard_category("qna");
 		
 		response.setContentType("text/html;charset=UTF-8");

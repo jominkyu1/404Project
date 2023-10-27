@@ -26,6 +26,9 @@ public interface BoardDAO {
 
 	void delBoard(int board_no);
 
+	BoardVO getBbsCont(int board_no);
+
+
 
 	
 

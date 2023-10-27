@@ -18,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import net.store.project.api.ImageHandler;
 //import net.store.project.service.AdminBoardService;
 import net.store.project.service.BbsService;
+import net.store.project.service.BoardService;
 import net.store.project.vo.bbs.BbsVO;
 import net.store.project.vo.board.BoardVO;
 import net.store.project.vo.page.PageVO;
@@ -31,7 +32,7 @@ public class BbsController {
 	@Autowired
 	private ImageHandler imageHandler;
 	@Autowired
-	//private AdminBoardService adminBoardService;
+	private BoardService boardService;
 	
 	private final PasswordEncoder passwordEncoder;
 	
@@ -61,6 +62,7 @@ public class BbsController {
 		//게시판 비밀번호 암호화
 		String encodedPassword = passwordEncoder.encode(b.getBoard_pwd());
 		b.setBoard_pwd(encodedPassword);
+		
 		b.setBoard_category("bbs");
 		
 		// 파일저장로직	
@@ -74,7 +76,7 @@ public class BbsController {
 			bbsList.add(bbs);
 		}
 
-       // this.adminBoardService.insertBoardWithFiles(b, bbsList);
+        this.boardService.insertBoardWithFiles(b, bbsList);
         // filePath를 사용하여 파일 경로에 대한 작업 수행
         return "redirect:/bbs_list";//자료실 목록보기 매핑주소로 이동
     }
@@ -125,5 +127,42 @@ public class BbsController {
 		
 		return listM;
 	}//bbs_list()
-
+	
+	//자료실 내용보기+답변폼+수정폼+삭제폼
+		@GetMapping("/bbs_cont") //get방식으로 접근하는 매핑주소를 처리
+		public ModelAndView board_cont(Integer board_no,int page,String state,BoardVO b) {
+			
+			List<BbsVO> files = bbsService.getFiles(board_no);
+			if(state.equals("cont")) {//내용보기일때만 조회수 증가
+				b=this.boardService.getBoardCont(board_no);
+				//TODO 파일목록
+			}else {//답변폼,수정폼,삭제폼일때는 조회수 증가 안한다.
+				b=this.boardService.getBoardCont2(board_no);
+				//TODO 파일목록
+				
+			}
+			
+			String board_cont=b.getBoard_cont().replace("\n","<br>");//textarea 입력박스에서 엔터
+			//키를 친 부분 \n을 <br>태그로 변경해서 웹상에서 내용을 볼 때 줄바꿈해서 본다.
+			
+			ModelAndView cm=new ModelAndView();
+			cm.addObject("page",page);//페이징에서 책갈피 기능때문에 쪽번호를 저장
+			cm.addObject("b",b);
+			cm.addObject("board_cont",board_cont);
+			cm.addObject("files", files);
+			
+			if(state.equals("cont")) {
+				cm.setViewName("board/bbs_cont");//뷰페이지 경로가 /WEB-INF/views/board/bbs_cont.
+				//jsp
+			}else if(state.equals("reply")) {//답변폼일 때
+				cm.setViewName("board/bbs_reply");
+			}else if(state.equals("edit")) {//수정폼일 때
+				cm.setViewName("board/bbs_edit");
+			}else if(state.equals("del")) {//삭제폼일 때
+				cm.setViewName("board/bbs_del");
+			}
+			
+			return cm;
+		}//bbs_cont()
+	
 }//BbsController class

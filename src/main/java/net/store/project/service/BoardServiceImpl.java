@@ -83,4 +83,15 @@ public class BoardServiceImpl implements BoardService {
 		this.bbsDao.insertBoardWithFiles(bbsList);
 	}
 
+	@Override
+	public BoardVO getBbsCont(int board_no) {
+		return this.boardDao.getBbsCont(board_no);
+	}
+
+	@Override
+	public BoardVO getBbsCont2(int board_no) {
+		return this.boardDao.getBbsCont(board_no);
+	}
+
+
 }

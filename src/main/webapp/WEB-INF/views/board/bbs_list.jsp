@@ -133,7 +133,7 @@
 						  <img src="images/AnswerLine.gif" > <%--답변글 이미지 --%>
 						</c:if>
 						<a
-							href="board_cont?board_no=${b.board_no}&state=cont&page=${page}">
+							href="bbs_cont?board_no=${b.board_no}&state=cont&page=${page}">
 								${b.board_title}</a></td>
 						<td align="center">${b.board_name}</td>
 						<td align="center">${fn:substring(b.board_date,0,10)}</td>

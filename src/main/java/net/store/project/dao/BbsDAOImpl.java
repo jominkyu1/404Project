@@ -38,6 +38,15 @@ public class BbsDAOImpl implements BbsDAO {
 	public List<BoardVO> getBoardList(PageVO p) {
 		return this.sqlSession.selectList("abbs_list",p);
 	}
+
+	@Override
+	public List<BbsVO> getFiles(Integer board_no) {
+		return this.sqlSession.selectList("bbs_co", board_no);
+	}
+
+	
+
+	
 	
 
 
