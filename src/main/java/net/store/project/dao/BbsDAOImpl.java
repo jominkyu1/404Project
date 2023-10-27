@@ -40,8 +40,13 @@ public class BbsDAOImpl implements BbsDAO {
 	}
 
 	@Override
-	public List<BbsVO> getFiles(Integer board_no) {
+	public List<BbsVO> getFiles(int board_no) {
 		return this.sqlSession.selectList("bbs_co", board_no);
+	}
+
+	@Override
+	public void updateHit(int board_no) {
+		this.sqlSession.update("bbs_hi", board_no);
 	}
 
 	

@@ -130,11 +130,12 @@ public class BbsController {
 	
 	//자료실 내용보기+답변폼+수정폼+삭제폼
 		@GetMapping("/bbs_cont") //get방식으로 접근하는 매핑주소를 처리
-		public ModelAndView board_cont(Integer board_no,int page,String state,BoardVO b) {
+		public ModelAndView board_cont(int board_no,int page,String state,BoardVO b) {
 			
 			List<BbsVO> files = bbsService.getFiles(board_no);
 			if(state.equals("cont")) {//내용보기일때만 조회수 증가
 				b=this.boardService.getBoardCont(board_no);
+				this.bbsService.updateHit(board_no);
 				//TODO 파일목록
 			}else {//답변폼,수정폼,삭제폼일때는 조회수 증가 안한다.
 				b=this.boardService.getBoardCont2(board_no);

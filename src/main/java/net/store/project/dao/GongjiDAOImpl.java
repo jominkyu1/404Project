@@ -31,8 +31,8 @@ public class GongjiDAOImpl implements GongjiDAO {
 	}//관리자 게시판 저장
 
 	@Override
-	public BoardVO getGongjiCont(int no) {
-		return this.sqlSession.selectOne("ag_cont",no);
+	public BoardVO getGongjiCont(int board_no) {
+		return this.sqlSession.selectOne("ag_cont",board_no);
 	}//관리자 공지 수정폼과 상세정보
 
 	@Override
