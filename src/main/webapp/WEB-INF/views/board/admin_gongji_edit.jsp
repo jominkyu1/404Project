@@ -13,8 +13,6 @@
 <meta name="author" content="" />
 
 <title>404 Store</title>
-<script src="https://code.jquery.com/jquery-latest.min.js"></script>
-<script src="/js/board.js"></script>
 <!--부트스트랩 아이콘 CSS
             https://icons.getbootstrap.com/ 이곳에서 아이콘 확인! 클래스명에 아이콘 적으면됨!
         -->
@@ -105,44 +103,44 @@
 		<%--관리자 메인 본문 --%>
   <div id="aMain_cont">
     <div id="aBw_wrap">
-     <h2 class="aBw_title">관리자 게시판 글쓰기</h2>
-     <form method="post" action="admin_board_write_ok"
-     onsubmit="return bw_check();">
+     <h2 class="aBw_title">관리자 공지 수정</h2>
+     <form method="post" action="admin_gongji_edit_ok"
+     onsubmit="return gw_check();">
+     <input type="hidden" name="board_no" 
+     value="${b.board_no}" />
+     <input type="hidden" name="page" value="${page}" />
      <table id="aBw_t">
+    <tr>
     <sec:authorize access="isAuthenticated()">
-	<sec:authentication property="principal.user" var="user" />
-	<tr>
-		<th>이름</th>
-		<td><input name="board_name" id="board_name" value="${user.username}" size="14" readonly/></td>
-	</tr>
-	</sec:authorize>
+				<sec:authentication property="principal.user" var="user"/>
+     <th>이름</th>
+     <td>
+     <input name="board_name" id="board_name" size="14" 
+     value="${user.username}" readonly/>
+     </td>
+     </sec:authorize>
+    </tr>
     <tr>
      <th>제목</th>
      <td>
-     <input name="board_title" id="board_title" size="35" />
+     <input name="board_title" id="board_title" size="35" 
+     value="${b.board_title}" />
      </td>
-    </tr>
-    <tr>
-     <th>비밀번호</th>
-     <td>
-     <input type="password" name="board_pwd" id="board_pwd"
-     size="14" />
-     </td>    
     </tr>
     <tr>
      <th>내용</th>
      <td>
      <textarea name="board_cont" id="board_cont" rows="9"
-     cols="36"></textarea>
+     cols="36">${b.board_cont}</textarea>
      </td>
     </tr>
    </table>
    <div id="aBw_menu">
-    <input type="submit" value="저장" />
+    <input type="submit" value="수정" />
     <input type="reset" value="취소" 
     onclick="$('#board_name').focus();" />
     <input type="button" value="목록"
-    onclick="location='admin_board_list?page=${page}';" />
+    onclick="location='admin_gongji_list?page=${page}';" />
    </div>
      </form>
     </div>
@@ -154,5 +152,4 @@
 
 <!-- Bootstrap core JS-->
 <script src="/js/bootstrap.bundle.js"></script>
-
 </html>

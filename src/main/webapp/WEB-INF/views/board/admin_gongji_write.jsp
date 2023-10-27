@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <!-- 더미이미지(데모이미지) 사용시
     <img src="https://placehold.it/가로x세로">
     로 적용 후 확인해보면 자동으로 그 사이즈에 맞게 불러옴
@@ -12,6 +13,8 @@
 <meta name="author" content="" />
 
 <title>404 Store</title>
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+<script src="/js/board.js"></script>
 <!--부트스트랩 아이콘 CSS
             https://icons.getbootstrap.com/ 이곳에서 아이콘 확인! 클래스명에 아이콘 적으면됨!
         -->
@@ -83,14 +86,15 @@
 }
 
 #body, #body2 {
-    width:1000px; 
-    margin: auto;
+	width: 1000px;
+	margin: auto;
 }
 
 #body, td, th {
-    border-collapse : collapse;
-    border : 1px solid black;
-};
+	border-collapse: collapse;
+	border: 1px solid black;
+}
+;
 </style>
 <body>
 	<!-- 네비게이션(nav) 로드 -->
@@ -98,58 +102,44 @@
 	<!-- 배너(header) 로드 -->
 	<jsp:include page="../include/header.jsp" />
 	<section>
-		<h2 align="center">게시판</h2>
-		<table id="body">
-			<tr>
-				<th>번호</th>
-				<th>제목</th>
-				<th>글쓴이</th>
-				<th>날짜</th>
-				<th>조회수</th>
-			</tr>
-			<!-- <c:forEach items="${boardlist}" var="item">
-				<td>${item.title}</td>
-				${item.cont}
-			</c:forEach>
-			 -->
-			<tr>
-				<td>1</td>
-				<td>제목입니다</td>
-				<td>홍길동</td>
-				<td>날짜~~~</td>
-				<td>조회수!</td>
-			</tr>
-			<tr>
-				<td>2</td>
-				<td>제목입니다2</td>
-				<td>홍길동</td>
-				<td>날짜~~~</td>
-				<td>조회수!</td>
-			</tr>
-			<tr>
-				<td>3</td>
-				<td>제목입니다3</td>
-				<td>홍길동</td>
-				<td>날짜~~~</td>
-				<td>조회수!</td>
-			</tr>
-			<tr>
-				<td>4</td>
-				<td>제목입니다4</td>
-				<td>홍길동</td>
-				<td>날짜~~~</td>
-				<td>조회수!</td>
-			</tr>
-		</table>	
-		
-		<table id="body2">
-		<tr align="center">
-			<td colspan="2" width="399"><input type=button value="글쓰기">
-				<input type=button value="답글"> <input type=button value="목록">
-				<input type=button value="수정"> <input type=button value="삭제">
-		</tr>
-		</table>
-
+		<%--관리자 메인 본문 --%>
+<div id="aMain_cont">
+	<div id="aBw_wrap">
+		<h2 class="aBw_title">관리자 공지 작성</h2>
+		<form method="post" action="admin_gongji_write_ok"
+			onsubmit="return gw_check();">
+			<table id="aBw_t">
+				<tr>
+					<sec:authorize access="hasRole('ROLE_ADMIN')">
+					<sec:authentication property="principal.user" var="user" />
+					<th>이름</th>
+					<td><input name="board_name" id="board_name" value="${user.username}" size="14" readonly/></td>
+					</sec:authorize>
+				</tr>
+				<!-- 비밀번호 Hidden <th>비밀번호</th> -->
+				<tr>
+					<td><input type="hidden" name="board_pwd" id="board_pwd"
+					size="14" value="1234"/></td>
+				</tr>
+				<tr>
+					<th>제목</th>
+					<td><input name="board_title" id="board_title" size="35" />
+					</td>
+				</tr>
+				<tr>
+					<th>내용</th>
+					<td><textarea name="board_cont" id="board_cont" rows="9"
+							cols="36"></textarea></td>
+				</tr>
+			</table>
+			<div id="aBw_menu">
+				<input type="submit" value="작성" /> <input type="reset" value="취소"
+					onclick="$('#board_name').focus();" /> <input type="button"
+					value="목록" onclick="location='admin_gongji_list?page=${page}';" />
+			</div>
+		</form>
+	</div>
+</div>
 	</section>
 	<!-- 푸터 (footer.html) -->
 	<jsp:include page="../include/footer.jsp" />
@@ -157,4 +147,5 @@
 
 <!-- Bootstrap core JS-->
 <script src="/js/bootstrap.bundle.js"></script>
+
 </html>

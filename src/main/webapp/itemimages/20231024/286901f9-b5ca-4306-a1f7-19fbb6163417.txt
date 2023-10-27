@@ -1,0 +1,511 @@
+setwd("c:/r_workdata")
+
+Sys.setlocale("LC_ALL", "Korean")
+
+library(dplyr)
+library(plyr)
+library(googleVis)
+library(devtools)
+library(lubridate)
+library(stringr)
+library(ggplot2)
+library(RColorBrewer)
+library(wordcloud)
+library(igraph)
+
+# 데이터 정제
+# 빠진 데이터 찾기 : 결측치 정제
+# 결측치
+# - 누락된 값, 비어있는 값
+# - 함수사용 불가, 분석결과 왜곡
+# - 제거 후 분석
+
+df = data.frame(gender=c('M', 'F', NA, 'M', 'F'), score = c(5,4,3,4,NA))
+df
+
+# 결측치 확인
+is.na(df)
+table(is.na(df))
+table(is.na(df$gender))
+table(is.na(df$score))
+
+mean(df$score)
+
+# 결측치 제거
+# 결측치 있는 행제거
+df
+
+df %>% 
+  filter(is.na(score))
+
+df %>% 
+  filter(!is.na(score))
+
+# 결측치 제거한 데이터 분석
+df1 = df %>% 
+  filter(!is.na(score))
+
+mean(df1$score)
+sum(df1$score)
+
+# 여러 변수에 동시에 결측치없는 데이터 추출
+df1 = df %>% 
+  filter(!is.na(score) & !is.na(gender))
+df1
+df
+
+# 결측치가 하나라도 있으면 제거
+df2 = na.omit(df)
+df2
+
+# 함수에 결측치 제외 기능 : na.rm=T
+mean(df$score, na.rm = T)
+
+exam = read.csv("csv_exam.csv")
+exam
+
+exam[c(3,8,15), 'math'] = NA
+exam
+
+exam %>% 
+  dplyr::summarise(mean_math=mean(math))
+
+exam %>% 
+  dplyr::summarise(mean_math=mean(math, na.rm = T))
+
+# 결측치 대체하기
+# - 결측치가 많을 경우 제외하면 데이터 손실이 큼
+# - 대안 : 다른 값 채워 넣기
+# 
+# 결측치 대체법
+# - 대표값으로 일괄대체 : 평균, 최빈값, 중앙값
+# - 통계분석기법, 예측값 추정해서 대체
+# 
+# 평균값으로 결측치 대체
+
+mean(exam$math, na.rm = T)
+exam$math = ifelse(is.na(exam$math), 55, exam$math)
+exam$math
+
+mean(exam$math)
+
+# 이상치 : 정상범주에서 크게 벗어난 값
+# - 포함시 분석결과 왜곡
+# - 결측 처리 후 제외하고 분석
+# 
+# 이상치 종류
+# - 존재할 수 없는 값 : 결측처리
+# - 극단적인 값 : 정상범위 기준을 정해서 결측처리
+# 
+# 이상치 제거 : 존재할 수 없는 값
+
+out = data.frame(gender=c(1,2,1,3,2,1), score=c(5,4,3,4,2,6))
+out
+
+# 이상치 확인
+table(out$gender)
+table(out$score)
+
+# 결측처리
+out$gender = ifelse(out$gender == 3, NA, out$gender)
+out$gender = ifelse(out$gender %in% c(1,2), out$gender, NA)
+
+out$score = ifelse((out$score < 1 | out$score > 5), NA, out$score)
+out
+
+# 결측처리 후 분석
+out %>% 
+  filter(!is.na(gender) & !is.na(score)) %>% 
+  group_by(gender) %>% 
+  dplyr::summarise(mean_score=mean(score))
+
+# 이상치 제거 : 극단적인 값
+# - 정상범주에서 크게 벗어나면 결측처리
+# 
+# 판단기준
+# - 논리적 판단
+# - 통계적 판단 : boxplot() 이용
+mpg
+
+boxplot(mpg$hwy)
+boxplot(mpg$hwy)$stats
+
+# 결측 처리
+mpg$hwy = ifelse(mpg$hwy < 12 | mpg$hwy > 37, NA, mpg$hwy)
+table(is.na(mpg$hwy))
+
+# 결측치 제외하고 분석
+mpg %>% 
+  filter(!is.na(hwy)) %>% 
+  group_by(drv) %>% 
+  dplyr::summarise(mean_hwy=mean(hwy))
+
+#이상치가 들어있는 mpg 데이터를 활용해서 문제를 해결해보세요.
+mpg[c(10,14,58,93),"drv"] = "k"
+mpg[c(29,43,129,203),'cty']=c(3,4,39,42)
+
+#구동방식별로 도시 연비가 다른지 알아보려고 합니다. 분석을 하려면 우선 두 변수에 이상치가 있는지 확인하려고 합니다.
+#Q1. drv에 이상치가 있는지 확인하세요. 이상치를 결측 처리한 다음 이상치가 사라졌는지 확인하세요. 결측 처리 할 때는 %in% 기호를 활용하세요.
+table(mpg$drv)
+mpg$drv = ifelse(mpg$drv %in% c('4','f','r'), mpg$drv, NA)
+
+mpg$drv = ifelse(mpg$drv == 'k', NA, mpg$drv)
+
+table(mpg$drv)
+
+#Q2. 상자 그림을 이용해서 cty에 이상치가 있는지 확인하세요. 상자 그림의 통계치를 이용해 정상 범위를 벗어난 값을 결측 처리한 후 다시 상자 그림을 만들어 이상치가 사라졌는지 확인하세요.
+boxplot(mpg$cty)
+boxplot(mpg$cty)$stats
+
+mpg$cty = ifelse(mpg$cty < 9 | mpg$cty > 26, NA, mpg$cty)
+
+boxplot(mpg$cty)
+
+#Q3. 두 변수의 이상치를 결측처리 했으니 이제 분석할 차례입니다. 결측치를 제외한 다음 drv별로 cty 평균이 어떻게 다른지 알아보세요. 하나의 dplyr 구문으로 만들어야 합니다.
+
+mpg %>% 
+  filter(!is.na(drv) & !is.na(cty)) %>% 
+  group_by(drv) %>% 
+  dplyr::summarise(across(cty, mean))
+
+# 군집분석 : 데이터를 여러 집단으로 나눈 후 특성및 차이를 분석
+library(igraph)
+
+g = read.csv("군집분석.csv")
+g
+
+graph = data.frame(학생 = g$학생, 교수 = g$교수)
+
+g1 = graph.data.frame(graph, directed = T)
+g1
+plot(g1, layout=layout.kamada.kawai, vertex.size=2, edge.arrow.size=0.3, vertex.color='green', vertex.label=NA)
+
+V(g1)$name
+gubun1 = V(g1)$name
+gubun=str_sub(gubun1, start = 1, end = 1)
+gubun
+
+# 학생일 경우 컬러를 red, 교수 green
+colors=c()
+for (i in 1:length(gubun)) {
+  if (gubun[i] == 'S') {
+    colors = c(colors, 'red')
+  } else {
+    colors = c(colors, 'green')
+  }
+}
+plot(g1, layout=layout.kamada.kawai, vertex.size=2, edge.arrow.size=0.3, vertex.color=colors, vertex.label=NA)
+
+# 학생일 경우 점의 크기를 2, 교수 6
+# 학생일 경우 모양을 circle, 교수 square
+sizes = c()
+shapes = c()
+
+for (i in 1:length(gubun)) {
+  if (gubun[i] == 'S') {
+    sizes = c(sizes, 2)
+    shapes = c(shapes, 'circle')
+  } else {
+    sizes = c(sizes, 6)
+    shapes = c(shapes, 'square')
+  }
+}
+
+plot(g1, layout=layout.kamada.kawai, vertex.size=sizes, edge.arrow.size=0.3, vertex.color=colors, vertex.label=NA, vertrex.shape = shapes)
+
+# treemap : 나무지도는 데이터가 갖는 계층구조를 타일모양으로 표현한 것. 타일은 계층적 ㅅ속성을 가지며, 계층은 컬러로 표현된다.
+#  data : 패키지에 있는 데이터를 가져올때 사용
+#  index : 계층을 선언하는 매개변수
+#  vSize : 상대적크기
+#  vColor : 지정한 생상으로 표현
+install.packages("treemap")
+library(treemap)
+
+tot = read.csv("학생시험결과_전체점수.csv")
+tot
+treemap(tot, vSize="점수", index = c("점수", "이름"))
+
+treemap(tot, vSize="점수", index = c("점수", "이름", "조"))
+treemap(tot, vSize="점수", index = c("점수", "조", "이름"))
+
+# stars() : 파이조각그림, 
+tot = read.table("학생별전체성적_new.txt", header = T, sep=",")
+tot
+
+row.names(tot)=tot$이름
+tot
+tot1 = tot[2:7]
+tot1
+
+stars(tot1, flip.labels = F, draw.segments = T, frame.plot = T, full = T, key.loc = c(0.2,6.5), main = "학생별 과목 성적")
+
+
+# radarchart() : 방사형 차트는 어떤 측정 목표에 대한 평가항목이 여러개일 경우 항목 수에 따라 원을 같은 간격으로 나누고, 중심으로부터 일정 간격을 동심으로 척도를 잼
+# 1. 샘플데이터를 만든다
+# 2. 최대값및 최소값 지정
+# 3. radarchart()사용
+
+install.packages("fmsb")
+library(fmsb)
+
+# 2. 최대값및 최소값 지정
+layout = data.frame(
+  분석력 = c(5,1),
+  창의력 = c(15,3),
+  판단력 = c(3,0),
+  리더쉽 = c(5,1),
+  사교성 = c(5,1)
+)
+
+# 1. 샘플데이터 만든다
+set.seed(123)
+d1=data.frame(
+  분석력=runif(3,1,5),
+  창의력=rnorm(3,10,2),
+  판단력=c(0.5,1.8,3),
+  리더쉽=runif(3,1,5),
+  사교성=c(5,2.5,4)
+)
+
+d2=rbind(layout, d1)
+d2
+
+op = par(mar = c(1,0.5,3,1), mfrow=c(2,2))
+radarchart(d2, axistype = 1, plty = 1, seg = 5, title = '1st')
+radarchart(d2, axistype = 2, pcol = topo.colors(3), plty = 2, title = '2nd')
+radarchart(d2, axistype = 3, pty = 32, plty = 3, axislabcol = 'grey', na.itp = F, title = '3rd')
+radarchart(d2, axistype = 0, plwd = 1:5, pcol = 1, title = '4th')
+
+# 저수준 작도
+# 점 : point()
+# 직선 : lines(), segment(), abline()
+# 격자 : grid()
+# 화살표 : arrows()
+# 직사각형 : rect()
+# 문자 : text(), mtext(), title()
+# 테두리와 축 : box(), axis()
+# 범례 : legend()
+# 다각형 : polygon()
+
+par(mfrow=c(1,1))
+plot(1:15)
+abline(h=8)
+abline(v=8)
+rect(1,6, 3,8)
+arrows(1,1, 5,5)
+text(8,9, 'TEXT')
+title("THIS IS TEXT", "SUB")
+
+# ggplot2() : plot()함수의 확장 버전
+# ggplot(dataframe, aes(x=x축데이터, y=y축데이터)) + geom_함수
+
+# geom 부분 설정 값
+# - stat : 주어진 데이터에서 geomk에 필요한 데이터를 생성한다
+# - stat_bin : 아래와 같은 데이터를 갖는 dataframe을 출력
+#   1. count : 각 항목의 빈도수
+#   2. density : 각 항목의 밀도수
+#   3. ncount : count와 같으나 값의범위가 (0,1)로 스케일링됨
+#   4. ndensity : density와 같으나 값의범위가 (0,1)로 스케일링됨
+
+kor = read.table("학생별국어성적_new.txt", header = T, sep=",")
+kor
+
+ggplot(kor, aes(x=이름, y=점수))+geom_point()
+
+# geom_bar() : parplot과 비슷한 역할
+ggplot(kor, aes(x=이름, y=점수))+geom_bar(stat='identity')
+
+gg1 = ggplot(kor, aes(x=이름, y=점수))+geom_bar(stat='identity', color='red', fill='green')
+gg1+theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1, colour = 'blue', size=8))
+
+kem = read.csv("학생별과목별성적_국영수_new.csv")
+kem
+
+library(plyr)
+skem = arrange(kem, 이름, 과목)
+skem
+
+skem2 = ddply(skem, "이름", transform, 누적합계 = cumsum(점수))
+skem2
+
+skem3 = ddply(skem2, '이름', transform, 누적합계= cumsum(점수), label=cumsum(점수)-0.5*점수)
+skem3
+
+gg2=ggplot(skem3, aes(x=이름, y=점수, fill=과목))+geom_bar(stat='identity', position = position_stack(reverse = T))+geom_text(aes(y=label, label=paste(점수, "점")), color='black', size=4)+guides(fill=guide_legend(reverse = T))
+
+gg2+theme(axis.text.x = element_text(angle=45, hjust = 1, vjust = 1, color='black', size=8))
+
+# geom_segment() : 클리블랜드 점 그래프
+
+sc = read.table("학생별전체성적_new.txt", header = T, sep = ",")
+sc
+sc = sc[,c('이름','영어')]
+sc
+
+gg=ggplot(sc, aes(x=영어, y=이름))
+gg+geom_point(size=6)
+
+gg=ggplot(sc, aes(x=영어, y=reorder(이름, 영어)))
+gg+geom_point(size=6)+theme_bw() + theme(panel.grid.major.x = element_blank(), panel.grid.minor.x = element_blank(), panel.grid.major.y = element_line(color='red', linetype = 'dashed'))
+
+gg+geom_segment(aes(xend=0, yend=이름, color='blue'))+geom_point(size=6, color='green')+theme_bw()+theme(panel.grid.major.y = element_blank())
+
+# geom_segment()를 사용한 롤리팝 그래프의 표현
+
+install.packages("gridExtra")
+library(gridExtra)
+mtcars
+mt=mtcars
+
+# 기본식 : x축과 연결된 롤리팝 그래프
+gg1 = ggplot(mt, aes(x=mpg, y=disp))
+gg1+geom_segment(aes(xend=mpg, yend=0, color=gear), size=1.3)+geom_point(aes(color=gear), size=6)+scale_color_continuous(type='gradient')+theme_minimal()
+
+# 기본식 : y축과 연결된 롤리팝 그래프
+gg1 = ggplot(mt, aes(x=mpg, y=disp))
+gg1+geom_segment(aes(xend=0, yend=disp, color=gear), size=1.3)+geom_point(aes(color=gear), size=6)+scale_color_continuous(type='gradient')+theme_minimal()
+
+# geom_point()
+
+g1=ggplot(mt, aes(x=hp, y=mpg))
+g1+geom_point()
+
+g1+geom_point(color='blue')
+
+g1+geom_point(aes(color=factor(am)))
+View(mt)
+
+g1+geom_point(size=7)
+g1+geom_point(aes(size=wt))
+
+g1+geom_point(aes(size=wt, shape=factor(am)))
+
+g1+geom_point(aes(size=wt, shape=factor(am), color=factor(am)))
+
+g1+geom_point(aes(size=wt, shape=factor(am), color=factor(am))) + scale_color_manual(values = c('red','green'))
+
+g1+geom_point(color='blue')+geom_line()
+
+g1+geom_point(color='blue')+geom_line()+labs(x='마력', y='연비')
+
+# geom_line()
+th = read.csv("학생별과목별성적_3기_3명.csv")
+th
+ss=arrange(th, 이름, 과목)
+ss
+
+ggplot(ss,aes(x=과목, y=점수, group=이름, color=이름))+geom_line()+geom_point(size=6, shape=22) # shape : 0~25
+
+# geom_area()
+dis = read.csv("1군전염병발병현황_년도별.csv")
+dis
+ggplot(dis, aes(x=년도별, y=장티푸스, group=1))+geom_area(color='red', fill='cyan', alpha=0.4)+geom_line()
+
+# 데이터 분석
+# 1. 패키지 준비
+# 2. 데이터 준비
+# 3. 데이터 검토
+# 4. 변수명 바꾸기
+# 5. 데이터분석 절차
+#   5-1. 변수 검토및 전처리
+#   5-2. 변수간 관계분석
+# 6. 시각화
+
+# 성별에 따른 수입
+# 1. 패키지 준비
+install.packages("foreign")
+library(foreign)
+library(dplyr)
+library(ggplot2)
+
+
+# 2. 데이터 준비
+wel1 = read.spss(file = "Koweps_hpwc17_2022_beta1.sav", reencode = "utf-8", to.data.frame = T)
+wel1
+
+View(wel1)
+wel2 = wel1
+
+# 3. 데이터 검토
+dim(wel2)
+str(wel2)
+summary(wel2)
+
+# 4. 변수명 바꾸기
+wel2 = dplyr::rename(wel2,
+                     gender=h17_g3,
+                     birth=h17_g4,
+                     marriage=h17_g10,
+                     religion=h17_g11,
+                     income=h17_pers_income1,
+                     code_job=h17_eco9,
+                     code_region=h17_reg7)
+View(wel2)
+
+wel2 = wel2[, c('gender', 'birth', 'marriage', 'religion', 'income', 'code_job', 'code_region')]
+View(wel2)
+
+
+# 5. 데이터분석 절차
+#   5-1. 변수 검토및 전처리
+# 성별에 대한 변수 검토및 전처리
+class(wel2$gender)
+
+# 이상치
+table(wel2$gender)
+
+# 변수별 결측치 처리
+table(is.na(wel2$gender))
+
+# 이상치 결측처리
+wel2$gender = ifelse(wel2$gender %in% c(1,2), wel2$gender, NA)
+table(is.na(wel2$gender))
+
+# 성별 항목이름
+wel2$gender = ifelse(wel2$gender == 1, '남성', '여성')
+table(wel2$gender)
+qplot(wel2$gender)
+
+# 수입에 대한 변수검토및 전처리
+class(wel2$income)
+hist(wel2$income)
+summary(wel2$income)
+qplot(wel2$income)+xlim(0, 6000)
+
+wel2$income = ifelse(wel2$income %in% c(0, 9999), NA, wel2$income)
+table(is.na(wel2$income))
+
+#   5-2. 변수간 관계분석
+gen_in = wel2 %>% 
+  filter(!is.na(income)) %>% 
+  group_by(gender) %>% 
+  dplyr::summarise(across(income, mean))
+
+gen_in
+
+# 6. 시각화
+ggplot(gen_in, aes(x=gender, y=income))+geom_col()
+
+# 몇살때 월급을 가장 많이 받나?
+class(wel2$birth)
+summary(wel2$birth)
+qplot(wel2$birth)
+table(is.na(wel2$birth))
+
+wel2$birth = ifelse(wel2$birth == 9999, NA, wel2$birth)
+table(is.na(wel2$birth))
+
+wel2$age = 2022 - wel2$birth
+summary(wel2$age)
+qplot(wel2$age)
+
+age_income = wel2 %>% 
+  filter(!is.na(income)) %>% 
+  group_by(age) %>% 
+  dplyr::summarise(across(income, mean))
+
+age_income
+
+ggplot(age_income, aes(x=age, y=income))+geom_line()
+
+
