@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="Bbs"> <!-- 관리자 자료실 매퍼태그 -->
+	
+	<!--자료실 저장 -->
+	<insert id="insert_files" parameterType="bbs">
+	 insert into bbs1(bbs_no,bbs_filepath,bbs_originalFilename,board_no) 
+	 values(bbs1_no_seq.nextval, #{bbs_filepath}, #{bbs_originalFilename}, #{board_no})
+	</insert>
+	
+	<!-- 검색전후 레코드 개수 -->
+	<select id="abbs_count"  resultType="int">
+		select count(board_no) from board where board_category = 'bbs'
+			<if test="find_field == ''">
+				<!-- 검색조건이 없어서 총레코드 개수 -->
+			</if>
+			<if test="find_field == 'board_title'">
+				<!-- 검색 조건이 제목인 경우 -->
+				and board_title like #{find_name} <!-- like는 오라클 검색 연산자 -->
+			</if>
+			<if test="find_field == 'board_cont'">
+				and board_cont like #{find_name}
+			</if>
+	</select>
+
+	<!-- 검색 전후 목록 -->
+	<select id="abbs_list" parameterType="page" resultType="board">
+		select * from
+		(select rowNum rNum,board_no,board_name,board_title,
+		board_hit,board_ref,board_step,board_level,board_date,board_category
+		from (select * from board where board_category = 'bbs'
+			<if test="find_field == ''">
+				<!-- 검색조건이 없어서 총레코드 개수 -->
+			</if>
+			<if test="find_field == 'board_title'">
+				<!-- 검색 조건이 제목인 경우 -->
+				and board_title like #{find_name} <!-- like는 오라클 검색 연산자 -->
+			</if>
+			<if test="find_field == 'board_cont'">
+				and board_cont like #{find_name}
+			</if>
+		order by board_ref desc,board_level asc ))
+		where rNum &gt;= #{startrow} and rNum &lt;= #{endrow}   
+		<!-- &gt;은 ~보다 크다(>), &lt;은 ~보다 작다(<) -->
+	</select>
+	
+     <!-- 내용보기 -->
+   <select id="bbs_co" resultType="bbs">
+     select * from bbs1 where board_no=#{board_no}
+   </select>
+    
+</mapper>
