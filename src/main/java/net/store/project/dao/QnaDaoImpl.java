@@ -14,14 +14,10 @@ public class QnaDaoImpl implements QnaDao {
     @Autowired
     private SqlSession sqlSession; //Mybatis 쿼리문 수행
 
-
-
-
     @Override
     public void insertBbs(PageVO b) {
 
     }
-
 
     @Override
     public int getRowCount(PageVO p) {
@@ -62,6 +58,4 @@ public class QnaDaoImpl implements QnaDao {
     public void delBbs(int bbs_no) {
 
     }
-
-
 }

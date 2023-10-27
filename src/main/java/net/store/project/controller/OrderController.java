@@ -62,11 +62,10 @@ public class OrderController {
      * 장바구니페이지에서 주문한 경우
      * @param cart_id: 유저의 카트아이디
      * @param merchant_uid: orders에 저장될 주문번호
-     * @param paid_amount: 결제한 금액
      * */
     @PostMapping("/order/{cart_id}")
     @ResponseBody
-    public String orderProcess(@PathVariable Long cart_id, String merchant_uid, String paid_amount){
+    public String orderProcess(@PathVariable Long cart_id, String merchant_uid){
 
         OrderVO orderVO = orderService.orderItemByCartId(cart_id, merchant_uid);
         System.out.println("::: 성공적으로 주문완료 ::: " + orderVO.getOrder_id());

@@ -61,11 +61,15 @@ public class BoardDAOImpl implements BoardDAO {
 	public void delBoard(int board_no) {
 		this.sqlSession.delete("board_del",board_no);
 	}//게시물 삭제
-
+	
 	@Override
 	public BoardVO getBbsCont(int board_no) {
 		return this.sqlSession.selectOne("board_co", board_no);
 	}
-
 	
+	//상단바에서 게시판 제목 검색
+	@Override
+	public List<BoardVO> searchboard(String search) {
+		return this.sqlSession.selectList("searchBoard", search);
+	}
 }

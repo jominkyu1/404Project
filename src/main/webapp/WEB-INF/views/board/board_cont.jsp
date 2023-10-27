@@ -131,7 +131,7 @@
 				</tr>
 				<tr>
 					<th width="80"
-						style="letter-spacing: 1px; border: 1px solid black; vertical-align: middle; ">내용</th>
+						style="letter-spacing: 1px; border: 1px solid black; vertical-align: middle;">내용</th>
 					<td width="250" style="border: 1px solid black;">${bcont}</td>
 				</tr>
 				<tr>
@@ -163,7 +163,6 @@
 				</div>
 			</div>
 		</div>
-
 
 		<br>
 

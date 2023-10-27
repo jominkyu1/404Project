@@ -35,6 +35,19 @@
         });
     </script>
 </sec:authorize>
+<style>
+  /* 네비게이션 링크 폰트 크기 설정 */
+  .navbar-nav li.nav-item a.nav-link {
+    font-size: 16px;
+    white-space: nowrap; /* 줄 바꿈 방지 */
+  }
+
+  /* 로그인 및 검색 입력란 폰트 크기 설정 */
+  .navbar-nav .form-control,
+  .navbar-nav .btn {
+    font-size: 16px;
+  }
+</style>
 
 
 <nav class="navbar navbar-expand-lg" style="background-color: rgba(211, 211, 211, 0.38);">
@@ -62,7 +75,7 @@
                 </sec:authorize>
                 <sec:authorize access="hasRole('ROLE_USER')" >
                     <sec:authentication property="principal.user" var="user"/>
-                    <li class="nav-item"><a class="nav-link" href="/user/orders">주문정보</a></li>
+                    <li class="nav-link" style="color: lightseagreen">${user.username}</li>
                     <li class="nav-item"><a class="nav-link" href="/user/${user.user_id}">회원정보</a></li>
                     <li class="nav-item"><a class="nav-link" href="/logout">로그아웃</a></li>
                 </sec:authorize>
@@ -75,13 +88,14 @@
                 </sec:authorize>
             </ul>
             <!-- 검색 기능-->
-            <form class="navbar-nav mx-2">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" required tabindex="1">
+            <form class="navbar-nav mx-2" action="/search" method="GET">
+                <input class="form-control me-2" type="search" name="search"
+                       placeholder="Search" aria-label="Search" required tabindex="1">
                 <input class="btn btn-outline-dark text-bg-dark" type="submit" value="검색">
             </form>
             <!-- 장바구니 -->
             <form class="nav-item d-flex m-1 ms-auto" action="/cart">
-                <button class="btn btn-outline-dark" type="submit">
+                <button class="btn btn-outline-dark" type="submit" style="white-space: nowrap;">
                     <i class="bi-cart-fill me-1"></i>
                     장바구니
                     <span class="badge bg-dark text-white ms-1 rounded-pill" id="cartCount">

@@ -113,6 +113,9 @@
 .nav-link:hover {
 	text-decoration: underline;
 }
+ a.nav-link:hover {
+        text-decoration: none; /* 마우스 오버 시에 밑줄 제거 */
+    }
 
 </style>
 <body>
@@ -221,14 +224,13 @@ get방식으로 &구분하면서 전달된다. --%></td>
 
 				<%--페이징 즉 쪽나누기 추가 --%>
 				<div id="bList_paging" class="text-center">
-					<ul class="pogination">
 						<%-- 검색전 페이징 --%>
 						<c:if test="${(empty find_field) && (empty find_name)}">
 							<c:if test="${page<=1}">
-     <span>[이전] </span>
+     &laquo;
     </c:if>
 							<c:if test="${page>1}">
-								<a href="board_list?page=${page-1}">[이전]</a>&nbsp;
+								<li><a href="board_list?page=${page-1}">&laquo;</a></li>
     </c:if>
 
 							<%--현재 쪽번호 출력--%>
@@ -245,21 +247,21 @@ get방식으로 &구분하면서 전달된다. --%></td>
 							</c:forEach>
 
 							<c:if test="${page >= maxpage}">
-    [다음]
+    &raquo;
     </c:if>
 							<c:if test="${page<maxpage}">
-								<a href="board_list?page=${page+1}">[다음]</a>
+								<a href="board_list?page=${page+1}">&raquo;</a>
 							</c:if>
 						</c:if>
 
 						<%-- 검색후 페이징 --%>
 						<c:if test="${(!empty find_field) || (!empty find_name)}">
 							<c:if test="${page<=1}">
-     [이전]&nbsp;
+     &laquo;
     </c:if>
 							<c:if test="${page>1}">
 								<a
-									href="board_list?page=${page-1}&find_field=${find_field}&find_name=${find_name}">[이전]</a>&nbsp;
+									href="board_list?page=${page-1}&find_field=${find_field}&find_name=${find_name}">&lequo;</a>&nbsp;
     </c:if>
 
 							<%--현재 쪽번호 출력--%>
@@ -277,14 +279,13 @@ get방식으로 &구분하면서 전달된다. --%></td>
 							</c:forEach>
 
 							<c:if test="${page >= maxpage}">
-    [다음]
+    &requo;
     </c:if>
 							<c:if test="${page<maxpage}">
 								<a
-									href="board_list?page=${page+1}&find_field=${find_field}&find_name=${find_name}">[다음]</a>
+									href="board_list?page=${page+1}&find_field=${find_field}&find_name=${find_name}">&requo;</a>
 							</c:if>
 						</c:if>
-					</ul>
 				</div>
 			</div>
 		</form>

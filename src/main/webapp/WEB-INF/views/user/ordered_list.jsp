@@ -61,6 +61,9 @@
             </c:when>
           </c:choose>
         </p>
+        <c:if test="${!empty order.tracking}">
+          <p class="card-text">운송장번호: ${order.tracking}</p>
+        </c:if>
         <table class="table table-bordered table-striped">
           <thead>
           <tr>
@@ -88,7 +91,13 @@
           </tbody>
         </table>
         <a href="/user/orders/${order.order_id}" class="btn btn-outline-secondary">주문상세</a>
+        <c:if test="${order.status == 'ORDER'}">
         <button class="btn btn-danger">주문취소</button>
+        </c:if>
+        <c:if test="${order.status == 'DELIVERY'}">
+        <a href="/user/orders/${order.order_id}/complete"
+           class="btn btn-primary" onclick="confirm('구매 확정 하시겠습니까?')">구매확정</a>
+        </c:if>
       </div>
     </div>
   </c:forEach>

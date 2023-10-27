@@ -1,5 +1,6 @@
 package net.store.project.service;
 
+import java.beans.Transient;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,5 +94,18 @@ public class BoardServiceImpl implements BoardService {
 		return this.boardDao.getBbsCont(board_no);
 	}
 
+	//상단바에서 게시판 제목 검색
+	@Override
+	public List<BoardVO> searchboard(String search) {
+		return this.boardDao.searchboard(search);
+	}
+
+
+	@Transactional
+	@Override
+	public BoardVO getBoardCont3(int no) {
+		this.boardDao.updateHit(no);
+		return this.boardDao.getBoardCont(no);
+	}
 
 }

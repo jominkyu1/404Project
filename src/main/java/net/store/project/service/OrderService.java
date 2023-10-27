@@ -9,13 +9,17 @@ import net.store.project.vo.cart.CartItemVO;
 import net.store.project.vo.cart.CartVO;
 import net.store.project.vo.item.ItemVO;
 import net.store.project.vo.order.OrderItemVO;
+import net.store.project.vo.order.OrderStatus;
 import net.store.project.vo.order.OrderVO;
 import net.store.project.vo.user.UserVO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -23,7 +27,6 @@ public class OrderService {
 
     private final CartItemRepository cartItemRepository;
     private final CartRepository cartRepository;
-    private final OrderItemRepository orderItemRepository;
     private final OrderRepository orderRepository;
 
     /**
@@ -58,5 +61,65 @@ public class OrderService {
         cartItemRepository.deleteAll(cartItems);
 
         return order;
+    }
+
+    
+    /**
+     * 배송대기 -> 배송중으로 변경 후 송장번호 리턴
+     * */
+    @Transactional
+    public String setToDelivery(Long order_id) {
+        OrderVO order =
+                orderRepository.findById(order_id).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 주문입니다."));
+
+        if(order.getStatus().equals(OrderStatus.ORDER)){
+            order.setStatus(OrderStatus.DELIVERY);
+        } else {
+            throw new IllegalStateException("이미 배송 중 이거나 배송이 완료된 상품입니다!");
+        }
+        
+        //랜덤 송장번호 생성
+        String randomTrackingNumber = String.valueOf((int)(Math.random() * 1000000000));
+        order.setTracking(randomTrackingNumber);
+
+        return order.getTracking();
+    }
+
+    //주문취소
+    @Transactional
+    public void cancelOrder(Long orderId) {
+        OrderVO orderVO = orderRepository.findById(orderId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 주문입니다."));
+
+        //주문취소
+        if(orderVO.getStatus() == OrderStatus.ORDER){
+            orderVO.setStatus(OrderStatus.CANCEL);
+        } else {
+            throw new IllegalStateException("이미 배송중이거나 배송완료된 상품입니다.");
+        }
+
+        //주문취소시 아이템의 재고 증가
+        List<OrderItemVO> orderItems = orderVO.getOrderItems();
+        for(OrderItemVO orderItem : orderItems){
+            orderItem.getItemVO().addStock(orderItem.getQuantity());
+        }
+    }
+
+    public Page<OrderVO> findAllByStatus(Pageable pageable, String status){
+        if(status.equals("ALL")) return orderRepository.findAll(pageable);
+
+        return orderRepository.findAllByStatus(pageable, OrderStatus.valueOf(status));
+    }
+
+    @Transactional
+    public void completeOrder(Long orderId){
+        OrderVO orderVO = orderRepository.findById(orderId)
+                .orElseThrow(() -> new NoSuchElementException("존재하지 않는 주문입니다."));
+
+        if(orderVO.getStatus() == OrderStatus.DELIVERY){
+            orderVO.setStatus(OrderStatus.COMPLETE);
+        } else {
+            throw new IllegalStateException("이미 배송이 완료됐거나 취소된 주문입니다.");
+        }
     }
 }

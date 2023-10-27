@@ -5,10 +5,14 @@ import lombok.extern.slf4j.Slf4j;
 import net.store.project.repository.OrderRepository;
 import net.store.project.repository.UserRepository;
 import net.store.project.security.StoreUserDetails;
+import net.store.project.service.ItemQnaService;
+import net.store.project.service.ItemService;
 import net.store.project.service.OrderService;
 import net.store.project.service.UserService;
+import net.store.project.vo.item.ItemVO;
 import net.store.project.vo.order.OrderStatus;
 import net.store.project.vo.order.OrderVO;
+import net.store.project.vo.user.UserGrade;
 import net.store.project.vo.user.UserVO;
 import net.store.project.vo.user.form.UserRegisterForm;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -18,7 +22,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.NotActiveException;
@@ -37,6 +43,8 @@ public class UserController {
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
     private final OrderRepository orderRepository;
+    private final OrderService orderService;
+
 
     @GetMapping("/{id}")
     public String userInfo(@PathVariable Long id,
@@ -157,7 +165,10 @@ public class UserController {
 
         //다른유저의 주문정보에 접근하려고할때 예외발생
         if(user.getUser_id() != orderVO.getUser().getUser_id()){
-            throw new IllegalStateException("올바르지 않은 접근입니다.");
+            //운영자가아니면 예외
+            if(storeUserDetails.getUser().getUsergrade() != UserGrade.ADMIN) {
+                throw new IllegalStateException("올바르지 않은 접근입니다.");
+            }
         }
 
         model.addAttribute("order", orderVO);
@@ -165,6 +176,24 @@ public class UserController {
         return "order/order_detail";
     }
 
+    /**
+     * 배송완료처리
+     * */
+    @GetMapping("/orders/{orderId}/complete")
+    public String orderComplete(@PathVariable Long orderId,
+                                @AuthenticationPrincipal StoreUserDetails storeUserDetails)
+            throws IllegalAccessException {
+        OrderVO orderVO = orderRepository.findById(orderId)
+                .orElseThrow(() -> new NoSuchElementException("존재하지 않는 주문입니다."));
+
+        if(!Objects.equals(orderVO.getUser(), storeUserDetails.getUser())){
+            throw new IllegalAccessException("올바르지 않은 접근입니다!");
+        }
+
+        orderService.completeOrder(orderId);
+
+        return "redirect:/user/orders/" + orderId;
+    }
 
     /**
      * id에 해당하는 유저와 세션에있는 유저가 같은지 검증
@@ -177,6 +206,17 @@ public class UserController {
         
         return Objects.equals(foundUser.getUser_id(), storeUserDetails.getUser().getUser_id());
     }
+
+
+
+
+
+
+
+
+
+
+
 
 
 }

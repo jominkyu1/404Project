@@ -13,7 +13,7 @@ import java.util.UUID;
 
 @Component
 public class ImageHandler {
-    private static final String FILE_DIR = "src/main/webapp/itemimages/";
+    public static final String FILE_DIR = "src/main/webapp/itemimages/";
 
     public String upload(MultipartFile multipartFile) {
         //현재날짜를 기준으로 폴더경로 생성

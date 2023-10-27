@@ -1,5 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!-- 더미이미지(데모이미지) 사용시
     <img src="https://placehold.it/가로x세로">
     로 적용 후 확인해보면 자동으로 그 사이즈에 맞게 불러옴
@@ -66,11 +68,53 @@
                             </tbody>
                     </table>
                 </div>
+            
+            <!-- 주문 현황 -->
+            <table class="table table-striped text-center table-hover mb-2" style="table-layout: fixed;">
+                <caption class="caption-top fw-bold text-center mb-3">
+                    배송대기 주문: ${orders.size()}건
+                </caption>
+                <thead>
+                <tr>
+                    <th class="w-25">주문 번호</th>
+                    <th class="w-25">상품명</th>
+                    <th class="w-25">주문금액</th>
+                    <th class="w-25">주문일자</th>
+                    <th class="w-25">주문현황</th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach items="${orders}" var="order">
+                    <tr>
+                        <td>${order.order_id}</td>
+                        <td>
+                            ${order.orderItems[0].itemVO.name}
+                            <c:set var="moreCount" value="${fn:length(order.orderItems) -1}" />
+                            <c:if test="${moreCount > 0}">
+                            외 ${moreCount}개
+                            </c:if>
+                        </td>
+                        <!-- 주문 총 금액 -->
+                        <c:set var="totalPrice" value="0" />
+                        <c:forEach items="${order.orderItems}" var="orderItem">
+                            <c:set var="totalPrice" value="${totalPrice + (orderItem.price * orderItem.quantity)}" />
+                            <fmt:formatNumber value="${totalPrice}" type="number" var="totalPrice"/>
+                        </c:forEach>
+                        <td>${totalPrice}원</td>
+                        <td>${order.order_date}</td>
+                        <td>${order.status.value}</td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+            <!-- 주문 현황 -->
 
             <hr>
 
             <table class="table table-striped text-center table-hover" style="table-layout: fixed;">
-                <caption class="caption-top fw-bold text-center mb-3">미답변 상품문의</caption>
+                <caption class="caption-top fw-bold text-center mb-3">
+                    미답변 상품문의: ${notAnsweredQnaList.size()}건
+                </caption>
                 <thead>
                     <tr>
                         <th class="w-25">상품명</th>
@@ -80,7 +124,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <c:forEach items="${notAnsweredQnaList}" var="qna">
+                    <c:set var="doneLoop" value="false"/>
+                    <c:forEach items="${notAnsweredQnaList}" var="qna" varStatus="status">
+                        <c:if test="${status.index > 4}">
+                            <c:set var="doneLoop" value="true"/>
+                            <c:set var="qnaMore" value="true" />
+                        </c:if>
+                        <c:if test="${doneLoop == false}">
                         <tr>
                             <td>${qna.itemVO.name}</td>
                             <td class="overflow-hidden text-nowrap">
@@ -89,8 +139,12 @@
                                 </a>
                             </td>
                             <td class="overflow-hidden text-nowrap">${qna.userVO.username}</td>
-                            <td class="overflow-hidden text-nowrap">${qna.regdate}</td>
+                            <td class="overflow-hidden text-nowrap">
+                                <fmt:formatDate value="${qna.regdate}" pattern="yyyy-MM-dd a hh:mm" var="qnaDate"/>
+                                    ${qnaDate}
+                            </td>
                         </tr>
+                        </c:if>
                     </c:forEach>
                     <c:if test="${qnaMore == true}">
                         <tr>
@@ -102,7 +156,9 @@
                 </tbody>
             </table>
             <table class="table table-striped text-center mx-auto table-hover" style="table-layout: fixed;">
-                <caption class="caption-top fw-bold text-center mb-3">미답변 Q&A</caption>
+                <caption class="caption-top fw-bold text-center mb-3">
+                    미답변 Q&A: 0건
+                </caption>
                 <thead>
                     <tr>
                         <th class="w-75">제목</th>
