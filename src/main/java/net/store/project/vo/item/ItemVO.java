@@ -50,8 +50,8 @@ public class ItemVO {
     @ColumnDefault(value = "0")
     private int qna_count; //상품문의 개수
 
-
-    //TODO 카테고리
+    @Enumerated(EnumType.STRING)
+    private ItemCategory category; //상품 카테고리
 
     protected ItemVO() {}
 

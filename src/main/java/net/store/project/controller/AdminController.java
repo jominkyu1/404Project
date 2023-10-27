@@ -168,6 +168,7 @@ public class AdminController {
         //검색결과처리
         if(search != null){
             all = userRepository.findByUsernameLike("%" + search + "%", pageable);
+            model.addAttribute("search", search);
         } else {
             all = userRepository.findAll(pageable);
         }

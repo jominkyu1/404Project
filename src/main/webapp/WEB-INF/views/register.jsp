@@ -37,15 +37,6 @@
     <jsp:include page="include/header.jsp" />
         <!-- 매인 섹션 -->
         <section class="py-5 mx-auto">
-          <div class="text-center">
-            <h3 class="mb-3 badge bg-secondary-subtle d-block w-25 mx-auto text-black ">
-                SNS계정으로 간편하게 로그인하세요!</h3>
-            <!--<img src="/images/login/icon_kakao.webp" style="width: 4rem;"><br>
-            <img src="/images/login/icon_naver.webp" style="width: 4rem;"><br> -->
-            <a href="/oauth2/authorization/google">
-              <img src="/images/login/googlebtn.png" class="img-fluid m-2" style="width:150px;">
-            </a>
-          </div>
           <div class="container px-4 px-lg-5 mt-5">
               <div class="row justify-content-center">
                   <div class="mb-5 col-md-6 col-lg-6">

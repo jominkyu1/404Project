@@ -186,7 +186,7 @@ public class UserController {
         OrderVO orderVO = orderRepository.findById(orderId)
                 .orElseThrow(() -> new NoSuchElementException("존재하지 않는 주문입니다."));
 
-        if(!Objects.equals(orderVO.getUser(), storeUserDetails.getUser())){
+        if(!Objects.equals(orderVO.getUser().getUser_id(), storeUserDetails.getUser().getUser_id())){
             throw new IllegalAccessException("올바르지 않은 접근입니다!");
         }
 

@@ -15,8 +15,8 @@
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
 	rel="stylesheet" />
-<!-- Core theme CSS (includes Bootstrap)-->
-<link href="css/styles.css" rel="stylesheet" />
+	<!-- jQuery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
 </head>
 <style>
 .carousel-inner {
@@ -105,10 +105,18 @@
 							<!-- Product actions-->
 							<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
 								<div class="text-center">
-									<a class="btn btn-outline-dark mt-auto mb-1" href="#">장바구니</a>
+									<form method="get" action="/cart/add/${item.item_id}">
+										<input type="hidden" value="1" name="quantity">
+										<input type="submit" class="btn btn-outline-dark mt-auto mb-1" value="장바구니">
+									</form>
 								</div>
 								<div class="text-center">
-									<a class="btn btn-primary mt-auto" href="#">구매하기</a>
+									<form method="get" action="/order">
+										<input type="hidden" name="item_id" value="${item.item_id}">
+										<input type="hidden" name="orderQuantity" value="1">
+										<input type="button" class="btn btn-secondary"
+													 onclick="orderItem()" value="구매하기">
+									</form>
 								</div>
 							</div>
 						</div>
@@ -119,13 +127,20 @@
 	</section>
 	<!-- 푸터 (footer.html) -->
 	<jsp:include page="include/footer.jsp" />
-	<!-- include.js 자바스크립트 -->
-	<script src="/include/include.js"></script>
-	<script>
-		includeHTML();
-	</script>
 </body>
-
+<script>
+	function orderItem(){
+		var quantity = prompt("구매할 수량을 입력하세요", "1");
+		//취소버튼을 눌렀을경우
+		if(quantity === null){
+			return;
+		}
+		
+		var form = $(event.target).closest("form");
+		form.find("input[name='orderQuantity']").val(quantity);
+		form.submit();
+	}
+</script>
 <!-- Bootstrap core JS-->
-<script src="js/bootstrap.bundle.js"></script>
+<script src="/js/bootstrap.bundle.js"></script>
 </html>

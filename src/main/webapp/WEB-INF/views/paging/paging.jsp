@@ -4,6 +4,7 @@
 <link href="/css/bootstrap.min.css" rel="stylesheet" />
 
 <%-- 페이징 처리시 JpaPagingDto 객체가 name=paging으로 넘어와야 함! --%>
+<%-- 검색결과가있는경우 name = search --%>
 
 <!-- 페이징 처리 -->
 <div class="mx-auto mb-1">
@@ -33,8 +34,8 @@
     <c:if test="${paging.endPage >= 0}"> <!-- 값이 있을경우만 페이징 -->
       <c:forEach begin="${paging.startPage}" end="${paging.endPage}" var="num">
         <li class="page-item <c:if test="${num == paging.currentPage}"> active</c:if>">
-        <a href="?page=${num}" class="page-link"
-        >${num + 1}</a>
+        <a href="?<c:if test="${!empty search}">search=${search}&</c:if>page=${num}"
+           class="page-link">${num + 1}</a>
         </li>
       </c:forEach>
     </c:if>
