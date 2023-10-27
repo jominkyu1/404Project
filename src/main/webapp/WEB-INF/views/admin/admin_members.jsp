@@ -84,8 +84,10 @@
                 </c:forEach>
                 </tbody>
             </table>
+            
             <jsp:include page="../paging/paging.jsp">
                 <jsp:param name="paging" value="${paging}"/>
+                <jsp:param name="search" value="${search}"/>
             </jsp:include>
             
             <form class="mb-3">

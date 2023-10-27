@@ -79,7 +79,9 @@
                 <!-- 주문 반복문 -->
                 <c:forEach items="${orders}" var="order">
                 <tr>
-                  <td>${order.merchant_uid} #${order.order_id}
+                  <td>
+                    <fmt:formatDate value="${order.order_date}" pattern="yyyyMMdd_HHmm" />
+                     #${order.order_id}
                     <a href="/user/orders/${order.order_id}" id="orderDetail">주문상세</a>
                   </td>
                   <td>${order.user.username}</td>

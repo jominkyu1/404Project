@@ -9,7 +9,6 @@ import net.store.project.service.CartService;
 import net.store.project.vo.cart.CartVO;
 import net.store.project.vo.cart.form.UserCartForm;
 import net.store.project.vo.item.ItemVO;
-import net.store.project.vo.user.UserVO;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,8 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.persistence.Tuple;
-import java.util.*;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -57,8 +55,15 @@ public class CartController {
                           @RequestParam int quantity,
                           @AuthenticationPrincipal StoreUserDetails storeUserDetails){
         if(storeUserDetails == null) return "redirect:/login";
+        ItemVO item = itemRepository.findById(item_id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 아이템이 없습니다."));
+
+        //장바구니에 추가하는 아이템의 갯수가 아이템의 재고보다 많을경우
+        if(item.getStockQuantity() < quantity) throw new IllegalArgumentException("아이템의 재고가 부족합니다.");
+
+
         //아이템번호(PK), 유저번호(PK), 아이템수량을 받아서 카트에 추가
-        Long cart_id = cartService.addCart(item_id, storeUserDetails.getUser().getUser_id(), quantity);
+        cartService.addCart(item_id, storeUserDetails.getUser().getUser_id(), quantity);
 
         return "redirect:/cart";
     }

@@ -3,7 +3,7 @@ package net.store.project.service;
 import lombok.RequiredArgsConstructor;
 import net.store.project.repository.CartItemRepository;
 import net.store.project.repository.CartRepository;
-import net.store.project.repository.OrderItemRepository;
+import net.store.project.repository.ItemRepository;
 import net.store.project.repository.OrderRepository;
 import net.store.project.vo.cart.CartItemVO;
 import net.store.project.vo.cart.CartVO;
@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -28,6 +29,8 @@ public class OrderService {
     private final CartItemRepository cartItemRepository;
     private final CartRepository cartRepository;
     private final OrderRepository orderRepository;
+    private final ItemRepository itemRepository;
+
 
     /**
      * 주문처리 -> 장바구니주문처리
@@ -63,6 +66,21 @@ public class OrderService {
         return order;
     }
 
+    /**
+     * 단품주문
+     * */
+    @Transactional
+    public OrderVO orderItemByItemId(Long item_id, String merchant_uid, int orderQuantity, UserVO userVO){
+        ItemVO itemVO = itemRepository.findById(item_id)
+                .orElseThrow(() -> new IllegalArgumentException("주문하려는 상품이 존재하지않습니다."));
+
+        //TODO 할인정책이 있다면 주문생성시 할인된 금액이 들어가면 됨!
+        OrderItemVO orderItem =
+                OrderItemVO.createOrderItem(itemVO, itemVO.getPrice(), orderQuantity);
+
+        OrderVO order = OrderVO.createOrder(userVO, merchant_uid, Collections.singletonList(orderItem));
+        return orderRepository.save(order);
+    }
     
     /**
      * 배송대기 -> 배송중으로 변경 후 송장번호 리턴
