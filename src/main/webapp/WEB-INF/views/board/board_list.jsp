@@ -279,7 +279,7 @@ get방식으로 &구분하면서 전달된다. --%></td>
 							</c:forEach>
 
 							<c:if test="${page >= maxpage}">
-    &requo;
+								&requo;
     </c:if>
 							<c:if test="${page<maxpage}">
 								<a
