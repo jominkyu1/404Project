@@ -1,19 +1,34 @@
 package net.store.project.controller;
 
+import net.store.project.api.PageableHandler;
+import net.store.project.repository.ItemRepository;
 import net.store.project.service.BoardService;
 import net.store.project.service.ItemService;
 import net.store.project.vo.board.BoardVO;
 import net.store.project.vo.item.ItemVO;
+import net.store.project.vo.page.JpaPagingDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.List;
+
+
 
 @Controller
 public class MainController {
+
+
+
+	@Autowired
+	private ItemRepository itemRepository;
 
 	@Autowired
 	private  ItemService itemService;
@@ -21,6 +36,8 @@ public class MainController {
 	@Autowired
 	private BoardService boardService;
 
+	@Autowired
+	private PageableHandler pageableHandler;
 
 
 	@GetMapping("/")
@@ -36,16 +53,25 @@ public class MainController {
 
 	//상단바 검색창
 	@GetMapping("/search")
-	public ModelAndView Search(@RequestParam("search") String search) {
+	public ModelAndView Search(Model model,@RequestParam(value = "search", required = false) String search,
+							   @PageableDefault(sort="regdate") Pageable pageable) {
+		List<ItemVO> searchItems = null;
 
+		//ItemVO 검색 및 JPA 페이징
+		if(search != null && !search.isEmpty()){//검색어 비어있지 않을때만 수행
+			Page<ItemVO> items = itemRepository.findAllByNameLike("%" + search + "%", pageable);
+			JpaPagingDto paging = pageableHandler.makePages(pageable, items, 3);
+			model.addAttribute("paging", paging);
+			searchItems = items.getContent();
+			System.out.println("items:" + items);
+		}
 
-		//상품명으로 검색
-		List<ItemVO> searchItems = this.itemService.searchItems("%" + search + "%");
+		System.out.println("searchItems:"+searchItems);
+
 		//게시판 이름으로 검색
 		List<BoardVO> searchBoardList  = this.boardService.searchboard("%" + search + "%");
 
 
-		System.out.println("아이템 검색 목록 개수 :" + searchItems.size());
 		System.out.println("보드게시판 검색 목록 개수 : " + searchBoardList.size());
 
 		ModelAndView searchM = new ModelAndView();
@@ -53,34 +79,9 @@ public class MainController {
 		searchM.addObject("boardlist", searchBoardList);
 
 		searchM.setViewName("search");
+
 		return searchM;
 
 	}//search()
 
-	//상단바 검색창; board내용 목록보기
-	@GetMapping("/borad_cont")
-	public ModelAndView board_cont(int no, String state, BoardVO b){
-		if(state.equals("cont")){//내용보기일때만 조회수 증가
-			b = boardService.getBoardCont3(no);
-		}else{//답변 수정 삭제폼=>조회수 증가 X
-			b = boardService.getBoardCont(no);
-		}
-
-		String board_cont=b.getBoard_cont().replace("\n", "<br>");
-
-		ModelAndView cm = new ModelAndView();
-		cm.addObject("b", b);
-		cm.addObject("board_cont", board_cont); //줄바꿈한 내용 저장
-
-		if(state.equals("cont")){
-			cm.setViewName("board_cont");
-		}else if(state.equals("reply")){//답변폼일떄
-			cm.setViewName("board_reply");
-		}else if(state.equals("edit")){//수정폼일 떄
-			cm.setViewName("board_edit");
-		}else if(state.equals("del")){//삭제폼일 떄
-			cm.setViewName("board_del");
-		}
-		return cm;
-	}
 }
