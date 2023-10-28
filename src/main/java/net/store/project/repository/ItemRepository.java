@@ -13,5 +13,6 @@ import java.util.List;
 public interface ItemRepository extends JpaRepository<ItemVO, Long> {
 
     Page<ItemVO> findAllByNameLike(String name, Pageable pageable);
+    Page<ItemVO> findAllByNameContaining(String name, Pageable pageable);
 
 }
