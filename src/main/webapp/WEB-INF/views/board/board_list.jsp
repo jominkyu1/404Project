@@ -130,7 +130,7 @@
 				
 				<ul class="nav nav-tabs">
 					<li class="nav-item"><a class="nav-link active"
-						aria-current="page" href="board_list" style="color: black;">게시판</a></li>
+						aria-current="page" href="/board_list" style="color: black;">게시판</a></li>
 					<li class="nav-item"><a class="nav-link" href="/bbs_list"
 						style="color: black;">자료실</a></li>
 					<li class="nav-item"><a class="nav-link" href="/gongji_list"
@@ -151,7 +151,6 @@
 						<th width="10%" style="text-align: center;">조회수</th>
 						<sec:authorize access="hasRole('ROLE_ADMIN') ">
 						<th width="18%" style="text-align: center;">수정/삭제</th>
-						
 						</sec:authorize>
 					</tr>
 					<c:if test="${!empty blist}">

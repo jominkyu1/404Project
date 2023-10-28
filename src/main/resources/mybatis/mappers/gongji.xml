@@ -14,10 +14,10 @@
 			</if>
 			<if test="find_field == 'board_title'">
 				<!-- 검색 조건이 제목인 경우 -->
-				board_title like #{find_name} <!-- like는 오라클 검색 연산자 -->
+				and board_title like #{find_name} <!-- like는 오라클 검색 연산자 -->
 			</if>
 			<if test="find_field == 'board_cont'">
-				board_cont like #{find_name}
+				and board_cont like #{find_name}
 			</if>
 	</select>
 
@@ -46,28 +46,28 @@
 		<!-- &gt;은 ~보다 크다(>), &lt;은 ~보다 작다(<) -->
 	</select>
 	
-	<!-- 관리자 공지 저장 -->
+	<!-- 공지 저장 -->
 	<insert id="ag_in" parameterType="board">
 		insert into board (board_no,board_name,board_title,board_pwd,
 		board_cont,board_hit,board_ref,board_step,board_level,
 		board_date,board_category) values(board_no_seq.nextval,#{board_name},
 		#{board_title},#{board_pwd},#{board_cont},0,
-		board_no_seq.nextval,0,0,sysdate,'gongji')
+		board_no_seq.nextval,0,0,sysdate,#{board_category})
 	</insert>
 	
-	<!-- 관리자 공지 내용보기+수정폼 -->
+	<!-- 공지 내용보기+수정폼 -->
 	<select id="ag_cont" parameterType="int" resultType="board">
 		select * from board where board_no=#{board_no}
 	</select>
 	
-	<!-- 관리자 공지 수정완료 -->
+	<!-- 공지 수정완료 -->
 	<update id="ag_edit">
 		update board set board_name=#{board_name},
 		board_title=#{board_title}, 
 		board_cont=#{board_cont} where board_no=#{board_no}
 	</update>
 	
-	<!-- 관리자 공지 삭제 -->
+	<!-- 공지 삭제 -->
 	<delete id="ag_del">
 		delete from board where board_no=#{no}
 	</delete>
