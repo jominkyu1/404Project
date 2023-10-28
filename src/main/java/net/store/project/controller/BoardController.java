@@ -101,6 +101,8 @@ public class BoardController {
 		String find_name=request.getParameter("find_name");//검색어
 		String find_field=request.getParameter("find_field");//검색
 		//필드
+		
+		//p.setBoard_category(board_category);//get으로 전달된 qna, bbs, gongji저장
 		p.setFind_field(find_field);
 		p.setFind_name("%"+find_name+"%");
 		//%는 오라클 와일드 카드 문자로서 하나이상의 임의의 문자와

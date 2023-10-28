@@ -32,7 +32,12 @@ public class BbsServiceImpl implements BbsService {
 	}
 
 	@Override
-	public List<BbsVO> getFiles(Integer board_no) {
+	public List<BbsVO> getFiles(int board_no) {
 		return this.bbsDao.getFiles(board_no);
+	}
+
+	@Override
+	public void updateHit(int board_no) {
+		this.bbsDao.updateHit(board_no);
 	}
 }

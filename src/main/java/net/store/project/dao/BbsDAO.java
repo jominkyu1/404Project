@@ -16,7 +16,9 @@ public interface BbsDAO {
 
 	List<BoardVO> getBoardList(PageVO p);
 
-	List<BbsVO> getFiles(Integer board_no);
+	List<BbsVO> getFiles(int board_no);
+
+	void updateHit(int board_no);
 
 	
 

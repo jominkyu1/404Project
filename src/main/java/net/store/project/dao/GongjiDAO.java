@@ -13,7 +13,7 @@ public interface GongjiDAO {
 
 	void insertGongji(BoardVO b);
 
-	BoardVO getGongjiCont(int no);
+	BoardVO getGongjiCont(int board_no);
 
 	void editGongji(BoardVO b);
 

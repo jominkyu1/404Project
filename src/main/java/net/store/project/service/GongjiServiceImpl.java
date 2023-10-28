@@ -13,35 +13,35 @@ import net.store.project.vo.page.PageVO;
 public class GongjiServiceImpl implements GongjiService {
 	
 	@Autowired
-	private GongjiDAO adminGongjiDAO;
+	private GongjiDAO gongjiDao;
 
 	@Override
 	public int getListCount(PageVO p) {
-		return this.adminGongjiDAO.getListCount(p);
+		return this.gongjiDao.getListCount(p);
 	}
 
 	@Override
 	public List<BoardVO> getGongjiList(PageVO p) {
-		return this.adminGongjiDAO.getGongjiList(p);
+		return this.gongjiDao.getGongjiList(p);
 	}
 
 	@Override
 	public void insertGongji(BoardVO b) {
-		this.adminGongjiDAO.insertGongji(b);
+		this.gongjiDao.insertGongji(b);
 	}
 
 	@Override
-	public BoardVO getGongjiCont(int no) {
-		return this.adminGongjiDAO.getGongjiCont(no);
+	public BoardVO getGongjiCont(int board_no) {
+		return this.gongjiDao.getGongjiCont(board_no);
 	}
 
 	@Override
 	public void editGongji(BoardVO b) {
-		this.adminGongjiDAO.editGongji(b);
+		this.gongjiDao.editGongji(b);
 	}
 
 	@Override
 	public void delGongji(int no) {
-		this.adminGongjiDAO.delGongji(no);
+		this.gongjiDao.delGongji(no);
 	}
 }
