@@ -115,9 +115,9 @@
 <br><br>
 <div align=center><b>결제처리</b></div>
 
-![store_payment](https://github.com/jominkyu1/404Project/assets/18455743/af8e1fe9-ba1f-4462-ae0b-7f56d9fa898c)
-![store_payment2](https://github.com/jominkyu1/404Project/assets/18455743/709c9fc7-9ce2-4b5a-8361-7567cfdd7321)
-
+![store_payment](https://github.com/jominkyu1/404Project/assets/18455743/af8e1fe9-ba1f-4462-ae0b-7f56d9fa898c)  
+![kakao_payment](https://github.com/jominkyu1/404Project/assets/18455743/7d43250a-d633-4716-b2dd-8eea24d308be)  
+![order_info_detail](https://github.com/jominkyu1/404Project/assets/18455743/c7a57b00-9ab2-4fcf-8ee9-f6b1688b542c)  
     
 ### 관리페이지
 
