@@ -4,75 +4,75 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="AdminGongji"> <!-- 관리자 공지 -->
+<mapper namespace="Gongji">
 
 	<!-- 검색전후 레코드 개수 -->
-	<select id="ag_count" parameterType="page" resultType="int">
-		select count(board_no) from board
-		<where>
+	<select id="g_count" parameterType="page" resultType="int">
+		select count(board_no) from board where board_category = 'gongji'
 			<if test="find_field == ''">
 				<!-- 검색조건이 없어서 총레코드 개수 -->
 			</if>
 			<if test="find_field == 'board_title'">
 				<!-- 검색 조건이 제목인 경우 -->
-				board_title like #{find_name} <!-- like는 오라클 검색 연산자 -->
+				and board_title like #{find_name} <!-- like는 오라클 검색 연산자 -->
 			</if>
 			<if test="find_field == 'board_cont'">
-				board_cont like #{find_name}
+				and board_cont like #{find_name}
 			</if>
-		</where>
 	</select>
 
 	<!-- 검색 전후 목록 -->
-	<select id="ag_list" resultType="board">
-		<!-- resultType 속성은 반환 타입 -->
+	<select id="g_list" parameterType="page" resultType="board">
 		select * from
 		(select rowNum rNum,board_no,board_name,board_title,
 		board_hit,board_ref,board_step,board_level,board_date,board_category
-		from (select * from board
-		<where>
+		from (select * from board where board_category = 'gongji'
 			<if test="find_field == ''">
 				<!-- 검색조건이 없어서 총레코드 개수 -->
 			</if>
 			<if test="find_field == 'board_title'">
 				<!-- 검색 조건이 제목인 경우 -->
-				board_title like #{find_name} <!-- like는 오라클 검색 연산자 -->
+				and board_title like #{find_name} <!-- like는 오라클 검색 연산자 -->
 			</if>
 			<if test="find_field == 'board_cont'">
-				board_cont like #{find_name}
+				and board_cont like #{find_name}
 			</if>
-		</where>
-		order by board_ref desc,
-		board_level asc))
-		where rNum &gt;= #{startrow} and rNum &lt;= #{endrow} and board_category = 'gongji'
+		order by board_ref desc,board_level asc))
+		where rNum &gt;= #{startrow} and rNum &lt;= #{endrow}   
 		<!-- &gt;은 ~보다 크다(>), &lt;은 ~보다 작다(<) -->
 	</select>
 	
-	<!-- 관리자 공지 저장 -->
-	<insert id="ag_in" parameterType="board">
+	<!-- 공지 저장 -->
+	<insert id="g_in" parameterType="board">
 		insert into board (board_no,board_name,board_title,board_pwd,
 		board_cont,board_hit,board_ref,board_step,board_level,
 		board_date,board_category) values(board_no_seq.nextval,#{board_name},
 		#{board_title},#{board_pwd},#{board_cont},0,
-		board_no_seq.nextval,0,0,sysdate,'gongji')
+		board_no_seq.nextval,0,0,sysdate,#{board_category})
 	</insert>
 	
-	<!-- 관리자 공지 내용보기+수정폼 -->
-	<select id="ag_cont" parameterType="int" resultType="board">
+	<!-- 공지 내용보기+수정폼 -->
+	<select id="g_cont" parameterType="int" resultType="board">
 		select * from board where board_no=#{board_no}
 	</select>
 	
-	<!-- 관리자 공지 수정완료 -->
-	<update id="ag_edit">
+	<!-- 공지 수정완료 -->
+	<update id="g_edit">
 		update board set board_name=#{board_name},
 		board_title=#{board_title}, 
 		board_cont=#{board_cont} where board_no=#{board_no}
 	</update>
 	
-	<!-- 관리자 공지 삭제 -->
-	<delete id="ag_del">
+	<!-- 공지 삭제 -->
+	<delete id="g_del">
 		delete from board where board_no=#{no}
 	</delete>
+	
+	<!-- 조회수 증가 -->
+	<update id="g_hi" parameterType="int">
+		update board set board_hit=board_hit+1
+		where board_no=#{board_no}
+	</update>
 	
 	
 </mapper>

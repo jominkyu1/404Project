@@ -50,8 +50,8 @@ public class ItemVO {
     @ColumnDefault(value = "0")
     private int qna_count; //상품문의 개수
 
-
-    //TODO 카테고리
+    @Enumerated(EnumType.STRING)
+    private ItemCategory category; //상품 카테고리
 
     protected ItemVO() {}
 
@@ -71,5 +71,10 @@ public class ItemVO {
             throw new IllegalStateException("재고가 부족합니다.");
         }
         this.stockQuantity = restStock;
+    }
+
+    //주문취소시 재고 증가
+    public void addStock(int count){
+        this.stockQuantity = this.stockQuantity + count;
     }
 }

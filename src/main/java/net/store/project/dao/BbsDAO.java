@@ -16,6 +16,20 @@ public interface BbsDAO {
 
 	List<BoardVO> getBoardList(PageVO p);
 
+	List<BbsVO> getFiles(int board_no);
+
+	void updateHit(int board_no);
+
+	void delBbs(int board_no);
+
+	void editBbs(BoardVO b);
+
+	void editBbs2(BbsVO bbs);
+
+	
+
+	
+
 	
 
 

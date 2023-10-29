@@ -1,0 +1,123 @@
+1분문제) 다음 자바소스에서 switch ~ case문을  if else if 다중조건문과 ||(논리합) 연산, 그리고 ==(같다) 연산을 활용한 코드로 변경.
+소스예) 
+import java.util.Scanner;
+
+public class Ex12_01 {
+	public static void main(String[] args) {
+
+		int month = 0;
+		
+		System.out.print("현재 월을 입력>>");
+		
+		Scanner scan=new Scanner(System.in);
+		month=Integer.parseInt(scan.nextLine());
+		
+		switch(month) {
+		    case 3: case 4: case 5: 
+		    	System.out.println("현재는 봄"); break;
+		    case 6: case 7: case 8:
+		    	System.out.println("현재는 여름"); break;
+		    case 9: case 10: case 11:
+		    	System.out.println("현재는 가을"); break;
+		    default: System.out.println("현재는 겨울");
+		}
+	}
+}
+
+=================================================================
+
+import java.util.Scanner;
+
+public class Test100 {
+
+	public static void main(String[] args) {
+int month = 0;
+Scanner scan=new Scanner(System.in);
+		System.out.print("현재 월을 입력>>");
+		month=scan.nextInt();
+		
+		
+		
+		if(month>=3 && month<=5)
+			System.out.println("현재는 봄");
+		else if(month>=6 && month<=8)
+			System.out.println("현재는 여름");
+		else if(month>=9 && month<=11)
+			System.out.println("현재는 가울");
+		else if (month>=1 && month<=12)
+			System.out.println("현재는 겨울");
+		else 
+			System.out.println("Error");
+		
+
+
+		
+		
+	}
+}
+
+배점 : 25점
+
+2번문제) for반복문,if조건문, %나머지 연산을 이용해서 1부터 10까지의 정수 중에서 홀수, 짝수의 총합을 각각 구하는 java 코드를 작성
+public class Ex12_02 {
+	public static void main(String[] args) {
+        int i;
+        
+        //코드작성
+
+public class Test100 {
+
+	public static void main(String[] args) {
+		int sum1=0,sum2=0;
+		for(int i=1;i<=10;i++)
+		{
+			if(i%2==0)
+			sum1+=i;
+			
+		}
+		for(int j=1;j<=10;j+=2)
+		{
+			sum2+=j;
+		}	
+			
+		
+		System.out.println("짝수의 합 : "+sum1+
+					"\n홀수의 합 : "+sum2);
+		
+		
+			
+
+		
+		
+	}
+}
+
+
+   }
+}
+
+배점 : 25점
+
+3번 문제)  자바 기본 자료형  
+
+byte, short, int, long, float, double, char, boolean
+
+배점: 10점
+
+4번 문제) 전달인자 개수가 다른 메서드가 오버로딩 된 경우에는 그 개수만큼 메서드를 정의하면 비효율적. 이것을 자바 5버전에서 
+가변인자 문법을 추가해서 메서드를 한번만 정의해도 처리. 이 가변인자 문법을 추가한 메서드를 작성.
+
+배점: 30점
+
+5번문제)  메서드 오버로딩
+메소드 오버로딩(overloading)이란 같은 이름의 메소드를 중복하여 정의하는 것을 의미합니다.
+
+자바에서는 원래 한 클래스 내에 같은 이름의 메소드를 둘 이상 가질 수 없습니다.
+
+ 
+
+하지만 매개변수의 개수나 타입을 다르게 하면, 하나의 이름으로 메소드를 작성할 수 있습니다.
+
+즉, 메소드 오버로딩은 서로 다른 시그니처를 갖는 여러 메소드를 같은 이름으로 정의하는 것이라고 할 수 있습니다.
+배점 : 10점
+

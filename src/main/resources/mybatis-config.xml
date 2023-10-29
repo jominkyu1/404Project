@@ -4,12 +4,16 @@
     "http://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
+ <settings>
+        <setting name="jdbcTypeForNull" value="NULL" />
+    </settings>
   <typeAliases>
     <typeAlias type="net.store.project.vo.user.UserVO" alias="userVO" />
     <typeAlias type="net.store.project.vo.board.BoardVO" alias="board" />
     <typeAlias type="net.store.project.vo.item.ItemQnaVO" alias="qna" />
-    <typeAlias type="net.store.project.vo.admin.PageVO" alias="page" />
+    <typeAlias type="net.store.project.vo.page.PageVO" alias="page" />
 	<typeAlias type="net.store.project.vo.bbs.BbsVO" alias="bbs"/>
     <typeAlias type="net.store.project.vo.item.ItemVO" alias="item" />
   </typeAliases>
+  
 </configuration>

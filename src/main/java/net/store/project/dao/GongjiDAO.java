@@ -5,7 +5,7 @@ import java.util.List;
 import net.store.project.vo.board.BoardVO;
 import net.store.project.vo.page.PageVO;
 
-public interface AdminGongjiDAO {
+public interface GongjiDAO {
 
 	int getListCount(PageVO p);
 
@@ -13,10 +13,12 @@ public interface AdminGongjiDAO {
 
 	void insertGongji(BoardVO b);
 
-	BoardVO getGongjiCont(int no);
+	BoardVO getGongjiCont(int board_no);
 
 	void editGongji(BoardVO b);
 
 	void delGongji(int no);
+
+	void updateHit(int board_no);
 
 }

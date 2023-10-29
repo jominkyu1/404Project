@@ -1,0 +1,36 @@
+1번 문제) 테이블 생성 쿼리문
+	create table 테이블명;
+배점 : 20점
+
+2번 문제)  1. night13 테이블 스페이스명 생성 기술 - create tablespace night13
+     datafile ‘C:\oraclexe\app\oracle\oradata\XE\night13.dbf’ size 200M;
+
+                2. 오라클 11g 이전 방식으로 되돌려 주는 명령문 기술 - alter session set 						"_ORACLE_SCRIPT"=true;
+
+                3. night13 오라클 사용자와 비밀번호 night13 생성 기술
+	-CREATE USER night13(아이디) 
+	2 IDENTIFIED BY night13(비번);
+	3 default tablespace night13 // 위에서 생성한 테이블스페이스 명
+	4 quota UNLIMITED ON night13; // 테이블 스페이스의 제한량 무한대 
+
+                4. 권한 부여
+	GRANT connect, resource TO night13;
+
+                5. 오라클 DB서버 접속
+	conn night13/night13
+
+                6. 접속한 사용자 확인
+	show user
+
+배점 : 50점
+
+3번 문제)  1. emp 사원 테이블 생성 쿼리문 기술 create table emp;
+                2. 정렬 쿼리문 기술 -select * from 테이블명 order by 레코드명 asc; or desc;
+
+배점: 20점
+
+4번 문제) 동일한 레코드 값들이 중복되어 출력되지 않도록 하기 위한 키워드 기술
+distinct
+배점 : 10점
+
+

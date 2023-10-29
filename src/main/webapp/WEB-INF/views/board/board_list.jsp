@@ -113,6 +113,9 @@
 .nav-link:hover {
 	text-decoration: underline;
 }
+ a.nav-link:hover {
+        text-decoration: none; /* 마우스 오버 시에 밑줄 제거 */
+    }
 
 </style>
 <body>
@@ -127,10 +130,10 @@
 				
 				<ul class="nav nav-tabs">
 					<li class="nav-item"><a class="nav-link active"
-						aria-current="page" href="board_list" style="color: black;">게시판</a></li>
+						aria-current="page" href="/board_list" style="color: black;">게시판</a></li>
 					<li class="nav-item"><a class="nav-link" href="/bbs_list"
 						style="color: black;">자료실</a></li>
-					<li class="nav-item"><a class="nav-link" href="/admin_gongji_list"
+					<li class="nav-item"><a class="nav-link" href="/gongji_list"
 						style="color: black;">공지사항</a></li>
 				</ul>
 				<br>
@@ -148,7 +151,6 @@
 						<th width="10%" style="text-align: center;">조회수</th>
 						<sec:authorize access="hasRole('ROLE_ADMIN') ">
 						<th width="18%" style="text-align: center;">수정/삭제</th>
-						
 						</sec:authorize>
 					</tr>
 					<c:if test="${!empty blist}">
@@ -156,7 +158,7 @@
 							<tr>
 								<td align="center"><c:if test="${b.board_step == 0}">
 										<%-- 원본글일때만 그룹번호가 출력 --%>
-     ${b.board_ref}
+     ${b.board_ref}  
     </c:if></td>
 								<td><c:if test="${b.board_step != 0}">
 										<%--답변글일때만 실행--%>
@@ -175,11 +177,10 @@ get방식으로 &구분하면서 전달된다. --%></td>
 								<sec:authorize access="hasRole('ROLE_ADMIN')">
 									<sec:authentication property="principal.user" var="user" />
 									<td align="center"><input type="button" value="수정"
-										onclick="location=
-								'admin_board_cont?no=${b.board_no}&page=${page}&state=edit';" />
+										onclick="location= 'board_cont?no=${b.board_no}&page=${page}&state=edit';" />
 										<input type="button" value="삭제"
 										onclick="if(confirm('정말로 삭제할까요?') == true){
-								location='admin_board_del?no=${b.board_no}&page=${page}';}else{ return ;}" />
+								location='board_del_ok?no=${b.board_no}&page=${page}&state=del';}else{ return ;}" />
 									</td>
 								</sec:authorize>
 
@@ -216,22 +217,19 @@ get방식으로 &구분하면서 전달된다. --%></td>
 					style="position: absolute; right: 30px; font-size: 12px;"
 						class="btn btn-outline-dark btn-lg">글쓰기 <c:if
 							test="${(!empty find_field) && (!empty find_name)}">
-							<input type="button" value="전체목록"
-								onclick="location='board_list?page=${page}';" />
 						</c:if>
 					</a>
 				</div>
 
 				<%--페이징 즉 쪽나누기 추가 --%>
 				<div id="bList_paging" class="text-center">
-					<ul class="pogination">
 						<%-- 검색전 페이징 --%>
 						<c:if test="${(empty find_field) && (empty find_name)}">
 							<c:if test="${page<=1}">
-     <span>[이전] </span>
+     &laquo;
     </c:if>
 							<c:if test="${page>1}">
-								<a href="board_list?page=${page-1}">[이전]</a>&nbsp;
+								<li><a href="board_list?page=${page-1}">&laquo;</a></li>
     </c:if>
 
 							<%--현재 쪽번호 출력--%>
@@ -248,21 +246,21 @@ get방식으로 &구분하면서 전달된다. --%></td>
 							</c:forEach>
 
 							<c:if test="${page >= maxpage}">
-    [다음]
+    &raquo;
     </c:if>
 							<c:if test="${page<maxpage}">
-								<a href="board_list?page=${page+1}">[다음]</a>
+								<a href="board_list?page=${page+1}">&raquo;</a>
 							</c:if>
 						</c:if>
 
 						<%-- 검색후 페이징 --%>
 						<c:if test="${(!empty find_field) || (!empty find_name)}">
 							<c:if test="${page<=1}">
-     [이전]&nbsp;
+     &laquo;
     </c:if>
 							<c:if test="${page>1}">
 								<a
-									href="board_list?page=${page-1}&find_field=${find_field}&find_name=${find_name}">[이전]</a>&nbsp;
+									href="board_list?page=${page-1}&find_field=${find_field}&find_name=${find_name}">&lequo;</a>&nbsp;
     </c:if>
 
 							<%--현재 쪽번호 출력--%>
@@ -280,14 +278,13 @@ get방식으로 &구분하면서 전달된다. --%></td>
 							</c:forEach>
 
 							<c:if test="${page >= maxpage}">
-    [다음]
+								&requo;
     </c:if>
 							<c:if test="${page<maxpage}">
 								<a
-									href="board_list?page=${page+1}&find_field=${find_field}&find_name=${find_name}">[다음]</a>
+									href="board_list?page=${page+1}&find_field=${find_field}&find_name=${find_name}">&requo;</a>
 							</c:if>
 						</c:if>
-					</ul>
 				</div>
 			</div>
 		</form>

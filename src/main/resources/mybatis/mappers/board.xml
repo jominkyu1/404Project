@@ -4,19 +4,19 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="Board"> <!-- 매퍼 네임스페이스명을 Board로 지정 -->
-	<!-- 시퀀스 번호값 검색 -->
-	<select id="boardNoSeq_Find" resultType="int">
-		select board_no_seq.nextval from dual
-	</select>
 
 	<!-- 게시물 저장 -->
 	<insert id="board_in" parameterType="board">
+	<selectKey keyProperty="board_no" order="AFTER" resultType="int">
+        SELECT board_no_seq.currval FROM dual
+    </selectKey>
+	
 		<!-- parameterType속성은 전달인자 타입.생략가능 -->
 		insert into board (board_no,board_name,board_title,
 		board_pwd,board_cont,board_hit,board_ref,board_step,
 		board_level,board_date, board_category) values(board_no_seq.nextval,
 		#{board_name},#{board_title},#{board_pwd},#{board_cont},0,
-		board_no_seq.nextval,0,0,sysdate,'qna')
+		board_no_seq.nextval,0,0,sysdate,#{board_category})
 	</insert>
 
 	<!-- 게시판 목록 -->
@@ -25,44 +25,39 @@
 		select * from
 		(select rowNum rNum,board_no,board_name,board_title,
 		board_hit,board_ref,board_step,board_level,board_date,board_category
-		from (select * from board
-		<where>
+		from (select * from board where board_category = 'qna'
 			<if test="find_field == ''">
 				<!-- 검색조건이 없어서 총레코드 개수 -->
 			</if>
 			<if test="find_field == 'board_title'">
 				<!-- 검색 조건이 제목인 경우 -->
-				board_title like #{find_name} <!-- like는 오라클 검색 연산자 -->
+				and board_title like #{find_name} <!-- like는 오라클 검색 연산자 -->
 			</if>
 			<if test="find_field == 'board_cont'">
-				board_cont like #{find_name}
+				and board_cont like #{find_name}
 			</if>
-		</where>
-		order by board_ref desc,
-		board_level asc))
-		where rNum &gt;= #{startrow} and rNum &lt;= #{endrow} and board_category = 'qna'
+		order by board_ref desc,board_level asc ))
+		where rNum &gt;= #{startrow} and rNum &lt;= #{endrow}   
 		<!-- &gt;은 ~보다 크다(>), &lt;은 ~보다 작다(<) -->
 	</select>
 
 	<!-- 검색 전후 레코드 개수 -->
-	<select id="board_row" parameterType="page" resultType="int">
-		select count(*) from board
-		<where>
-			<if test="find_field == ''">
-				<!-- 검색조건이 없어서 총레코드 개수 -->
-				 and board_category = 'qna'
-			</if>
-			<if test="find_field == 'board_title'">
-				<!-- 검색 조건이 제목인 경우 -->
-				board_title like #{find_name}  <!-- like는 오라클 검색 연산자 -->
-				and board_category = 'qna'			
-			</if>
-			<if test="find_field == 'board_cont'">
-				board_cont like #{find_name}  
-				and board_category = 'qna'				
-			</if>
-		</where>
-	</select>
+	<select id="board_count" parameterType="page" resultType="int">
+    select count(*) from board  where board_category = 'qna'
+            <!-- 검색조건이 없어서 총레코드 개수 
+            <if test="find_field == ''">
+            </if>-->
+            
+            <!-- 검색 조건이 제목인 경우 -->
+            <if test="find_field == 'board_title'">
+               and board_title like #{find_name}  <!-- like는 오라클 검색 연산자 -->
+            </if>
+            
+            <if test="find_field == 'board_cont'">
+               and board_cont like #{find_name}  
+            </if>
+   
+</select>
 
 	<!-- 내용보기 -->
 	<select id="board_co" resultType="board">
@@ -83,7 +78,7 @@
 	</update>
 
 	<!-- 게시판 수정 -->
-	<update id="board_up" parameterType="board">
+	<update id="board_edit" parameterType="board">
 		update board set board_name=#{board_name},
 		board_title=#{board_title},board_cont=#{board_cont}
 		where board_no=#{board_no}
@@ -97,5 +92,10 @@
      #{board_title},#{board_pwd},#{board_cont},0,#{board_ref},
      #{board_step}+1,#{board_level}+1,sysdate,'qna')
     </insert>
+    
+    <!-- 게시판 삭제 -->
+    <delete id="board_del" parameterType="int">
+     delete from board where board_no=#{board_no}
+    </delete>
 
 </mapper>

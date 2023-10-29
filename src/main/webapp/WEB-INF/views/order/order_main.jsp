@@ -201,10 +201,11 @@
       IMP.request_pay({
           pg: 'kakaopay',
           pay_method: 'card',
+          //우리서버에서 사용할 주문식별번호
           merchant_uid: 'merchant' + new Date().getTime(),
           
           name: '404Store 상품결제',
-          amount: totalPrice,
+          amount: totalPrice, //총결제금액
           buyer_email: 'jominkyu@gmail.com',
           buyer_name: '조민규',
           buyer_tel: '010-3678-6474',
@@ -213,34 +214,59 @@
           }, function (rsp){
             if(rsp.success){
                 alert('주문이 완료되었습니다.');
+                //결제완료 후 주문정보를 DB에 저장하고, 주문완료 페이지로 이동
                 
-                //TODO : 결제완료 후 주문정보를 DB에 저장하고, 주문완료 페이지로 이동
-                $.ajax(
-                    {
-                        url: '/order/${cart_id}',
-                        type: 'post',
-                        data: {
-                            imp_uid: rsp.imp_uid,
-                            merchant_uid: rsp.merchant_uid,
-                            paid_amount: rsp.paid_amount,
-                            apply_num: rsp.apply_num,
-                            buyer_email: rsp.buyer_email,
-                            buyer_name: rsp.buyer_name,
-                            buyer_tel: rsp.buyer_tel,
-                            buyer_addr: rsp.buyer_addr,
-                            buyer_postcode: rsp.buyer_postcode,
-                            total_price: totalPrice
+                if(${singleItem}){ //단품결제일경우
+
+                    $.ajax(
+                        {
+                            url: '/order',
+                            type: 'post',
+                            data: {
+                                merchant_uid: rsp.merchant_uid,
+                                orderQuantity: ${orderQuantity},
+                                item_id: ${itemVO.item_id}
+                            }
                         }
-                    }
-                ).done(function(msg){
-                    if(msg == 'SUCCESS'){
-                        location.href = '/user/orders';
-                    } else {
-                        alert('주문에 실패하였습니다.');
-                    }
-                }).fail(function(){
-                    alert('결제에 실패하였습니다.');
-                });
+                    ).done(function(msg){
+                        if(msg == 'SUCCESS'){
+                            location.href = '/user/orders';
+                        } else {
+                            alert('주문에 실패하였습니다.');
+                        }
+                    }).fail(function(){
+                        alert('결제에 실패하였습니다.');
+                    });
+                    
+                } else { //장바구니결제일경우
+
+                    $.ajax(
+                        {
+                            url: '/order/${cart_id}',
+                            type: 'post',
+                            data: {
+                                imp_uid: rsp.imp_uid,
+                                merchant_uid: rsp.merchant_uid,
+                                paid_amount: rsp.paid_amount,
+                                apply_num: rsp.apply_num,
+                                buyer_email: rsp.buyer_email,
+                                buyer_name: rsp.buyer_name,
+                                buyer_tel: rsp.buyer_tel,
+                                buyer_addr: rsp.buyer_addr,
+                                buyer_postcode: rsp.buyer_postcode,
+                                total_price: totalPrice
+                            }
+                        }
+                    ).done(function(msg){
+                        if(msg == 'SUCCESS'){
+                            location.href = '/user/orders';
+                        } else {
+                            alert('주문에 실패하였습니다.');
+                        }
+                    }).fail(function(){
+                        alert('결제에 실패하였습니다.');
+                    });
+                }
             } else {
                 alert(rsp.error_msg);
             }

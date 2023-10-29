@@ -14,24 +14,45 @@ import net.store.project.vo.page.PageVO;
 public class BbsServiceImpl implements BbsService {
 	
 	@Autowired
-	private BbsDAO bbsDAO;
+	private BbsDAO bbsDao;
 
 	@Override
 	public int getRowCount(PageVO p) {
-		return this.bbsDAO.getRowCount(p);
+		return this.bbsDao.getRowCount(p);
 	}
 
 	@Override
 	public List<BbsVO> getBbsList(PageVO p) {
-		return this.bbsDAO.getBbsList(p);
+		return this.bbsDao.getBbsList(p);
 	}
 
 	@Override
 	public List<BoardVO> getBoardList(PageVO p) {
-		return this.bbsDAO.getBoardList(p);
+		return this.bbsDao.getBoardList(p);
 	}
 
+	@Override
+	public List<BbsVO> getFiles(int board_no) {
+		return this.bbsDao.getFiles(board_no);
+	}
 
+	@Override
+	public void updateHit(int board_no) {
+		this.bbsDao.updateHit(board_no);
+	}
 
-	
+	@Override
+	public void delBbs(int board_no) {
+		this.bbsDao.delBbs(board_no);
+	}
+
+	@Override
+	public void editBbs(BoardVO b) {
+		this.bbsDao.editBbs(b);
+	}
+
+	@Override
+	public void editBbs2(BbsVO bbs) {
+		this.bbsDao.editBbs2(bbs);
+	}
 }

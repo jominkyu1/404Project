@@ -4,6 +4,8 @@
 <html>
 <head>
   <title></title>
+  <!-- jQuery -->
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
   <style>
       .carousel-inner {
           width: 80%;
@@ -61,6 +63,9 @@
             </c:when>
           </c:choose>
         </p>
+        <c:if test="${!empty order.tracking}">
+          <p class="card-text">운송장번호: ${order.tracking}</p>
+        </c:if>
         <table class="table table-bordered table-striped">
           <thead>
           <tr>
@@ -88,13 +93,37 @@
           </tbody>
         </table>
         <a href="/user/orders/${order.order_id}" class="btn btn-outline-secondary">주문상세</a>
-        <button class="btn btn-danger">주문취소</button>
+        <c:if test="${order.status == 'ORDER'}">
+        <button class="btn btn-danger" onclick="cancelOrder(${order.order_id})">주문취소</button>
+        </c:if>
+        <c:if test="${order.status == 'DELIVERY'}">
+        <a href="/user/orders/${order.order_id}/complete"
+           class="btn btn-primary" onclick="confirm('구매 확정 하시겠습니까?')">구매확정</a>
+        </c:if>
       </div>
     </div>
   </c:forEach>
 </section>
 <jsp:include page="../include/footer.jsp" />
 </body>
+<script>
+  function cancelOrder(orderId){
+      if(confirm('정말로 주문을 취소하시겠습니까?')){
+        $.ajax({
+            url: '/order/' + orderId,
+            type: 'PATCH',
+            success: function (){
+                alert('주문이 취소되었습니다!');
+                location.href = '/user/orders';
+            },
+            error: function (){
+                alert('주문을 취소할 수 없습니다. 취소는 발송이전에만 가능합니다!');
+                location.href = '/user/orders';
+            }
+        })
+      }
+  }
+</script>
 <!-- Bootstrap core JS-->
 <script src="/js/bootstrap.bundle.js"></script>
 </html>
