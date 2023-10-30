@@ -1,6 +1,5 @@
 package net.store.project.service;
 
-import java.beans.Transient;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,27 +14,27 @@ import net.store.project.vo.page.PageVO;
 
 @Service
 public class BoardServiceImpl implements BoardService {
-	
+
 	@Autowired
 	private BoardDAO boardDao;
-	
+
 	@Autowired
 	private BbsDAO bbsDao;
 
 	@Override
 	public void insertBoard(BoardVO b) {
 		this.boardDao.insertBoard(b);
-		
+
 	}
 
 	@Override
 	public List<BoardVO> getBoardList(PageVO p) {
 		return this.boardDao.getBoardList(p);
 	}
-	
+
 	@Override
 	public int getListCount(PageVO p) {
-		
+
 		return this.boardDao.getListCount(p);
 	}
 
@@ -73,14 +72,14 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public void insertBoardWithFiles(BoardVO b, List<BbsVO> bbsList) {
 		int sequence = this.boardDao.insertBoard(b);
-		
-		//bbsList.forEach(bbsVO -> bbsVO.setBoard_no(sequence));
-		
-		for(BbsVO bbs : bbsList) {
+
+		// bbsList.forEach(bbsVO -> bbsVO.setBoard_no(sequence));
+
+		for (BbsVO bbs : bbsList) {
 			bbs.setBoard_no(sequence);
 		}
-		
-		//TODO BbsVO에 BoardVO의 PK를 넣어줘야함
+
+		// TODO BbsVO에 BoardVO의 PK를 넣어줘야함
 		this.bbsDao.insertBoardWithFiles(bbsList);
 	}
 
@@ -94,12 +93,11 @@ public class BoardServiceImpl implements BoardService {
 		return this.boardDao.getBbsCont(board_no);
 	}
 
-	//상단바에서 게시판 제목 검색
+	// 상단바에서 게시판 제목 검색
 	@Override
 	public List<BoardVO> searchboard(String search) {
 		return this.boardDao.searchboard(search);
 	}
-
 
 	@Transactional
 	@Override

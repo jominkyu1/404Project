@@ -11,7 +11,7 @@ public interface BoardService {
 	void insertBoard(BoardVO b);
 
 	List<BoardVO> getBoardList(PageVO p);
-	
+
 	int getListCount(PageVO p);
 
 	BoardVO getBoardCont(int board_no);
@@ -25,18 +25,15 @@ public interface BoardService {
 	void editBoard(BoardVO b);
 
 	void delBoard(int board_no);
-	
+
 	void insertBoardWithFiles(BoardVO b, List<BbsVO> bbsList);
 
 	BoardVO getBbsCont(int board_no);
 
 	BoardVO getBbsCont2(int board_no);
 
-
-	
-
-	//상단바에서 게시판 제목 검색
-    List<BoardVO> searchboard(String search);
+	// 상단바에서 게시판 제목 검색
+	List<BoardVO> searchboard(String search);
 
 	BoardVO getBoardCont3(int no);
 }
