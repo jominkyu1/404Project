@@ -107,7 +107,7 @@
 }
 
 .nav-item {
-	font-size: 20;
+	font-size: 20px;
 }
 
 .nav-link:hover {
@@ -130,18 +130,18 @@
 				
 				<ul class="nav nav-tabs">
 					<li class="nav-item"><a class="nav-link active"
-						aria-current="page" href="board_list" style="color: black;">게시판</a></li>
+						aria-current="page" href="/board_list" style="color: black;">게시판</a></li>
 					<li class="nav-item"><a class="nav-link" href="/bbs_list"
 						style="color: black;">자료실</a></li>
 					<li class="nav-item"><a class="nav-link" href="/gongji_list"
 						style="color: black;">공지사항</a></li>
 				</ul>
 				<br>
-				<div class="bList_count" style="margin-left: 20; font-size: 20px;">글개수:
+				<div class="bList_count" style="margin-left: 20px; font-size: 20px;">글개수:
 					${listcount} 개</div>
 
 				<table id="bList_t" border="1"
-					style="position: relative top: 28px left: 48px opacity: 0.8 margin: 0 auto;"
+					style="position: relative top: 28px left: 48px opacity: 0.8 margin: 0 auto"
 					class="table table-hover">
 					<tr>
 						<th width="6%" height="26" style="text-align: center;">번호</th>
@@ -151,7 +151,6 @@
 						<th width="10%" style="text-align: center;">조회수</th>
 						<sec:authorize access="hasRole('ROLE_ADMIN') ">
 						<th width="18%" style="text-align: center;">수정/삭제</th>
-						
 						</sec:authorize>
 					</tr>
 					<c:if test="${!empty blist}">
@@ -221,72 +220,73 @@ get방식으로 &구분하면서 전달된다. --%></td>
 						</c:if>
 					</a>
 				</div>
-
+				
 				<%--페이징 즉 쪽나누기 추가 --%>
 				<div id="bList_paging" class="text-center">
-						<%-- 검색전 페이징 --%>
-						<c:if test="${(empty find_field) && (empty find_name)}">
-							<c:if test="${page<=1}">
-     &laquo;
-    </c:if>
-							<c:if test="${page>1}">
-								<li><a href="board_list?page=${page-1}">&laquo;</a></li>
-    </c:if>
-
-							<%--현재 쪽번호 출력--%>
-							<c:forEach var="a" begin="${startpage}" end="${endpage}" step="1">
-								<c:if test="${a == page}">
-									<%--현재 페이지가 선택되었다면--%>
-      <${a}>
-     </c:if>
-								<c:if test="${a != page}">
-									<%--현재 페이지가 선택되지 않았
-     다면 --%>
-									<a href="board_list?page=${a}">[${a}]</a>&nbsp;
-     </c:if>
-							</c:forEach>
-
-							<c:if test="${page >= maxpage}">
-    &raquo;
-    </c:if>
-							<c:if test="${page<maxpage}">
-								<a href="board_list?page=${page+1}">&raquo;</a>
-							</c:if>
+					<%-- 검색전 페이징 --%>
+					<c:if test="${(empty find_field) && (empty find_name)}">
+						<c:if test="${page<=1}">
+							&laquo;
 						</c:if>
-
-						<%-- 검색후 페이징 --%>
-						<c:if test="${(!empty find_field) || (!empty find_name)}">
-							<c:if test="${page<=1}">
-     &laquo;
-    </c:if>
-							<c:if test="${page>1}">
+						<c:if test="${page>1}">
+							<li><a href="board_list?page=${page-1}">&laquo;</a></li>
+						</c:if>
+						
+						<%--현재 쪽번호 출력--%>
+						<c:forEach var="a" begin="${startpage}" end="${endpage}" step="1">
+							<c:if test="${a == page}">
+								<%--현재 페이지가 선택되었다면--%>
+								<${a}>
+							</c:if>
+							<c:if test="${a != page}">
+								<%--현재 페이지가 선택되지 않았
+다면 --%>
+								<a href="board_list?page=${a}">[${a}]</a>&nbsp;
+							</c:if>
+						</c:forEach>
+						
+						<c:if test="${page >= maxpage}">
+							&raquo;
+						</c:if>
+						<c:if test="${page<maxpage}">
+							<a href="board_list?page=${page+1}">&raquo;</a>
+						</c:if>
+					</c:if>
+					
+					<%-- 검색후 페이징 --%>
+					<c:if test="${(!empty find_field) || (!empty find_name)}">
+						<c:if test="${page<=1}">
+							&laquo;
+						</c:if>
+						<c:if test="${page>1}">
+							<a
+									href="board_list?page=${page-1}&find_field=${find_field}&find_name=${find_name}">&laquo;</a>&nbsp;
+						</c:if>
+						
+						<%--현재 쪽번호 출력--%>
+						<c:forEach var="a" begin="${startpage}" end="${endpage}" step="1">
+							<c:if test="${a == page}">
+								<%--현재 페이지가 선택되었다면--%>
+								<${a}>
+							</c:if>
+							<c:if test="${a != page}">
+								<%--현재 페이지가 선택되지 않았
+다면 --%>
 								<a
-									href="board_list?page=${page-1}&find_field=${find_field}&find_name=${find_name}">&lequo;</a>&nbsp;
-    </c:if>
-
-							<%--현재 쪽번호 출력--%>
-							<c:forEach var="a" begin="${startpage}" end="${endpage}" step="1">
-								<c:if test="${a == page}">
-									<%--현재 페이지가 선택되었다면--%>
-      <${a}>
-     </c:if>
-								<c:if test="${a != page}">
-									<%--현재 페이지가 선택되지 않았
-     다면 --%>
-									<a
 										href="board_list?page=${a}&find_field=${find_field}&find_name=${find_name}">[${a}]</a>&nbsp;
-     </c:if>
-							</c:forEach>
-
-							<c:if test="${page >= maxpage}">
-								&requo;
-    </c:if>
-							<c:if test="${page<maxpage}">
-								<a
-									href="board_list?page=${page+1}&find_field=${find_field}&find_name=${find_name}">&requo;</a>
 							</c:if>
+						</c:forEach>
+						
+						<c:if test="${page >= maxpage}">
+							&raquo;
 						</c:if>
+						<c:if test="${page<maxpage}">
+							<a
+									href="board_list?page=${page+1}&find_field=${find_field}&find_name=${find_name}">&raquo;</a>
+						</c:if>
+					</c:if>
 				</div>
+			
 			</div>
 		</form>
 	</section>

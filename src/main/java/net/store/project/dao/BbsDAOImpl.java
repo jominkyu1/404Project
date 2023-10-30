@@ -19,38 +19,54 @@ public class BbsDAOImpl implements BbsDAO {
 	@Override
 	public void insertBoardWithFiles(List<BbsVO> bbsList) {
 		for(BbsVO bbs : bbsList) {
-			this.sqlSession.insert("insert_files", bbs);
+			this.sqlSession.insert("bs_in", bbs);
 		}
 	}//자료실 저장
 
 	@Override
 	public int getRowCount(PageVO p) {
-		return this.sqlSession.selectOne("abbs_count",p);
+		return this.sqlSession.selectOne("bs_count",p);
 	}//검색 전후 총 레코드 개수
 
 	@Override
 	public List<BbsVO> getBbsList(PageVO p) {
-		return this.sqlSession.selectList("bbs_list",p);//mybatis에서 selectList()메서드는
+		return this.sqlSession.selectList("bs_list",p);//mybatis에서 selectList()메서드는
 		//하나이상의 레코드를 검색해서 컬렉션 List로 변환
 	}//검색전후 목록
 
 	@Override
 	public List<BoardVO> getBoardList(PageVO p) {
-		return this.sqlSession.selectList("abbs_list",p);
+		return this.sqlSession.selectList("bs_list",p);
 	}
 
 	@Override
-	public List<BbsVO> getFiles(Integer board_no) {
-		return this.sqlSession.selectList("bbs_co", board_no);
+	public List<BbsVO> getFiles(int board_no) {
+		return this.sqlSession.selectList("bs_co", board_no);
 	}
 
-	
+	@Override
+	public void updateHit(int board_no) {
+		this.sqlSession.update("bs_hi", board_no);
+	}
 
-	
-	
+	@Override
+	public void delBbs(int board_no) {
+		this.sqlSession.delete("bs_del", board_no);
+	}//삭제
 
+	@Override
+	public void editBbs(BoardVO b) {
+		this.sqlSession.update("bs_edit", b);
+	}//수정
 
+	@Override
+	public void delbbsFile(int bbs_no) {
+		this.sqlSession.delete("bsfile_del", bbs_no);
+	}
 
-
+	@Override
+	public BbsVO getFile(int bbs_no) {
+		return this.sqlSession.selectOne("getFileByBbs_no", bbs_no);
+	}
 
 }

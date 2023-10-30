@@ -98,8 +98,8 @@
                         <c:set var="totalPrice" value="0" />
                         <c:forEach items="${order.orderItems}" var="orderItem">
                             <c:set var="totalPrice" value="${totalPrice + (orderItem.price * orderItem.quantity)}" />
-                            <fmt:formatNumber value="${totalPrice}" type="number" var="totalPrice"/>
                         </c:forEach>
+                        <fmt:formatNumber value="${totalPrice}" type="number" var="totalPrice"/>
                         <td>${totalPrice}원</td>
                         <td>${order.order_date}</td>
                         <td>${order.status.value}</td>

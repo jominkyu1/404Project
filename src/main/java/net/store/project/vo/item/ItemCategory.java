@@ -4,5 +4,5 @@ import lombok.Getter;
 
 @Getter
 public enum ItemCategory {
-    FRUITS, FASHION, BOOKS
+    FRUITS, ELECTRONICS
 }

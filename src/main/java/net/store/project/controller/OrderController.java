@@ -84,6 +84,7 @@ public class OrderController {
         //세션에 있는 유저가 장바구니에 추가한 아이템의 총 가격
         Long totalPrice = cartItemRepository.sumByCartVO(cartVO);
         model.addAttribute("totalPrice", totalPrice);
+        model.addAttribute("singleItem", false);
 
         return "order/order_main";
     }

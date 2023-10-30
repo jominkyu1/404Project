@@ -104,7 +104,7 @@
 	<section>
 		<div id="aMain_cont">
  <div id="aBc_wrap">
-  <h2 class="aBc_title">관리자 공지 내용</h2>
+  <h2 class="aBc_title"> 공지 내용</h2>
   <table id="aBc_t">
    <tr>
     <th>제목</th> <td>${b.board_title}</td>
@@ -118,7 +118,7 @@
   </table>
   <div id="aBc_menu">
   <input type="button" value="목록"
-  onclick="location='admin_gongji_list?page=${page}';" />  
+  onclick="location='gongji_list?page=${page}';" />  
   </div>
  </div>
 </div>

@@ -2,9 +2,11 @@ package net.store.project.vo.bbs;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Setter
 @Getter
+@ToString
 public class BbsVO {
 	 
 	private int bbs_no;
