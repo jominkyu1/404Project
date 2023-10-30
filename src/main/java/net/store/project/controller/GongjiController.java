@@ -162,7 +162,6 @@ public class GongjiController {
 						cm.setViewName("board/gongji_edit");
 					}
 					return cm;
-				
 			}//gongji_cont()
 
 
@@ -205,7 +204,6 @@ public class GongjiController {
 				return null;
 			}//gongji_del()
 			
-	
 			//반복적인  로그인을 안하기 위한 코드 추가
 			public static boolean isAdminLogin(HttpServletResponse response, 
 					@AuthenticationPrincipal StoreUserDetails storeUserDetails) throws Exception{

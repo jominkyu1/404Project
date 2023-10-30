@@ -264,9 +264,10 @@ public class BoardController {
 			if(request.getParameter("page") != null) {
 				page=Integer.parseInt(request.getParameter("page"));
 			}
+			//오라클 디비로 부터 비번을 가져옴.
 			
-				this.boardService.delBoard(board_no);//게시판 삭제
-				return "redirect:/board_list?page="+page;
+			this.boardService.delBoard(board_no);//게시판 삭제
+			return "redirect:/board_list?page="+page;
 		
 		}//board_del_ok()
 	

@@ -1,6 +1,5 @@
 package net.store.project.controller;
 
-import java.io.File;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +12,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,7 +21,6 @@ import org.springframework.web.servlet.ModelAndView;
 import lombok.RequiredArgsConstructor;
 import net.store.project.api.ImageHandler;
 import net.store.project.security.StoreUserDetails;
-//import net.store.project.service.AdminBoardService;
 import net.store.project.service.BbsService;
 import net.store.project.service.BoardService;
 import net.store.project.vo.bbs.BbsVO;
@@ -101,8 +98,8 @@ public class BbsController {
 			}
 		}
 		return null;
-
     }//bbs_write_ok
+	
 
 	//페이징과 검색기능이 되는 자료실 목록
 	@RequestMapping("/bbs_list")
@@ -151,7 +148,7 @@ public class BbsController {
 		return listM;
 	}//bbs_list()
 	
-	//자료실 내용보기
+		//자료실 내용보기
 		@GetMapping("/bbs_cont") //get방식으로 접근하는 매핑주소를 처리
 		public ModelAndView board_cont(int board_no,int page,String state,BoardVO b) {
 			
@@ -162,7 +159,6 @@ public class BbsController {
 				//답변폼,수정폼,삭제폼일때는 조회수 증가 안한다.
 			}else {
 				b=this.boardService.getBoardCont2(board_no);
-				
 			}
 			
 			String board_cont=b.getBoard_cont().replace("\n","<br>");//textarea 입력박스에서 엔터
@@ -181,6 +177,8 @@ public class BbsController {
 				cm.setViewName("board/bbs_reply");
 			}else if(state.equals("edit")) {//수정폼일 때
 				cm.setViewName("board/bbs_edit");
+			}else if(state.equals("del")) {//삭제폼일 때
+				cm.setViewName("board/bbs_del");
 			}
 			
 			return cm;

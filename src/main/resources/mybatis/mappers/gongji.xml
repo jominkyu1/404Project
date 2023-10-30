@@ -38,7 +38,7 @@
 				and board_cont like #{find_name}
 			</if>
 		order by board_ref desc,board_level asc))
-		where rNum &gt;= #{startrow} and rNum &lt;= #{endrow}   
+		where rNum &gt;= #{startrow} and rNum &lt;= #{endrow}
 		<!-- &gt;은 ~보다 크다(>), &lt;은 ~보다 작다(<) -->
 	</select>
 	

@@ -112,6 +112,7 @@
 			<div class="bList_count">글개수: ${listcount} 개</div>
 			<table id="bList_t">
 				<tr>
+<<<<<<< HEAD
 						<th width="6%" height="26" style="text-align: center;">번호</th>
 						<th width="34%">제목</th>
 						<th width="14%" style="text-align: center;">작성자</th>
