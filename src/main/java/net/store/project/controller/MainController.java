@@ -23,9 +23,6 @@ import java.util.List;
 
 @Controller
 public class MainController {
-
-
-
 	@Autowired
 	private ItemRepository itemRepository;
 
@@ -37,7 +34,6 @@ public class MainController {
 
 	@Autowired
 	private PageableHandler pageableHandler;
-
 
 	@GetMapping("/")
 	public String index() {
