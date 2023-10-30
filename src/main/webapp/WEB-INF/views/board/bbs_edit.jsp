@@ -140,7 +140,7 @@
      </td>
      <tr>
 		<th>파일첨부</th>
-		<td><input type="file" name="bbs_file" multiple="multiple"/></td>
+		<td><input type="file" name="files" multiple="multiple"/></td>
 	</tr>
     <c:forEach var="file" items="${files}" >
    <tr>
@@ -148,7 +148,8 @@
 	      첨부파일: 
 	      <a href="/itemimages/${file.bbs_filepath}" download="${file.bbs_originalFilename}">
 	      ${file.bbs_originalFilename}
-	      </a>
+	      </a>&nbsp; 
+	      <a href="/bbs_del_file?bbs_no=${file.bbs_no}&page=${page}&board_no=${b.board_no}">파일삭제</a>
 	   </td>
    </tr>
    </c:forEach>   

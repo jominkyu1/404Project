@@ -52,7 +52,17 @@ public class BbsServiceImpl implements BbsService {
 	}
 
 	@Override
-	public void editBbs2(BbsVO bbs) {
-		this.bbsDao.editBbs2(bbs);
+	public void insertFile(List<BbsVO> fileList) {
+		this.bbsDao.insertBoardWithFiles(fileList);
+	}
+
+	@Override
+	public void delbbsFile(int bbs_no) {
+		this.bbsDao.delbbsFile(bbs_no);
+	}
+
+	@Override
+	public BbsVO getFile(int bbs_no) {
+		return this.bbsDao.getFile(bbs_no);
 	}
 }

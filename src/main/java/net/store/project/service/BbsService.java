@@ -22,7 +22,10 @@ public interface BbsService {
 
 	void editBbs(BoardVO b);
 
-	void editBbs2(BbsVO bbs);
+	public void insertFile(List<BbsVO> fileList);
 
+	void delbbsFile(int bbs_no);
+
+	BbsVO getFile(int bbs_no);
 
 }

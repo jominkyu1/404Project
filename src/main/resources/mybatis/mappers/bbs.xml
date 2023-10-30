@@ -63,17 +63,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
      delete from board where board_no=#{board_no}
    </delete>
    
+   <!-- 자료실 파일삭제 -->
+   <delete id="bsfile_del" parameterType="int">
+     delete from bbs1 where bbs_no=#{bbs_no}
+   </delete>
+   
    <!-- 자료실 수정완료 -->
 	<update id="bs_edit">
 		update board set board_name=#{board_name},
 		board_title=#{board_title}, 
 		board_cont=#{board_cont} where board_no=#{board_no}
 	</update>
-    
-    <!-- 자료실 파일 수정완료 -->
-	<update id="file_edit">
-		update bbs1 set bbs_no=#{bbs_no},bbs_filepath=#{bbs_filepath},
-		bbs_originalFilename=#{bbs_originalFilename},board_no={board_no}
-	</update>
+	
+	<select id="getFileByBbs_no" resultType="bbs">
+	  select * from bbs1 where bbs_no = #{bbs_no}
+	</select>
 	
 </mapper>

@@ -215,10 +215,12 @@
 		</div>
 
 		<div id="bList_menu">
+			<sec:authorize access="hasRole('ROLE_ADMIN') ">
 			<input type="button" value="글쓰기"
 				onclick="location='bbs_write?page=${page}';" />
 			<c:if test="${(!empty find_field) &&  (!empty find_name)}">
-			</c:if>			
+			</c:if>
+			</sec:authorize>		
 		</div>
 
        <%--검색 폼 추가 --%>

@@ -60,9 +60,13 @@ public class BbsDAOImpl implements BbsDAO {
 	}//수정
 
 	@Override
-	public void editBbs2(BbsVO bbs) {
-		this.sqlSession.update("file_edit", bbs);
-	}//파일 수정
+	public void delbbsFile(int bbs_no) {
+		this.sqlSession.delete("bsfile_del", bbs_no);
+	}
 
+	@Override
+	public BbsVO getFile(int bbs_no) {
+		return this.sqlSession.selectOne("getFileByBbs_no", bbs_no);
+	}
 
 }

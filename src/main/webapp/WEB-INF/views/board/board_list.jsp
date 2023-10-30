@@ -278,11 +278,11 @@ get방식으로 &구분하면서 전달된다. --%></td>
 							</c:forEach>
 
 							<c:if test="${page >= maxpage}">
-								&requo;
+								&raquo;
     </c:if>
 							<c:if test="${page<maxpage}">
 								<a
-									href="board_list?page=${page+1}&find_field=${find_field}&find_name=${find_name}">&requo;</a>
+									href="board_list?page=${page+1}&find_field=${find_field}&find_name=${find_name}">&raquo;</a>
 							</c:if>
 						</c:if>
 				</div>

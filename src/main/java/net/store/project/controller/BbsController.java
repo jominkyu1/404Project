@@ -1,5 +1,6 @@
 package net.store.project.controller;
 
+import java.io.File;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
@@ -92,12 +93,12 @@ public class BbsController {
 			bbs.setBbs_originalFilename(multipartFile.getOriginalFilename());
 			
 			bbsList.add(bbs);
-			this.boardService.insertBoardWithFiles(b, bbsList);
 			// filePath를 사용하여 파일 경로에 대한 작업 수행
-			return "redirect:/bbs_list";//자료실 목록보기 매핑주소로 이동
 			}
+		
+		this.boardService.insertBoardWithFiles(b, bbsList);
 		}
-		return null;
+		return "redirect:/bbs_list";
     }//bbs_write_ok
 	
 
@@ -173,12 +174,8 @@ public class BbsController {
 			if(state.equals("cont")) {
 				cm.setViewName("board/bbs_cont");//뷰페이지 경로가 /WEB-INF/views/board/bbs_cont.
 				//jsp
-			}else if(state.equals("reply")) {//답변폼일 때
-				cm.setViewName("board/bbs_reply");
 			}else if(state.equals("edit")) {//수정폼일 때
 				cm.setViewName("board/bbs_edit");
-			}else if(state.equals("del")) {//삭제폼일 때
-				cm.setViewName("board/bbs_del");
 			}
 			
 			return cm;
@@ -187,7 +184,7 @@ public class BbsController {
 
 		//수정완료
 		@RequestMapping("/bbs_edit_ok")
-		public String bbs_edit_ok(BoardVO b, BbsVO bbs,
+		public String bbs_edit_ok(BoardVO b, List<MultipartFile> files,
 				@RequestParam("board_pwd") String board_pwd,
 				HttpServletRequest request,
 				HttpServletResponse response,@AuthenticationPrincipal StoreUserDetails storeUserDetails)
@@ -209,8 +206,23 @@ public class BbsController {
 				out.println("history.back();");
 				out.println("</script>");
 			}else {
-				this.bbsService.editBbs(b);//자료실 수정
-				this.bbsService.editBbs2(bbs);//자료실 파일 관련 수정
+				this.boardService.editBoard(b);
+				
+				//업로드 진행
+				List<BbsVO> fileList = new ArrayList<>();
+				for(MultipartFile file : files ) {
+					BbsVO bbs = new BbsVO();
+					
+					String uploadpath = imageHandler.upload(file);
+					bbs.setBbs_filepath(uploadpath);
+					bbs.setBbs_originalFilename(file.getOriginalFilename());
+					bbs.setBoard_no(b.getBoard_no());
+					
+					fileList.add(bbs);
+				}
+				
+				bbsService.insertFile(fileList);
+			
 				return "redirect:/bbs_list?page="+page;
 			}
 			return null;
@@ -219,14 +231,15 @@ public class BbsController {
 		
 		//자료실 삭제
 		@RequestMapping("/bbs_del_ok") //get OR POST로 전달되는 매핑주소를 처리
-		public ModelAndView bbs_del_ok(int board_no,int page,BoardVO b,BbsVO bbs,
+		public ModelAndView bbs_del_ok(int board_no,int page,BoardVO b,
 		HttpServletResponse response,HttpServletRequest request)
 		throws Exception{
 	    /* @RequestParam("del_pwd") 스프링의 애노테이션의 의미는 
 	     * 	request.getParameter("del_pwd")와 같은 기능이다.	
 	     */
 			response.setContentType("text/html;charset=UTF-8");
-
+			
+			page = 1;
 			if(request.getParameter("page") != null) {
 				 page=Integer.parseInt(request.getParameter("page"));
 				 this.bbsService.delBbs(board_no);//자료실 삭제 
@@ -237,5 +250,35 @@ public class BbsController {
 				return dm;
 			
 		}//bbd_del_ok()
+		
+		//게시글에 등록된 파일 제거
+		@GetMapping("/bbs_del_file")
+		public ModelAndView deleteFile(int bbs_no, int page,int board_no,
+				HttpServletResponse response,HttpServletRequest request)throws Exception {
+			
+			//TODO bbs_no에 해당하는 레코드 제거
+			response.setContentType("text/html;charset=UTF-8");
+			
+			page = 1;
+			String delFolder= ImageHandler.FILE_DIR;
+			
+			//실제 파일삭제
+			BbsVO bbs = bbsService.getFile(bbs_no);
+			if(bbs.getBbs_filepath() != null) {//기존 첨부파일이 있는 경우
+				File delFile=new File(delFolder+bbs.getBbs_filepath());//삭제할 파일객체
+				//생성
+				delFile.delete();//폴더는 삭제 안되고,기존 파일만 삭제됨.				
+			}
+			
+			//DB에서 삭제
+			if(request.getParameter("page") != null) {
+				 page=Integer.parseInt(request.getParameter("page"));
+				 this.bbsService.delbbsFile(bbs_no);//자료실 삭제 
+			}
+			
+			ModelAndView m=new ModelAndView();
+			m.setViewName("redirect:/bbs_cont?board_no="+board_no+"&page="+page+"&state=edit");
+			return m;
+		}
 	
 }//BbsController class

@@ -24,13 +24,8 @@ public interface BbsDAO {
 
 	void editBbs(BoardVO b);
 
-	void editBbs2(BbsVO bbs);
+	void delbbsFile(int bbs_no);
 
+	BbsVO getFile(int bbs_no);
 	
-
-	
-
-	
-
-
 }

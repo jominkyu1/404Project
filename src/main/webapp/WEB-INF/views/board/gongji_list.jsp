@@ -105,14 +105,13 @@
 	<jsp:include page="../include/header.jsp" />
 	<section>
 		<%-- 메인 본문 --%>
-<div id="aMain_cont">
+	<div id="aMain_cont">
 	<form method="get" action="gongji_list">
 		<div id="bList_wrap">
 			<h2 class="bList_title"> 공지목록</h2>
 			<div class="bList_count">글개수: ${listcount} 개</div>
 			<table id="bList_t">
 				<tr>
-<<<<<<< HEAD
 						<th width="6%" height="26" style="text-align: center;">번호</th>
 						<th width="34%">제목</th>
 						<th width="14%" style="text-align: center;">작성자</th>
@@ -229,7 +228,7 @@
     </c:if>
 							<c:if test="${page>1}">
 								<a
-									href="gongji_list?page=${page-1}&find_field=${find_field}&find_name=${find_name}">&lequo;</a>&nbsp;
+									href="gongji_list?page=${page-1}&find_field=${find_field}&find_name=${find_name}">&laquo;</a>&nbsp;
     </c:if>
 
 							<%--현재 쪽번호 출력--%>
@@ -247,11 +246,11 @@
 							</c:forEach>
 
 							<c:if test="${page >= maxpage}">
-								&requo;
+								&raquo;
     </c:if>
 							<c:if test="${page<maxpage}">
 								<a
-									href="gongji_list?page=${page+1}&find_field=${find_field}&find_name=${find_name}">&requo;</a>
+									href="gongji_list?page=${page+1}&find_field=${find_field}&find_name=${find_name}">&raquo;</a>
 							</c:if>
 						</c:if>
 				</div>
