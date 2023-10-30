@@ -1,5 +1,4 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <!-- 더미이미지(데모이미지) 사용시
     <img src="https://placehold.it/가로x세로">
     로 적용 후 확인해보면 자동으로 그 사이즈에 맞게 불러옴
@@ -23,6 +22,7 @@
 	rel="stylesheet" />
 
 </head>
+
 <style>
 .carousel-inner {
 	width: 80%;
@@ -102,44 +102,27 @@
 	<!-- 배너(header) 로드 -->
 	<jsp:include page="../include/header.jsp" />
 	<section>
-		<%-- 메인 본문 --%>
-<div id="aMain_cont">
-	<div id="aBw_wrap">
-		<h2 class="aBw_title"> 공지 작성</h2>
-		<form method="post" action="gongji_write_ok"
-			onsubmit="return gw_check();">
-			<table id="aBw_t">
-				<tr>
-					<sec:authorize access="hasRole('ROLE_ADMIN')">
-					<sec:authentication property="principal.user" var="user" />
-					<th>이름</th>
-					<td><input name="board_name" id="board_name" value="${user.username}" size="14" readonly/></td>
-					</sec:authorize>
-				</tr>
-				<!-- 비밀번호 Hidden <th>비밀번호</th> -->
-				<tr>
-					<td><input type="hidden" name="board_pwd" id="board_pwd"
-					size="14" value="1234"/></td>
-				</tr>
-				<tr>
-					<th>제목</th>
-					<td><input name="board_title" id="board_title" size="35" />
-					</td>
-				</tr>
-				<tr>
-					<th>내용</th>
-					<td><textarea name="board_cont" id="board_cont" rows="9"
-							cols="36"></textarea></td>
-				</tr>
-			</table>
-			<div id="aBw_menu">
-				<input type="submit" value="작성" /> <input type="reset" value="취소"
-					onclick="$('#board_name').focus();" /> <input type="button"
-					value="목록" onclick="location='gongji_list?page=${page}';" />
-			</div>
-		</form>
-	</div>
-</div>
+		<div id="bDel_wrap">
+			<h2 class="bDel_title">게시판 삭제</h2>
+			<form method="post" action="bbs_del_ok"
+				onsubmit="return del_check();">
+				<input type="hidden" name="bbs_no" value="${b.bbs_no}" /> <input
+					type="hidden" name="page" value="${page}" />
+				<table id="bDel_t">
+					<tr>
+						<th>비밀번호</th>
+						<td><input type="password" name="del_pwd" id="del_pwd"
+							size="14" /></td>
+					</tr>
+				</table>
+				
+				<div id="bDel_menu">
+					<input type="submit" value="삭제" /> <input type="reset" value="취소"
+						onclick="$('#del_pwd').focus();" /> <input type="button"
+						value="목록" onclick="location='bbs_list?page=${page}';" />
+				</div>
+			</form>
+		</div>
 	</section>
 	<!-- 푸터 (footer.html) -->
 	<jsp:include page="../include/footer.jsp" />
@@ -147,5 +130,4 @@
 
 <!-- Bootstrap core JS-->
 <script src="/js/bootstrap.bundle.js"></script>
-
 </html>

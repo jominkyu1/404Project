@@ -32,8 +32,8 @@ public class BoardDAOImpl implements BoardDAO {
 	
 	@Override
 	public int getListCount(PageVO p) {
-		return this.sqlSession.selectOne("board_row",p);
-		//selectOne() 메서드는 단 한개의 레코드만 반환. board_row는
+		return this.sqlSession.selectOne("board_count",p);
+		//selectOne() 메서드는 단 한개의 레코드만 반환. board_count는
 		//select 아이디명		
 	}//검색 전후 레코드 개수
 
@@ -53,8 +53,8 @@ public class BoardDAOImpl implements BoardDAO {
 	}//답변저장
 
 	@Override
-	public void editBoard(BoardVO eb) {
-		this.sqlSession.update("board_up", eb);
+	public void editBoard(BoardVO b) {
+		this.sqlSession.update("board_edit", b);
 	}//게시물 수정
 
 	@Override

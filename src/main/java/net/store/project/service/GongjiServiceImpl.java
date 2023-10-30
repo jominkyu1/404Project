@@ -44,4 +44,10 @@ public class GongjiServiceImpl implements GongjiService {
 	public void delGongji(int no) {
 		this.gongjiDao.delGongji(no);
 	}
+
+	@Override
+	public void updateHit(int board_no) {
+		this.gongjiDao.updateHit(board_no);
+	}
+
 }

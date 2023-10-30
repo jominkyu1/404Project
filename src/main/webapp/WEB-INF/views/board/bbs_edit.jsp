@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <!-- 더미이미지(데모이미지) 사용시
     <img src="https://placehold.it/가로x세로">
@@ -104,9 +105,9 @@
   <div id="aMain_cont">
     <div id="aBw_wrap">
      <h2 class="aBw_title">자료실 수정</h2>
-     <form method="post" action="admin_bbs_edit_ok"
+     <form method="post" action="bbs_edit_ok"
      onsubmit="return write_check();" enctype="multipart/form-data">
-     <input type="hidden" name="bbs_no" value="${b.bbs_no}" />
+     <input type="hidden" name="board_no" value="${b.board_no}" />
      <input type="hidden" name="page" value="${page}" />
      <table id="aBw_t">
     <tr>
@@ -124,11 +125,12 @@
      </td>
     </tr>
     <tr>
-     <th>비밀번호</th>
-     <td>
-     <input type="password" name="board_pwd" id="board_pwd"
-     size="14" />
-     </td>    
+     <sec:authorize access="hasRole('ROLE_ADMIN')">
+		<!-- 비밀번호 Hidden <th>비밀번호</th> -->
+	
+		<td><input type="hidden" name="board_pwd" id="board_pwd" value="1234"
+		style="width: 300px; font-size: 14; text-align: center; vertical-align: middle;" /></td>
+	 </sec:authorize>
     </tr>
     <tr>
      <th>내용</th>
@@ -136,11 +138,21 @@
      <textarea name="board_cont" id="board_cont" rows="9"
      cols="36">${b.board_cont}</textarea>
      </td>
-    </tr>
-    <tr>
-     <th>파일첨부</th>
-     <td><input type="file" name="bbs_file" /><br>${b.bbs_file}</td>
-    </tr>
+     <tr>
+		<th>파일첨부</th>
+		<td><input type="file" name="files" multiple="multiple"/></td>
+	</tr>
+    <c:forEach var="file" items="${files}" >
+   <tr>
+	   <td>
+	      첨부파일: 
+	      <a href="/itemimages/${file.bbs_filepath}" download="${file.bbs_originalFilename}">
+	      ${file.bbs_originalFilename}
+	      </a>&nbsp; 
+	      <a href="/bbs_del_file?bbs_no=${file.bbs_no}&page=${page}&board_no=${b.board_no}">파일삭제</a>
+	   </td>
+   </tr>
+   </c:forEach>   
    </table>
    <div id="aBw_menu">
     <input type="submit" value="수정" />

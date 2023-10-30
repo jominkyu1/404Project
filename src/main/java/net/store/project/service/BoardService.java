@@ -22,7 +22,7 @@ public interface BoardService {
 
 	void replyBoard(BoardVO rb);
 
-	void editBoard(BoardVO eb);
+	void editBoard(BoardVO b);
 
 	void delBoard(int board_no);
 	

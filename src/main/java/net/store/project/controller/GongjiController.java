@@ -136,6 +136,7 @@ public class GongjiController {
 			public ModelAndView gongji_cont(HttpServletRequest request,
 					HttpServletResponse response,@AuthenticationPrincipal StoreUserDetails storeUserDetails,
 					@RequestParam("no") int board_no,
+					BoardVO b,
 					@RequestParam("state") String state)
 							throws Exception{
 				response.setContentType("text/html;charset=UTF-8");
@@ -145,7 +146,7 @@ public class GongjiController {
 					if(request.getParameter("page") != null) {
 						page=Integer.parseInt(request.getParameter("page"));		
 					}
-					BoardVO b=this.gongjiService.getGongjiCont(board_no);
+					b=this.gongjiService.getGongjiCont(board_no);
 					String b_cont=b.getBoard_cont().replace("\n","<br/>");
 					//textarea영역에서 엔터키 친 부분을 다음줄로 줄바꿈
 
@@ -156,12 +157,11 @@ public class GongjiController {
 
 					if(state.equals("cont")) {//내용보기
 						cm.setViewName("board/gongji_cont");
+						this.gongjiService.updateHit(board_no);
 					}else if(state.equals("edit")) {//수정폼
 						cm.setViewName("board/gongji_edit");
 					}
 					return cm;
-				
-				
 			}//gongji_cont()
 
 
@@ -203,7 +203,7 @@ public class GongjiController {
 				}
 				return null;
 			}//gongji_del()
-	
+			
 			//반복적인  로그인을 안하기 위한 코드 추가
 			public static boolean isAdminLogin(HttpServletResponse response, 
 					@AuthenticationPrincipal StoreUserDetails storeUserDetails) throws Exception{
