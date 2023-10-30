@@ -172,7 +172,9 @@
                     updateTotalPrice();
                 },
                 error: function(data){
-                    alert('수량 변경 중 오류가 발생했습니다!');
+                    // 변경하려는 수량 > 재고
+                    alert(data.responseJSON.message);
+                    location.reload();
                 }
             });
         }

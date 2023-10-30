@@ -1,6 +1,9 @@
 package net.store.project.repository;
 
+import net.store.project.vo.order.OrderStatus;
 import net.store.project.vo.order.OrderVO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -10,4 +13,6 @@ public interface OrderRepository extends JpaRepository<OrderVO, Long> {
 
     @Query("select o from OrderVO o join fetch o.user where o.user.user_id = :user_id")
     List<OrderVO> findAllByUser_Id(Long user_id);
+
+    Page<OrderVO> findAllByStatus(Pageable pageable, OrderStatus status);
 }

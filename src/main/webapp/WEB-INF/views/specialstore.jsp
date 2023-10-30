@@ -15,8 +15,18 @@
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
 	rel="stylesheet" />
-<!-- Core theme CSS (includes Bootstrap)-->
-<link href="css/styles.css" rel="stylesheet" />
+	<!-- jQuery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+<script>
+	function searchValid(){
+		var searchInput = $('#searchInput').val().trim();
+		if(searchInput === ""){
+			alert("검색어를 입력해주세요!");
+			$('#searchInput').focus();
+			return false;
+		}
+	}
+</script>
 </head>
 <style>
 .carousel-inner {
@@ -45,28 +55,33 @@
 	<section class="py-5">
 		<div class="text-center">
 			<h2 class="mb-3">이번주 한정 특가</h2>
-
-			<select class="form-select mb-4 mx-auto" id="categoryFilter"
+			<!-- 제품 검색 폼 -->
+			<form onsubmit="return searchValid()">
+			<!-- 제품 카테고리-->
+			<select class="form-select mb-4 mx-auto" name="category"
 				style="width: 50vw">
-				<option value="all">모든 제품</option>
-				<option value="electronics">전자제품</option>
-				<option value="clothing">의류</option>
-			</select> <span class="input-group mb-4 mx-auto" style="width: 50vw"> <input
-				type="text" class="form-control" placeholder="제품 검색" />
-				<button class="btn btn-outline-secondary" type="button"
-					id="searchButton">
+				<option value="">모든 제품</option>
+				<option value="FRUITS">과일</option>
+				<option value="ELECTRONICS">전자제품</option>
+			</select>
+			
+			<!-- 제품 검색 -->
+			<span class="input-group mb-4 mx-auto" style="width: 50vw">
+				<input name="search" id="searchInput" class="form-control" placeholder="제품 검색" />
+				<button class="btn btn-outline-secondary" type="submit">
 					<i class="bi bi-search"></i>
 				</button>
 			</span>
+			</form>
 
 			<!-- 카테고리별 버튼 추가 -->
 			<div class="btn-group" role="group" aria-label="카테고리 필터">
 				<button type="button" class="btn btn-outline-dark"
-					data-category="all">전체</button>
+					onclick="location.href='/specialstore'">전체</button>
 				<button type="button" class="btn btn-outline-dark"
-					data-category="electronics">전자제품</button>
+					onclick="location.href='/specialstore?category=FRUITS'">과일</button>
 				<button type="button" class="btn btn-outline-dark"
-					data-category="clothing">의류</button>
+					onclick="location.href='/specialstore?category=ELECTRONICS'">전자제품</button>
 			</div>
 		</div>
 		<div class="container px-4 px-lg-5 mt-5">
@@ -105,27 +120,49 @@
 							<!-- Product actions-->
 							<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
 								<div class="text-center">
-									<a class="btn btn-outline-dark mt-auto mb-1" href="#">장바구니</a>
+									<form method="get" action="/cart/add/${item.item_id}">
+										<input type="hidden" value="1" name="quantity">
+										<input type="submit" class="btn btn-outline-dark mt-auto mb-1" value="장바구니">
+									</form>
 								</div>
 								<div class="text-center">
-									<a class="btn btn-primary mt-auto" href="#">구매하기</a>
+									<form method="get" action="/order">
+										<input type="hidden" name="item_id" value="${item.item_id}">
+										<input type="hidden" name="orderQuantity" value="1">
+										<input type="button" class="btn btn-secondary"
+													 onclick="orderItem()" value="구매하기">
+									</form>
 								</div>
 							</div>
 						</div>
 					</div>
 				</c:forEach>
 			</div>
+			<!-- 페이징 -->
+			<div class="d-flex justify-content-center">
+			<jsp:include page="paging/paging.jsp">
+				<jsp:param name="paging" value="${paging}" />
+				<jsp:param name="search" value="${search}" />
+			</jsp:include>
+			</div>
 		</div>
 	</section>
 	<!-- 푸터 (footer.html) -->
 	<jsp:include page="include/footer.jsp" />
-	<!-- include.js 자바스크립트 -->
-	<script src="/include/include.js"></script>
-	<script>
-		includeHTML();
-	</script>
 </body>
-
+<script>
+	function orderItem(){
+		var quantity = prompt("구매할 수량을 입력하세요", "1");
+		//취소버튼을 눌렀을경우
+		if(quantity === null){
+			return;
+		}
+		
+		var form = $(event.target).closest("form");
+		form.find("input[name='orderQuantity']").val(quantity);
+		form.submit();
+	}
+</script>
 <!-- Bootstrap core JS-->
-<script src="js/bootstrap.bundle.js"></script>
+<script src="/js/bootstrap.bundle.js"></script>
 </html>

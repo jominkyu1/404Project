@@ -1,6 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
-<%@ taglib prefix="sec"
-	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <!-- 더미이미지(데모이미지) 사용시
     <img src="https://placehold.it/가로x세로">
     로 적용 후 확인해보면 자동으로 그 사이즈에 맞게 불러옴
@@ -167,9 +166,18 @@ input[type="text"], input[type="password"] {
 							value="${b.board_title}" /></td>
 					</tr>
 					<tr>
+					<sec:authorize access="hasRole('ROLE_ADMIN')">
+					<!-- 비밀번호 Hidden <th>비밀번호</th> -->
+					
+						<td><input type="hidden" name="board_pwd" id="board_pwd" value="1234"
+							style="width: 300px; font-size: 14; text-align: center; vertical-align: middle;" /></td>
+					</sec:authorize>
+					
+					<sec:authorize access="hasRole('ROLE_USER')">
 						<th style="text-align: center; vertical-align: middle; color: black;">비밀번호</th>
 						<td><input type="password" name="board_pwd" id="board_pwd"
 							style="width: 300px; font-size: 14; text-align: center; vertical-align: middle;" /></td>
+					</sec:authorize>
 					</tr>
 					<tr>
 						<th style="text-align: center; vertical-align: middle; color: black;">내용</th>

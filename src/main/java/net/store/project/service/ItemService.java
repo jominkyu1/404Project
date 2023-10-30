@@ -3,7 +3,11 @@ package net.store.project.service;
 import net.store.project.dao.ItemDao;
 import net.store.project.vo.item.ItemVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ItemService {
@@ -20,4 +24,10 @@ public class ItemService {
         this.itemDao.editProduct(item);
 
     }
+
+    //상단바에서 게시판 제목 검색
+    public List<ItemVO> searchItems(String search) {
+        return  itemDao.searchItems(search);
+    }
+
 }

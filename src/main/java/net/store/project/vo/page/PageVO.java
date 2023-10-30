@@ -14,4 +14,6 @@ public class PageVO {//페이징과 검색기능 관련 클래스
 	//검색기능 관련변수
 	private String find_field;//검색 필드
 	private String find_name;//검색어
+	
+	//private String board_category;//구분값 qna, bbs, gongji
 }

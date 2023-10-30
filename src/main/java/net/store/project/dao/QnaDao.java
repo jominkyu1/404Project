@@ -1,6 +1,6 @@
 package net.store.project.dao;
 
-import net.store.project.vo.admin.PageVO;
+import net.store.project.vo.page.PageVO;
 import net.store.project.vo.item.ItemQnaVO;
 
 import java.util.List;

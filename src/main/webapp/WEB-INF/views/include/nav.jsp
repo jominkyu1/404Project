@@ -1,6 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 
 <!--부트스트랩 아이콘 CSS
     https://icons.getbootstrap.com/ 이곳에서 아이콘 확인! 클래스명에 아이콘 적으면됨!
@@ -88,8 +90,9 @@
                 </sec:authorize>
             </ul>
             <!-- 검색 기능-->
-            <form class="navbar-nav mx-2">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" required tabindex="1">
+            <form class="navbar-nav mx-2" action="/search" method="GET">
+                <input class="form-control me-2" type="search" name="search"
+                       placeholder="Search" aria-label="Search" required tabindex="1">
                 <input class="btn btn-outline-dark text-bg-dark" type="submit" value="검색">
             </form>
             <!-- 장바구니 -->
@@ -105,4 +108,9 @@
         </div>
     </div>
 </nav>
+
+
+
+
+
 

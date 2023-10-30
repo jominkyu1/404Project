@@ -1,9 +1,10 @@
 package net.store.project.vo.order;
 
-import com.sun.org.apache.bcel.internal.generic.RETURN;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
+@Getter
 public enum OrderStatus {
     ORDER("주문접수"),
     DELIVERY("배송중"),

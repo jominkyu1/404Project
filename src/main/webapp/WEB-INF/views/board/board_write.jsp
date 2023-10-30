@@ -1,6 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
-<%@ taglib prefix="sec"
-	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <!-- 더미이미지(데모이미지) 사용시
     <img src="https://placehold.it/가로x세로">
     로 적용 후 확인해보면 자동으로 그 사이즈에 맞게 불러옴
@@ -110,20 +109,19 @@
 		<div style="display: flex; justify-content: center;">
 			<div id="bWrite_wrap">
 				<h2 class="bWrite_title" style="text-align: center;">게시판 글쓰기</h2>
-
 				<br>
 				<form method="post" action="board_write_ok"
 					onsubmit="return bw_check();">
-					<table id="bWrite_t" style="text-align: center;"
-						class="table table-bordered">
-						<sec:authorize access="isAnonymous()">
+					<sec:authorize access="isAnonymous()">
 							<script>
 								alert("로그인 후 이용해 주세요!");
 								location.href = "/login";
 							</script>
 						</sec:authorize>
+					<table id="bWrite_t" style="text-align: center;"
+						class="table table-bordered">
 						<sec:authorize access="isAuthenticated()">
-						<sec:authentication property="principal.user" var="user" />
+							<sec:authentication property="principal.user" var="user"/>
 						<tr>
 							<th>이름</th>
 							<td><input name="board_name" id="board_name"
@@ -135,9 +133,16 @@
 							<td><input name="board_title" id="board_title" size="30" /></td>
 						</tr>
 						<tr>
+							<sec:authorize access="hasRole('ROLE_ADMIN')">
+							<!-- 비밀번호 Hidden <th>비밀번호</th> -->
+								<td><input type="hidden" name="board_pwd" id="board_pwd"
+								size="14" value="1234"/></td>
+							</sec:authorize>
+							<sec:authorize access="hasRole('ROLE_USER')">
 							<th>비밀번호</th>
-							<td><input type="password" name="board_pwd" id="board_pwd"
-								size="30" /></td>
+								<td><input type="password" name="board_pwd" id="board_pwd" size="30" />
+								</td>
+							</sec:authorize>
 						</tr>
 						<tr>
 							<th style="text-align: center;">내용</th>

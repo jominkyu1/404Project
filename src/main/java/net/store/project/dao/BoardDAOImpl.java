@@ -17,8 +17,9 @@ public class BoardDAOImpl implements BoardDAO {
 	public SqlSession sqlSession;
 
 	@Override
-	public void insertBoard(BoardVO b) {
+	public int insertBoard(BoardVO b) {
 		this.sqlSession.insert("board_in",b);
+		return b.getBoard_no();
 		
 	}//게시판 저장
 
@@ -31,8 +32,8 @@ public class BoardDAOImpl implements BoardDAO {
 	
 	@Override
 	public int getListCount(PageVO p) {
-		return this.sqlSession.selectOne("board_row",p);
-		//selectOne() 메서드는 단 한개의 레코드만 반환. board_row는
+		return this.sqlSession.selectOne("board_count",p);
+		//selectOne() 메서드는 단 한개의 레코드만 반환. board_count는
 		//select 아이디명		
 	}//검색 전후 레코드 개수
 
@@ -52,8 +53,8 @@ public class BoardDAOImpl implements BoardDAO {
 	}//답변저장
 
 	@Override
-	public void editBoard(BoardVO eb) {
-		this.sqlSession.update("board_up", eb);
+	public void editBoard(BoardVO b) {
+		this.sqlSession.update("board_edit", b);
 	}//게시물 수정
 
 	@Override
@@ -61,9 +62,14 @@ public class BoardDAOImpl implements BoardDAO {
 		this.sqlSession.delete("board_del",board_no);
 	}//게시물 삭제
 	
-
+	@Override
+	public BoardVO getBbsCont(int board_no) {
+		return this.sqlSession.selectOne("board_co", board_no);
+	}
 	
-	
-	
-
+	//상단바에서 게시판 제목 검색
+	@Override
+	public List<BoardVO> searchboard(String search) {
+		return this.sqlSession.selectList("searchBoard", search);
+	}
 }

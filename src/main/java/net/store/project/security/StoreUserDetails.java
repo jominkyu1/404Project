@@ -1,16 +1,17 @@
 package net.store.project.security;
 
-import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
-import net.store.project.vo.user.UserVO;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
+import net.store.project.vo.user.UserVO;
 
 /**
  * 데이터베이스에서 관리하는 User객체를 Spring Security에게 넘겨 주기위해

@@ -10,7 +10,7 @@ import net.store.project.vo.page.PageVO;
 @Repository
 public interface BoardDAO {
 
-	void insertBoard(BoardVO b);
+	int insertBoard(BoardVO b);
 
 	List<BoardVO> getBoardList(PageVO p);
 	
@@ -22,14 +22,12 @@ public interface BoardDAO {
 
 	void replyBoard(BoardVO rb);
 
-	void editBoard(BoardVO eb);
+	void editBoard(BoardVO b);
 
 	void delBoard(int board_no);
 
+	BoardVO getBbsCont(int board_no);
 	
-
-	
-	
-
-
+	//상단바에서 게시판 제목 검색
+	List<BoardVO> searchboard(String search);
 }
