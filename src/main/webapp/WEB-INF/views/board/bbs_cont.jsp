@@ -104,7 +104,7 @@
 	<section>
 		<div id="aMain_cont">
  <div id="abbsCont_wrap">
-  <h2 class="abbsCont_title">관리자 자료실 내용</h2>
+  <h2 class="abbsCont_title">자료실 내용</h2>
   <table id="abbsCont_t">
    <tr>
     <th>제목</th> <td>${b.board_title}</td>

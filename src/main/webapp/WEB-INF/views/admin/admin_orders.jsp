@@ -127,7 +127,6 @@
                         송장: ${order.tracking}
                       </c:otherwise>
                     </c:choose>
-                   
                   </td>
                 </tr>
                 </c:forEach>

@@ -28,15 +28,15 @@ public class ItemQnaVO {
             strategy=GenerationType.SEQUENCE,
             generator="item_qna_seq_gename"
     )
-    private Long item_qna_id;
+    private Long item_qna_id; // PK
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id")
-    private ItemVO itemVO; //문의상품의 ID
+    private ItemVO itemVO; //문의상품의 ID FK
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private UserVO userVO; //문의한 유저의 ID
+    private UserVO userVO; //문의한 유저의 ID FK
 
     @Column(length = 4000)
     private String contents; //문의내용

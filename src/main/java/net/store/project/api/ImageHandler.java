@@ -13,13 +13,14 @@ import java.util.UUID;
 
 @Component
 public class ImageHandler {
-    public static final String FILE_DIR = "src/main/webapp/itemimages/";
+    public static final String FILE_DIR = "/var/www/404store/itemimages/";
+    public static final String IMG_DIR = "src/main/webapp/itemimages/";
 
     public String upload(MultipartFile multipartFile) {
         //현재날짜를 기준으로 폴더경로 생성
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
         String currentDate = dateFormat.format(new Date());
-        String uploadDir = FILE_DIR + currentDate;
+        String uploadDir = IMG_DIR + currentDate;
 
         // 업로드한 파일명(ex:: apple.jpg)
         String originalFilename = multipartFile.getOriginalFilename();

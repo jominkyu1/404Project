@@ -13,10 +13,13 @@ public interface GongjiService {
 
 	void insertGongji(BoardVO b);
 
-	BoardVO getGongjiCont(int no);
+	BoardVO getGongjiCont(int board_no);
 
 	void editGongji(BoardVO b);
 
 	void delGongji(int no);
+
+	void updateHit(int board_no);
+
 
 }

@@ -95,6 +95,7 @@
 
     <jsp:include page="paging/paging.jsp">
         <jsp:param name="paging" value="${paging}"/>
+        
     </jsp:include>
 
     <!--게시판 목록 검색 -->

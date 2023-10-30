@@ -114,6 +114,9 @@
 				<th width="14%">작성자</th>
 				<th width="17%">작성일</th>
 				<th width="14%">조회수</th>
+				<sec:authorize access="hasRole('ROLE_ADMIN') ">
+				<th width="18%" style="text-align: center;">수정/삭제</th>
+				</sec:authorize>
 			</tr>
 
 			<c:if test="${!empty blist}">
@@ -139,6 +142,16 @@
 						<td align="center">${fn:substring(b.board_date,0,10)}</td>
 						<%-- 0이상 10미만 사이의 년월일만 반환 --%>
 						<td align="center">${b.board_hit}</td>
+						<!-- 관리자 로그인일때 수정/삭제 뜨게하기 -->
+						<sec:authorize access="hasRole('ROLE_ADMIN')">
+							<sec:authentication property="principal.user" var="user" />
+							<td align="center"><input type="button" value="수정"
+								onclick="location= 'bbs_cont?board_no=${b.board_no}&page=${page}&state=edit';" />
+								<input type="button" value="삭제"
+								onclick="if(confirm('정말로 삭제할까요?') == true){
+						location='bbs_del_ok?board_no=${b.board_no}&page=${page}&state=del';}else{ return ;}" />
+							</td>
+						</sec:authorize>
 					</tr>
 				</c:forEach>
 			</c:if>
@@ -202,12 +215,12 @@
 		</div>
 
 		<div id="bList_menu">
+			<sec:authorize access="hasRole('ROLE_ADMIN') ">
 			<input type="button" value="글쓰기"
 				onclick="location='bbs_write?page=${page}';" />
 			<c:if test="${(!empty find_field) &&  (!empty find_name)}">
-			  <input type="button" value="전체목록"
-			  onclick="location='bbs_list?page=${page}';" >
-			</c:if>			
+			</c:if>
+			</sec:authorize>		
 		</div>
 
        <%--검색 폼 추가 --%>
