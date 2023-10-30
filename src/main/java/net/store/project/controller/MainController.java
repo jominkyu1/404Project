@@ -62,17 +62,12 @@ public class MainController {
 			Page<ItemVO> items = itemRepository.findAllByNameLike("%" + search + "%", pageable);
 			JpaPagingDto paging = pageableHandler.makePages(pageable, items, 3);
 			model.addAttribute("paging", paging);
+			model.addAttribute("search", search);
 			searchItems = items.getContent();
-			System.out.println("items:" + items);
 		}
-
-		System.out.println("searchItems:"+searchItems);
 
 		//게시판 이름으로 검색
 		List<BoardVO> searchBoardList  = this.boardService.searchboard("%" + search + "%");
-
-
-		System.out.println("보드게시판 검색 목록 개수 : " + searchBoardList.size());
 
 		ModelAndView searchM = new ModelAndView();
 		searchM.addObject("itemlist", searchItems);

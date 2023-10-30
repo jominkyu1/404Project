@@ -99,7 +99,7 @@
 
     <!--게시판 목록 검색 -->
     <table id="bList_t" border="1"
-           style="position: relative top: 28px left: 48px opacity: 0.8 margin: 0 auto;"
+           style="position: relative; top: 28px; left: 48px; opacity: 0.8; margin: 0 auto;"
            class="table table-hover">
         <tr>
             <th width="6%" height="26" style="text-align: center;">번호</th>
