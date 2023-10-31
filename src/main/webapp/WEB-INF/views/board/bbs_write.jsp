@@ -123,23 +123,23 @@
 							<tr>
 								<th>이름</th>
 								<td><input name="board_name" id="board_name"
-									value="${user.username}" size="30" readonly  width="100px"/></td>
+									value="${user.username}" size="30" readonly /></td>
 							</tr>
 						</sec:authorize>
 						<tr>
 							<th>제목</th>
-							<td><input name="board_title" id="board_title" size="30" /></td>
+							<td><input name="board_title" id="board_title" size="30px" /></td>
 						</tr>
 						<tr>
 							<sec:authorize access="hasRole('ROLE_ADMIN')">
 								<!-- 비밀번호 Hidden <th>비밀번호</th> -->
 								<td><input type="hidden" name="board_pwd" id="board_pwd"
-									size="14" value="1234" /></td>
+									size="14px" value="1234" /></td>
 							</sec:authorize>
 							<sec:authorize access="hasRole('ROLE_USER')">
 								<th>비밀번호</th>
-								<td><input type="password" name="board_pwd" id="board_pwd"
-									size="30" /></td>
+								<input type="password" name="board_pwd" id="board_pwd"
+									size="30px" />
 							</sec:authorize>
 						</tr>
 						<tr>

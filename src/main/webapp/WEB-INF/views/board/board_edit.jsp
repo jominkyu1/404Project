@@ -93,8 +93,6 @@
 	border-collapse: collapse;
 	border: 1px solid black;
 }
-
-
 </style>
 <body>
 	<!-- 네비게이션(nav) 로드 -->
@@ -102,60 +100,61 @@
 	<!-- 배너(header) 로드 -->
 	<jsp:include page="../include/header.jsp" />
 	<section>
-		<div id="bWrite_wrap">
-			<br>
-			<h2 class="bWrite_title" style="text-align: center;">게시판 수정폼</h2>
-			<br>
-			<form method="post" action="board_edit_ok"
-				onsubmit="return bw_check();">
-				<input type="hidden" name="board_no" value="${b.board_no}" /> <input
-					type="hidden" name="page" value="${page}" />
-
-
-				<table id="bWrite_t" class="table table-bordered"
-					style="text-align: center; border-collapse: collapse; margin: auto; width: 50%;">
-					<sec:authorize access="isAuthenticated()">
-						<sec:authentication property="principal.user" var="user" />
-						<tr>
-							<th>이름</th>
-							<td><input name="board_name" id="board_name"
-								value="${user.username}" readonly style="size: 30px; "/></td>
-						</tr>
-					</sec:authorize>
-					<tr>
-						<th
-							style="text-align: center; vertical-align: middle; color: black;">제목</th>
-						<td><input name="board_title" id="board_title"
-							value="${b.board_title}" /></td>
-					</tr>
-					<tr>
-						<sec:authorize access="hasRole('ROLE_ADMIN')">
-							<!-- 비밀번호 Hidden <th>비밀번호</th> -->
-
-							<td><input type="hidden" name="board_pwd" id="board_pwd"
-								value="1234" /></td>
-						</sec:authorize>
-
-						<sec:authorize access="hasRole('ROLE_USER')">
-							<th>비밀번호</th>
-							<td><input type="password" name="board_pwd" id="board_pwd" style="size: 30px;"/></td>
-						</sec:authorize>
-					</tr>
-					<tr>
-						<th>내용</th>
-						<td><textarea name="board_cont" id="board_cont" rows="9"
-								cols="31x">${b.board_cont}</textarea></td>
-					</tr>
-				</table>
+		<div id="bWrite_wrap" style="display: flex; justify-content: center;">
+			<div id="Bwrite_wrap">
+				<h2 class="bWrite_title" style="text-align: center;">게시판 수정폼</h2>
 				<br>
+				<form method="post" action="board_edit_ok"
+					onsubmit="return bw_check();">
+					<input type="hidden" name="board_no" value="${b.board_no}" /> <input
+						type="hidden" name="page" value="${page}" />
 
-				<div id="aBw_menu" style="text-align: center;">
-					<input type="submit" value="수정" /> <input type="reset" value="취소"
-						onclick="$('#board_name').focus();" /> <input type="button"
-						value="목록" onclick="location='bbs_list?page=${page}';" />
-				</div>
 
-			</form>
+					<table id="bWrite_t" style="text-align: center;"
+						class="table table-bordered">
+						<sec:authorize access="isAuthenticated()">
+							<sec:authentication property="principal.user" var="user" />
+							<tr>
+								<th>이름</th>
+								<td><input name="board_name" id="board_name" size=30px;
+									value="${user.username}" readonly /></td>
+							</tr>
+						</sec:authorize>
+						<tr>
+							<th>제목</th>
+							<td><input name="board_title" id="board_title" size=30px;
+								value="${b.board_title}" /></td>
+						</tr>
+						<tr>
+							<sec:authorize access="hasRole('ROLE_ADMIN')">
+								<!-- 비밀번호 Hidden <th>비밀번호</th> -->
+
+								<input type="hidden" name="board_pwd" id="board_pwd"
+									value="1234" />
+							</sec:authorize>
+
+							<sec:authorize access="hasRole('ROLE_USER')">
+								<th>비밀번호</th>
+								<td><input type="password" name="board_pwd" id="board_pwd"
+									size=30px; /></td>
+							</sec:authorize>
+						</tr>
+						<tr>
+							<th>내용</th>
+							<td><textarea name="board_cont" id="board_cont" rows="9"
+									cols="31x">${b.board_cont}</textarea></td>
+						</tr>
+					</table>
+					<br>
+
+					<div id="aBw_menu" style="text-align: center;">
+						<input type="submit" value="수정" /> <input type="reset" value="취소"
+							onclick="$('#board_name').focus();" /> <input type="button"
+							value="목록" onclick="location='bbs_list?page=${page}';" />
+					</div>
+
+				</form>
+			</div>
 		</div>
 	</section>
 	<!-- 푸터 (footer.html) -->

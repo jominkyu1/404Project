@@ -142,7 +142,7 @@
 						</tr>
 						<c:forEach var="file" items="${files}">
 							<tr>
-								<td>첨부파일: <a href="/itemimages/${file.bbs_filepath}"
+								<th>첨부파일</th> <td><a href="/itemimages/${file.bbs_filepath}"
 									download="${file.bbs_originalFilename}">
 										${file.bbs_originalFilename} </a>&nbsp; <a
 									href="/bbs_del_file?bbs_no=${file.bbs_no}&page=${page}&board_no=${b.board_no}">파일삭제</a>

@@ -118,7 +118,7 @@ p {
 					class="styled-button">
 			</p>
 
-			<ul style="font-size: 10px; text-align: center;">
+			<ul style="font-size: 10px; text-align: center; list-style: none;" >
 				<li>기본적으로 최근 3개월간의 자료가 조회되며, 기간 검색시 지난 주문내역을 조회하실 수 있습니다.</li>
 				<li>주문번호를 클릭하시면 해당 주문에 대한 상세내역을 확인하실 수 있습니다.</li>
 				<li class="">취소/교환/반품 신청은 배송완료일 기준 30일까지 가능합니다.</li>
