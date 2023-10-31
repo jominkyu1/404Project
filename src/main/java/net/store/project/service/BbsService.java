@@ -18,5 +18,14 @@ public interface BbsService {
 
 	void updateHit(int board_no);
 
+	void delBbs(int board_no);
+
+	void editBbs(BoardVO b);
+
+	public void insertFile(List<BbsVO> fileList);
+
+	void delbbsFile(int bbs_no);
+
+	BbsVO getFile(int bbs_no);
 
 }

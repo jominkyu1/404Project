@@ -19,4 +19,6 @@ public interface GongjiDAO {
 
 	void delGongji(int no);
 
+	void updateHit(int board_no);
+
 }

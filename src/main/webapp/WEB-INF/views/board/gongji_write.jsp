@@ -106,7 +106,7 @@
 <div id="aMain_cont">
 	<div id="aBw_wrap">
 		<h2 class="aBw_title"> 공지 작성</h2>
-		<form method="post" action="admin_gongji_write_ok"
+		<form method="post" action="gongji_write_ok"
 			onsubmit="return gw_check();">
 			<table id="aBw_t">
 				<tr>
@@ -135,7 +135,7 @@
 			<div id="aBw_menu">
 				<input type="submit" value="작성" /> <input type="reset" value="취소"
 					onclick="$('#board_name').focus();" /> <input type="button"
-					value="목록" onclick="location='admin_gongji_list?page=${page}';" />
+					value="목록" onclick="location='gongji_list?page=${page}';" />
 			</div>
 		</form>
 	</div>

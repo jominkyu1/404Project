@@ -1,0 +1,31 @@
+# 도메인 주소
+http://3.37.67.219
+http://ec2-3-37-67-219.ap-northeast-2.compute.amazonaws.com
+
+
+#AWS 인스턴스 접근
+ssh -i "my-key.pem" ubuntu@ec2-3-37-67-219.ap-northeast-2.compute.amazonaws.com
+
+
+
+# Maven clean build
+
+./mvnw clean package -DskipTests 
+
+권한 --> chmod +x mvnw
+
+
+
+# 백그라운드 실행
+nohup java -jar WAR파일명 &
+
+# 백그라운드 프로세스 확인
+ps -ef | grep .war
+
+# 우분투 남은 용량 확인
+df -h
+
+-----
+JAR파일배포시 JSP파일이 포함되지 않는 문제 -> WAR로 배포 후 해결
+JPA의 Entity설계시 @GeneratedValue어노테이션의 strategy속성을 GenerationType.IDENTITY로 줘서 나타난 문제 -> 시퀀스제네레이터 직접 넣어줘서 해결
+배포 후 상품등록시 이미지 저장 및 이미지 불러오기가 안되는 문제 -> 이미지 저장 경로를 프로젝트 외부경로로 변경 및 클라이언트 요청 응답시 UrlResource로 응답

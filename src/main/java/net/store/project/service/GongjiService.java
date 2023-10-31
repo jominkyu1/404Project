@@ -19,4 +19,7 @@ public interface GongjiService {
 
 	void delGongji(int no);
 
+	void updateHit(int board_no);
+
+
 }

@@ -20,11 +20,12 @@ public interface BbsDAO {
 
 	void updateHit(int board_no);
 
+	void delBbs(int board_no);
+
+	void editBbs(BoardVO b);
+
+	void delbbsFile(int bbs_no);
+
+	BbsVO getFile(int bbs_no);
 	
-
-	
-
-	
-
-
 }

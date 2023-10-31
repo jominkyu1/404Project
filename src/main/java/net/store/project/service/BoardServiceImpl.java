@@ -60,8 +60,8 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public void editBoard(BoardVO eb) {
-		this.boardDao.editBoard(eb);
+	public void editBoard(BoardVO b) {
+		this.boardDao.editBoard(b);
 	}
 
 	@Override

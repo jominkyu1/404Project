@@ -92,12 +92,11 @@
             </c:forEach>
         </div>
     </div>
-
+    <div class="d-flex justify-content-center">
     <jsp:include page="paging/paging.jsp">
         <jsp:param name="paging" value="${paging}"/>
-        
     </jsp:include>
-
+    </div>
     <!--게시판 목록 검색 -->
     <table id="bList_t" border="1"
            style="position: relative; top: 28px; left: 48px; opacity: 0.8; margin: 0 auto;"

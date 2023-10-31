@@ -40,4 +40,29 @@ public class BbsServiceImpl implements BbsService {
 	public void updateHit(int board_no) {
 		this.bbsDao.updateHit(board_no);
 	}
+
+	@Override
+	public void delBbs(int board_no) {
+		this.bbsDao.delBbs(board_no);
+	}
+
+	@Override
+	public void editBbs(BoardVO b) {
+		this.bbsDao.editBbs(b);
+	}
+
+	@Override
+	public void insertFile(List<BbsVO> fileList) {
+		this.bbsDao.insertBoardWithFiles(fileList);
+	}
+
+	@Override
+	public void delbbsFile(int bbs_no) {
+		this.bbsDao.delbbsFile(bbs_no);
+	}
+
+	@Override
+	public BbsVO getFile(int bbs_no) {
+		return this.bbsDao.getFile(bbs_no);
+	}
 }

@@ -98,8 +98,8 @@
                         <c:set var="totalPrice" value="0" />
                         <c:forEach items="${order.orderItems}" var="orderItem">
                             <c:set var="totalPrice" value="${totalPrice + (orderItem.price * orderItem.quantity)}" />
-                            <fmt:formatNumber value="${totalPrice}" type="number" var="totalPrice"/>
                         </c:forEach>
+                        <fmt:formatNumber value="${totalPrice}" type="number" var="totalPrice"/>
                         <td>${totalPrice}원</td>
                         <td>${order.order_date}</td>
                         <td>${order.status.value}</td>
@@ -153,35 +153,6 @@
                             </td>
                         </tr>
                     </c:if>
-                </tbody>
-            </table>
-            <table class="table table-striped text-center mx-auto table-hover" style="table-layout: fixed;">
-                <caption class="caption-top fw-bold text-center mb-3">
-                    미답변 Q&A: 0건
-                </caption>
-                <thead>
-                    <tr>
-                        <th class="w-75">제목</th>
-                        <th class="w-25">이름</th>
-                        <th class="w-25">날짜</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="overflow-hidden text-nowrap">안녕하세요. 상품문의 드립니다. 상품문의 드립니다. 상품문의 드립니다. 상품문의 드립니다.</td>
-                        <td class="overflow-hidden text-nowrap">홍길동</td>
-                        <td class="overflow-hidden text-nowrap">2023/09/03</td>
-                    </tr>
-                    <tr>
-                        <td class="overflow-hidden text-nowrap">안녕하세요. 상품문의 드립니다. 상품문의 드립니다. 상품문의 드립니다. 상품문의 드립니다.</td>
-                        <td class="overflow-hidden text-nowrap">홍길동</td>
-                        <td class="overflow-hidden text-nowrap">2023/09/03</td>
-                    </tr>
-                    <tr>
-                        <td class="overflow-hidden text-nowrap">안녕하세요. 상품문의 드립니다. 상품문의 드립니다. 상품문의 드립니다. 상품문의 드립니다.</td>
-                        <td class="overflow-hidden text-nowrap">홍길동</td>
-                        <td class="overflow-hidden text-nowrap">2023/09/03</td>
-                    </tr>
                 </tbody>
             </table>
         </div>

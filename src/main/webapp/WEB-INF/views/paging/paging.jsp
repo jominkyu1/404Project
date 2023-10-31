@@ -34,7 +34,9 @@
     <c:if test="${paging.endPage >= 0}"> <!-- 값이 있을경우만 페이징 -->
       <c:forEach begin="${paging.startPage}" end="${paging.endPage}" var="num">
         <li class="page-item <c:if test="${num == paging.currentPage}"> active</c:if>">
-        <a href="?<c:if test="${!empty search}">search=${search}&</c:if>page=${num}"
+        <a href="?<c:if test="${!empty search}">search=${search}&</c:if>
+<c:if test="${!empty category}">category=${category}&</c:if>
+page=${num}"
            class="page-link">${num + 1}</a>
         </li>
       </c:forEach>
