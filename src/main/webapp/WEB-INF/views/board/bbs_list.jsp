@@ -1,7 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 
 <!-- 더미이미지(데모이미지) 사용시
     <img src="https://placehold.it/가로x세로">
@@ -103,143 +104,164 @@
 	<!-- 배너(header) 로드 -->
 	<jsp:include page="../include/header.jsp" />
 	<section>
+		<Br>
 		<form method="get" action="bbs_list">
-	<div id="bList_wrap">
-		<h2 class="bList_title">자료실 목록</h2>
-		<div class="bList_count">글개수: ${listcount}</div>
-		<table id="bList_t">
-			<tr>
-				<th width="6%" height="26">번호</th>
-				<th width="50%">제목</th>
-				<th width="14%">작성자</th>
-				<th width="17%">작성일</th>
-				<th width="14%">조회수</th>
-				<sec:authorize access="hasRole('ROLE_ADMIN') ">
-				<th width="18%" style="text-align: center;">수정/삭제</th>
-				</sec:authorize>
-			</tr>
-
-			<c:if test="${!empty blist}">
-				<c:forEach var="b" items="${blist}">
+			<div id="bList_wrap">
+				<ul class="nav nav-tabs" style="font-size: 20px;">
+					<li class="nav-item"><a class="nav-link" aria-current="page"
+						href="/board_list" style="color: black; font-weight: bold;">게시판</a></li>
+					<li class="nav-item"><a class="nav-link active"
+						href="/bbs_list" style="color: black; font-weight: bold;">자료실</a></li>
+					<li class="nav-item"><a class="nav-link" href="/gongji_list"
+						style="color: black; font-weight: bold;">공지사항</a></li>
+				</ul>
+				<br>
+				<div class="bList_count" style="margin-left: 20px; font-size: 20px;">글개수:
+					${listcount} 개</div>
+				<table id="bList_t" border=1
+					style="position: relative top: 28px left: 48px opacity: 0.8 margin: 0 auto"
+					class="table table-hover">
 					<tr>
-						<td align="center">
-						<c:if test="${b.board_step == 0}"> <%--원본글일때만 글그룹번호를 출력 --%>
-						${b.board_ref}
-						</c:if>
-						</td>
-						<td>
-						<c:if test="${b.board_step != 0}"> <%--답변글일때만 실행 : 계단형
-						계층형 자료실 --%>
-						  <c:forEach begin="1" end="${b.board_step}" step="1">
-						   &nbsp;<%--한칸의 빈공백 처리 --%>
-						  </c:forEach>
-						  <img src="images/AnswerLine.gif" > <%--답변글 이미지 --%>
-						</c:if>
-						<a
-							href="bbs_cont?board_no=${b.board_no}&state=cont&page=${page}">
-								${b.board_title}</a></td>
-						<td align="center">${b.board_name}</td>
-						<td align="center">${fn:substring(b.board_date,0,10)}</td>
-						<%-- 0이상 10미만 사이의 년월일만 반환 --%>
-						<td align="center">${b.board_hit}</td>
-						<!-- 관리자 로그인일때 수정/삭제 뜨게하기 -->
-						<sec:authorize access="hasRole('ROLE_ADMIN')">
-							<sec:authentication property="principal.user" var="user" />
-							<td align="center"><input type="button" value="수정"
-								onclick="location= 'bbs_cont?board_no=${b.board_no}&page=${page}&state=edit';" />
-								<input type="button" value="삭제"
-								onclick="if(confirm('정말로 삭제할까요?') == true){
-						location='bbs_del_ok?board_no=${b.board_no}&page=${page}&state=del';}else{ return ;}" />
-							</td>
+						<th width="6%" height="26" style="text-align: center;">번호</th>
+						<th width="34%">제목</th>
+						<th width="14%" style="text-align: center;">작성자</th>
+						<th width="18%" style="text-align: center;">작성일</th>
+						<th width="10%" style="text-align: center;">조회수</th>
+						<sec:authorize access="hasRole('ROLE_ADMIN') ">
+							<th width="18%" style="text-align: center;">수정/삭제</th>
 						</sec:authorize>
 					</tr>
-				</c:forEach>
-			</c:if>
 
-			<c:if test="${empty blist}">
-				<tr>
-					<th colspan="5">자료실 목록이 없습니다.</th>
-				</tr>
-			</c:if>
-		</table>
+					<c:if test="${!empty blist}">
+						<c:forEach var="b" items="${blist}">
+							<tr>
+								<td align="center"><c:if test="${b.board_step == 0}">
+										<%--원본글일때만 글그룹번호를 출력 --%>
+						${b.board_ref}
+						</c:if></td>
+								<td><c:if test="${b.board_step != 0}">
+										<%--답변글일때만 실행 : 계단형
+						계층형 자료실 --%>
+										<c:forEach begin="1" end="${b.board_step}" step="1">
+						   &nbsp;<%--한칸의 빈공백 처리 --%>
+										</c:forEach>
+										<img src="images/AnswerLine.gif">
+										<%--답변글 이미지 --%>
+									</c:if> <a
+									href="bbs_cont?board_no=${b.board_no}&state=cont&page=${page}">
+										${b.board_title}</a></td>
+								<td align="center">${b.board_name}</td>
+								<td align="center">${fn:substring(b.board_date,0,10)}</td>
+								<%-- 0이상 10미만 사이의 년월일만 반환 --%>
+								<td align="center">${b.board_hit}</td>
+								<!-- 관리자 로그인일때 수정/삭제 뜨게하기 -->
+								<sec:authorize access="hasRole('ROLE_ADMIN')">
+									<sec:authentication property="principal.user" var="user" />
+									<td align="center"><input type="button" value="수정"
+										onclick="location= 'bbs_cont?board_no=${b.board_no}&page=${page}&state=edit';" />
+										<input type="button" value="삭제"
+										onclick="if(confirm('정말로 삭제할까요?') == true){
+						location='bbs_del_ok?board_no=${b.board_no}&page=${page}&state=del';}else{ return ;}" />
+									</td>
+								</sec:authorize>
+							</tr>
+						</c:forEach>
+					</c:if>
 
-		<%--페이징(쪽나누기)--%>
-		<div id="bList_paging">
-			<%--검색전 페이징 --%>
-			<c:if test="${(empty find_field)&&(empty find_name)}">
-				<c:if test="${page <=1}">
+					<c:if test="${empty blist}">
+						<tr>
+							<th colspan="5">자료실 목록이 없습니다.</th>
+						</tr>
+					</c:if>
+				</table>
+
+				<%--검색 폼 추가 --%>
+				<div id="bFind_wrap" style="text-align: center; margin: 0 auto;">
+					<select name="find_field">
+						<option value="board_title"
+							<c:if test="${find_field == 'board_title'}"> ${'selected'}</c:if>>
+							<%-- find_field가 board_cont와 같다면 해당 목록을 선택되게 한다. --%> 글제목
+						</option>
+						<option value="board_cont"
+							<c:if test="${find_field == 'board_cont'}">${'selected'}
+             </c:if>>글내용</option>
+					</select> <input type="search" name="find_name" id="find_name" size="14"
+						value="${find_name}"> <input type="submit" value="검색">
+				</div>
+
+				<br>
+				
+				<div id="bList_menu">
+					<sec:authorize access="hasRole('ROLE_ADMIN')">
+						<input type="button" value="글쓰기"
+							onclick="location.href='bbs_write?page=${page}';"
+							style="position: absolute; right: 30px; font-size: 12px;"
+							class="btn btn-outline-dark btn-lg">
+					</sec:authorize>
+				</div>
+
+				<%--페이징(쪽나누기)--%>
+				<div id="bList_paging" style="text-align: center;">
+					<%--검색전 페이징 --%>
+					<c:if test="${(empty find_field)&&(empty find_name)}">
+						<c:if test="${page <=1}">
    [이전]&nbsp;
    </c:if>
-				<c:if test="${page >1}">
-					<a href="bbs_list?page=${page-1}">[이전]</a>&nbsp;
+						<c:if test="${page >1}">
+							<a href="bbs_list?page=${page-1}">[이전]</a>&nbsp;
    </c:if>
 
-				<%--쪽번호 출력부분 --%>
-				<c:forEach var="a" begin="${startpage}" end="${endpage}" step="1">
-					<c:if test="${a == page}"><${a}></c:if>
+						<%--쪽번호 출력부분 --%>
+						<c:forEach var="a" begin="${startpage}" end="${endpage}" step="1">
+							<c:if test="${a == page}"><${a}></c:if>
 
-					<c:if test="${a != page}">
-						<a href="bbs_list?page=${a}">[${a}]</a>&nbsp;
+							<c:if test="${a != page}">
+								<a href="bbs_list?page=${a}">[${a}]</a>&nbsp;
     </c:if>
-				</c:forEach>
+						</c:forEach>
 
-				<c:if test="${page>=maxpage}">[다음]</c:if>
-				<c:if test="${page<maxpage}">
-					<a href="bbs_list?page=${page+1}">[다음]</a>
-				</c:if>
-			</c:if>
+						<c:if test="${page>=maxpage}">[다음]</c:if>
+						<c:if test="${page<maxpage}">
+							<a href="bbs_list?page=${page+1}">[다음]</a>
+						</c:if>
+					</c:if>
 
-			<%-- 검색후 페이징(쪽나누기) --%>
-			<c:if test="${(!empty find_field) || (!empty find_name)}">
-				<c:if test="${page <=1}">
+					<%-- 검색후 페이징(쪽나누기) --%>
+					<c:if test="${(!empty find_field) || (!empty find_name)}">
+						<c:if test="${page <=1}">
    [이전]&nbsp;
    </c:if>
-				<c:if test="${page >1}">
-					<a href="bbs_list?page=${page-1}&find_field=${find_field}&find_name=${find_name}">[이전]</a>&nbsp;
+						<c:if test="${page >1}">
+							<a
+								href="bbs_list?page=${page-1}&find_field=${find_field}&find_name=${find_name}">[이전]</a>&nbsp;
    </c:if>
 
-				<%--쪽번호 출력부분 --%>
-				<c:forEach var="a" begin="${startpage}" end="${endpage}" step="1">
-					<c:if test="${a == page}"><${a}></c:if>
+						<%--쪽번호 출력부분 --%>
+						<c:forEach var="a" begin="${startpage}" end="${endpage}" step="1">
+							<c:if test="${a == page}"><${a}></c:if>
 
-					<c:if test="${a != page}">
-						<a href="bbs_list?page=${a}&find_field=${find_field}&find_name=${find_name}">[${a}]</a>&nbsp;
+							<c:if test="${a != page}">
+								<a
+									href="bbs_list?page=${a}&find_field=${find_field}&find_name=${find_name}">[${a}]</a>&nbsp;
     </c:if>
-				</c:forEach>
+						</c:forEach>
 
-				<c:if test="${page>=maxpage}">[다음]</c:if>
-				<c:if test="${page<maxpage}">
-					<a href="bbs_list?page=${page+1}&find_field=${find_field}&find_name=${find_name}">[다음]</a>
-				</c:if>
-			</c:if>
-		</div>
+						<c:if test="${page>=maxpage}">[다음]</c:if>
+						<c:if test="${page<maxpage}">
+							<a
+								href="bbs_list?page=${page+1}&find_field=${find_field}&find_name=${find_name}">[다음]</a>
+						</c:if>
+					</c:if>
+				</div>
 
-		<div id="bList_menu">
-			<sec:authorize access="hasRole('ROLE_ADMIN') ">
-			<input type="button" value="글쓰기"
-				onclick="location='bbs_write?page=${page}';" />
-			<c:if test="${(!empty find_field) &&  (!empty find_name)}">
-			</c:if>
-			</sec:authorize>		
-		</div>
+				
 
-       <%--검색 폼 추가 --%>
-       <div id="bFind_wrap">
-         <select name="find_field">
-           <option value="board_title"
-             <c:if test="${find_field == 'board_title'}"> ${'selected'}</c:if>>
-             <%-- find_field가 board_cont와 같다면 해당 목록을 선택되게 한다. --%>
-                         글제목</option>
-           <option value="board_cont"
-           <c:if test="${find_field == 'board_cont'}">${'selected'}
-             </c:if>>글내용</option>                
-         </select> <input type="search" name="find_name" id="find_name"
-         size="16" value="${find_name}" >
-         <input type="submit" value="검색" >
-       </div>
-       
-	</div>
-</form>
+				
+
+
+
+			</div>
+		</form>
 	</section>
 	<!-- 푸터 (footer.html) -->
 	<jsp:include page="../include/footer.jsp" />

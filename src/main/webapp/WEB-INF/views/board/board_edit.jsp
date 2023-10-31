@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 <!-- 더미이미지(데모이미지) 사용시
     <img src="https://placehold.it/가로x세로">
     로 적용 후 확인해보면 자동으로 그 사이즈에 맞게 불러옴
@@ -93,45 +94,7 @@
 	border: 1px solid black;
 }
 
-table {
-	width: 100%;
-	margin-bottom: 20px;
-	border-collapse: collapse;
-}
 
-th, td {
-	padding: 10px;
-	border: 1px solid #ddd;
-	text-align: left;
-}
-
-th {
-	background-color: #f2f2f2;
-}
-
-input[type="text"], input[type="password"] {
-	width: 100%;
-	padding: 8px;
-	box-sizing: border-box;
-	margin: 4px 0;
-	border: 1px solid #ccc;
-	border-radius: 4px;
-}
-
-#bWrite_t {
-	width: 400px; /* 테이블의 너비를 조절해 필요한 경우에 맞게 조절하세요 */
-	margin: 0 auto; /* 수평 가운데 정렬 */
-}
-
-#bWrite_t th, #bWrite_t td {
-	text-align: center; /* 텍스트를 가운데 정렬 */
-}
-
-#bWrite_t input, #bWrite_t textarea {
-	width: 100%; /* 부모 요소에 대해 100% 너비로 설정 */
-	box-sizing: border-box; /* 폭과 높이에 padding과 border를 포함하여 크기를 정의함 */
-	margin-bottom: 10px; /* 입력 요소 사이에 간격을 조절 */
-}
 </style>
 <body>
 	<!-- 네비게이션(nav) 로드 -->
@@ -140,7 +103,7 @@ input[type="text"], input[type="password"] {
 	<jsp:include page="../include/header.jsp" />
 	<section>
 		<div id="bWrite_wrap">
-		<br>
+			<br>
 			<h2 class="bWrite_title" style="text-align: center;">게시판 수정폼</h2>
 			<br>
 			<form method="post" action="board_edit_ok"
@@ -149,51 +112,47 @@ input[type="text"], input[type="password"] {
 					type="hidden" name="page" value="${page}" />
 
 
-				<table id="bWrite_t" border="1" class="table-dark">
+				<table id="bWrite_t" class="table table-bordered"
+					style="text-align: center; border-collapse: collapse; margin: auto; width: 50%;">
 					<sec:authorize access="isAuthenticated()">
 						<sec:authentication property="principal.user" var="user" />
 						<tr>
-							<th style="text-align: center; vertical-align: middle; color: black;">이름</th>
+							<th>이름</th>
 							<td><input name="board_name" id="board_name"
-								style="width: 300px; font-size: 14; text-align: center; vertical-align: middle;"
-								value="${user.username}" readonly /></td>
+								value="${user.username}" readonly style="size: 30px; "/></td>
 						</tr>
 					</sec:authorize>
 					<tr>
-						<th style="text-align: center; vertical-align: middle; color: black;">제목</th>
+						<th
+							style="text-align: center; vertical-align: middle; color: black;">제목</th>
 						<td><input name="board_title" id="board_title"
-							style="width: 300px; font-size: 14; text-align: center; vertical-align: middle;"
 							value="${b.board_title}" /></td>
 					</tr>
 					<tr>
-					<sec:authorize access="hasRole('ROLE_ADMIN')">
-					<!-- 비밀번호 Hidden <th>비밀번호</th> -->
-					
-						<td><input type="hidden" name="board_pwd" id="board_pwd" value="1234"
-							style="width: 300px; font-size: 14; text-align: center; vertical-align: middle;" /></td>
-					</sec:authorize>
-					
-					<sec:authorize access="hasRole('ROLE_USER')">
-						<th style="text-align: center; vertical-align: middle; color: black;">비밀번호</th>
-						<td><input type="password" name="board_pwd" id="board_pwd"
-							style="width: 300px; font-size: 14; text-align: center; vertical-align: middle;" /></td>
-					</sec:authorize>
+						<sec:authorize access="hasRole('ROLE_ADMIN')">
+							<!-- 비밀번호 Hidden <th>비밀번호</th> -->
+
+							<td><input type="hidden" name="board_pwd" id="board_pwd"
+								value="1234" /></td>
+						</sec:authorize>
+
+						<sec:authorize access="hasRole('ROLE_USER')">
+							<th>비밀번호</th>
+							<td><input type="password" name="board_pwd" id="board_pwd" style="size: 30px;"/></td>
+						</sec:authorize>
 					</tr>
 					<tr>
-						<th style="text-align: center; vertical-align: middle; color: black;">내용</th>
+						<th>내용</th>
 						<td><textarea name="board_cont" id="board_cont" rows="9"
-								style="width: 300px; font-size: 14; text-align: center; vertical-align: middle;"
-								cols="36">${b.board_cont}</textarea></td>
+								cols="31x">${b.board_cont}</textarea></td>
 					</tr>
 				</table>
 				<br>
 
-				<div id="bWrite_menu" style="text-align: center;">
-					<input type="submit" value="수정" class="btn btn-outline-dark" /> <input
-						type="reset" value="취소" class="btn btn-outline-dark"
+				<div id="aBw_menu" style="text-align: center;">
+					<input type="submit" value="수정" /> <input type="reset" value="취소"
 						onclick="$('#board_name').focus();" /> <input type="button"
-						value="목록" class="btn btn-outline-dark"
-						onclick="location='board_list?page=${page}';" />
+						value="목록" onclick="location='bbs_list?page=${page}';" />
 				</div>
 
 			</form>

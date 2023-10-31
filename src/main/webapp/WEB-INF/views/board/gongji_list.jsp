@@ -1,7 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 
 
 <!-- 더미이미지(데모이미지) 사용시
@@ -104,93 +105,107 @@
 	<!-- 배너(header) 로드 -->
 	<jsp:include page="../include/header.jsp" />
 	<section>
+	<br>
 		<%-- 메인 본문 --%>
-	<div id="aMain_cont">
-	<form method="get" action="gongji_list">
-		<div id="bList_wrap">
-			<h2 class="bList_title"> 공지목록</h2>
-			<div class="bList_count">글개수: ${listcount} 개</div>
-			<table id="bList_t">
-				<tr>
-						<th width="6%" height="26" style="text-align: center;">번호</th>
-						<th width="34%">제목</th>
-						<th width="14%" style="text-align: center;">작성자</th>
-						<th width="18%" style="text-align: center;">작성일</th>
-						<th width="10%" style="text-align: center;">조회수</th>
-						<sec:authorize access="hasRole('ROLE_ADMIN') ">
-						<th width="18%" style="text-align: center;">수정/삭제</th>
-						</sec:authorize>
-					</tr>
-					<c:if test="${!empty glist}">
-						<c:forEach var="b" items="${glist}">
-							<tr>
-								<td align="center"><c:if test="${b.board_step == 0}">
-										<%-- 원본글일때만 그룹번호가 출력 --%>
+		<div id="aMain_cont">
+			<form method="get" action="gongji_list">
+				<div id="bList_wrap">
+					<ul class="nav nav-tabs" style="font-size: 20px;">
+						<li class="nav-item"><a class="nav-link" aria-current="page"
+							href="/board_list" style="color: black; font-weight: bold;">게시판</a></li>
+						<li class="nav-item"><a class="nav-link" href="/bbs_list"
+							style="color: black; font-weight: bold;">자료실</a></li>
+						<li class="nav-item"><a class="nav-link  active"
+							href="/gongji_list" style="color: black; font-weight: bold;">공지사항</a></li>
+					</ul>
+					<br>
+					<div class="bList_count"
+						style="margin-left: 20px; font-size: 20px;">글개수:
+						${listcount} 개</div>
+					<table id="bList_t" border=1
+					style="position: relative top: 28px left: 48px opacity: 0.8 margin: 0 auto"
+					class="table table-hover">
+						<tr>
+							<th width="6%" height="26" style="text-align: center;">번호</th>
+							<th width="34%">제목</th>
+							<th width="14%" style="text-align: center;">작성자</th>
+							<th width="18%" style="text-align: center;">작성일</th>
+							<th width="10%" style="text-align: center;">조회수</th>
+							<sec:authorize access="hasRole('ROLE_ADMIN') ">
+								<th width="18%" style="text-align: center;">수정/삭제</th>
+							</sec:authorize>
+						</tr>
+						<c:if test="${!empty glist}">
+							<c:forEach var="b" items="${glist}">
+								<tr>
+									<td align="center"><c:if test="${b.board_step == 0}">
+											<%-- 원본글일때만 그룹번호가 출력 --%>
      ${b.board_ref}  
     </c:if></td>
-								<td><c:if test="${b.board_step != 0}">
-										<%--답변글일때만 실행--%>
-										<c:forEach begin="1" end="${b.board_step}" step="1">
+									<td><c:if test="${b.board_step != 0}">
+											<%--답변글일때만 실행--%>
+											<c:forEach begin="1" end="${b.board_step}" step="1">
    &nbsp;<%--답변글 들여쓰기 --%>
-										</c:forEach>
-										<img src="./images/AnswerLine.gif" />
-										<%--답변글 이미지 출력부분 --%>
-									</c:if> <a href="gongji_cont?no=${b.board_no}&page=${page}&state=cont">
-										${b.board_title}</a> 
-								</td>
-								<td align="center">${b.board_name}</td>
-								<td align="center">${fn:substring(b.board_date,0,10)}</td>
-								<td align="center">${b.board_hit}</td>
-								<!-- 관리자 로그인일때 수정/삭제 뜨게하기 -->
-								<sec:authorize access="hasRole('ROLE_ADMIN')">
-									<sec:authentication property="principal.user" var="user" />
-									<td align="center"><input type="button" value="수정"
-										onclick="location= 'gongji_cont?no=${b.board_no}&page=${page}&state=edit';" />
-										<input type="button" value="삭제"
-										onclick="if(confirm('정말로 삭제할까요?') == true){
+											</c:forEach>
+											<img src="./images/AnswerLine.gif" />
+											<%--답변글 이미지 출력부분 --%>
+										</c:if> <a
+										href="gongji_cont?no=${b.board_no}&page=${page}&state=cont">
+											${b.board_title}</a></td>
+									<td align="center">${b.board_name}</td>
+									<td align="center">${fn:substring(b.board_date,0,10)}</td>
+									<td align="center">${b.board_hit}</td>
+									<!-- 관리자 로그인일때 수정/삭제 뜨게하기 -->
+									<sec:authorize access="hasRole('ROLE_ADMIN')">
+										<sec:authentication property="principal.user" var="user" />
+										<td align="center"><input type="button" value="수정"
+											onclick="location= 'gongji_cont?no=${b.board_no}&page=${page}&state=edit';" />
+											<input type="button" value="삭제"
+											onclick="if(confirm('정말로 삭제할까요?') == true){
 								location='gongji_del?no=${b.board_no}&page=${page}&state=del';}else{ return ;}" />
-									</td>
-								</sec:authorize>
+										</td>
+									</sec:authorize>
 
 
-							</tr>
-						</c:forEach>
-					</c:if>
-					<c:if test="${empty glist}">
-						<tr>
-							<th colspan="5">목록이 없습니다!</th>
-						</tr>
-					</c:if>
-				</table>
-
-				<%--검색 폼추가 --%>
-				<div id="bFind_wrap" style="text-align: center; margin: 0 auto;">
-					<select name="find_field">
-						<option value="board_title"
-							<c:if test="${find_field=='board_title'}">${'selected'}</c:if>>제목</option>
-						<option value="gongji_cont"
-							<c:if test="${find_field=='board_cont'}">${'selected'}</c:if>>내용</option>
-					</select> <input name="find_name" id="find_name" size="14"
-						placeholder="Search" value="${find_name}"
-						onfocus="if(this.placeholder == 'Search') this.placeholder = '';"
-						onblur="if(this.placeholder == '') this.placeholder = 'Search';" />
-					<input type="submit" value="검색" />
-				</div>
-
-
-				<br>
-
-				<div id="bList_menu">
-					<a href="gongji_write?page=${page}" onclick="location.href='gongji_write?page=${page}';"
-					style="position: absolute; right: 30px; font-size: 12px;"
-						class="btn btn-outline-dark btn-lg">글쓰기 <c:if
-							test="${(!empty find_field) && (!empty find_name)}">
+								</tr>
+							</c:forEach>
 						</c:if>
-					</a>
-				</div>
+						<c:if test="${empty glist}">
+							<tr>
+								<th colspan="5">목록이 없습니다!</th>
+							</tr>
+						</c:if>
+					</table>
 
-				<%--페이징 즉 쪽나누기 추가 --%>
-				<div id="bList_paging" class="text-center">
+					<%--검색 폼추가 --%>
+					<div id="bFind_wrap" style="text-align: center; margin: 0 auto;">
+						<select name="find_field">
+							<option value="board_title"
+								<c:if test="${find_field=='board_title'}">${'selected'}</c:if>>제목</option>
+							<option value="gongji_cont"
+								<c:if test="${find_field=='board_cont'}">${'selected'}</c:if>>내용</option>
+						</select> <input name="find_name" id="find_name" size="14"
+							placeholder="Search" value="${find_name}"
+							onfocus="if(this.placeholder == 'Search') this.placeholder = '';"
+							onblur="if(this.placeholder == '') this.placeholder = 'Search';" />
+						<input type="submit" value="검색" />
+					</div>
+
+
+					<br>
+
+					<div id="bList_menu">
+						<a href="gongji_write?page=${page}"
+							onclick="location.href='gongji_write?page=${page}';"
+							style="position: absolute; right: 30px; font-size: 12px;"
+							class="btn btn-outline-dark btn-lg">글쓰기 <c:if
+								test="${(!empty find_field) && (!empty find_name)}">
+							</c:if>
+						</a>
+					</div>
+
+					<%--페이징 즉 쪽나누기 추가 --%>
+					<div id="bList_paging" class="text-center">
 						<%-- 검색전 페이징 --%>
 						<c:if test="${(empty find_field) && (empty find_name)}">
 							<c:if test="${page<=1}">
@@ -198,7 +213,7 @@
     </c:if>
 							<c:if test="${page>1}">
 								<li><a href="gongji_list?page=${page-1}">&laquo;</a></li>
-    </c:if>
+							</c:if>
 
 							<%--현재 쪽번호 출력--%>
 							<c:forEach var="a" begin="${startpage}" end="${endpage}" step="1">
@@ -253,9 +268,9 @@
 									href="gongji_list?page=${page+1}&find_field=${find_field}&find_name=${find_name}">&raquo;</a>
 							</c:if>
 						</c:if>
+					</div>
 				</div>
-			</div>
-		</form>
+			</form>
 	</section>
 	<!-- 푸터 (footer.html) -->
 	<jsp:include page="../include/footer.jsp" />

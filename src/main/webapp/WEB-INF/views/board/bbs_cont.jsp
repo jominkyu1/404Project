@@ -94,7 +94,19 @@
 	border-collapse: collapse;
 	border: 1px solid black;
 }
-;
+
+#abbCont_t th, #abbCont_td {
+	background-color: #f2f2f2;
+	padding: 10px;
+	border-bottom: 1px solid #ddd;
+}
+
+#abbCont_t {
+	width: 60%;
+	margin: auto;
+	border-collapse: collapse;
+	text-align: left;
+}
 </style>
 <body>
 	<!-- 네비게이션(nav) 로드 -->
@@ -103,35 +115,48 @@
 	<jsp:include page="../include/header.jsp" />
 	<section>
 		<div id="aMain_cont">
- <div id="abbsCont_wrap">
-  <h2 class="abbsCont_title">자료실 내용</h2>
-  <table id="abbsCont_t">
-   <tr>
-    <th>제목</th> <td>${b.board_title}</td>
-   </tr>
-   <tr>
-    <th>내용</th> <td>${b.board_cont}</td>
-   </tr>
-   <tr>
-    <th>조회수</th> <td>${b.board_hit}</td>
-   </tr>
-   <c:forEach var="file" items="${files}" >
-   <tr>
-	   <td>
-	      첨부파일: 
-	      <a href="/itemimages/${file.bbs_filepath}" download="${file.bbs_originalFilename}">
-	      ${file.bbs_originalFilename}
-	      </a>
-	   </td>
-   </tr>
-   </c:forEach>   
-  </table>
-  <div id="abbsCont_menu">
-   <input type="button" value="목록"
-   onclick="location='bbs_list?page=${page}';" />
-  </div>
- </div>
-</div>
+			<div id="abbsCont_wrap">
+				<h3 class="abbsCont_title" style="text-align: center;">자료실 내용</h3>
+				<br>
+				<table id="abbsCont_t" class="table table-bordered"
+					style="text-align: center; border-collapse: collapse; margin: auto; width: 50%;">
+					<tr>
+						<th width="80"
+							style="border: 1px solid black; vertical-align: middle; background-color: rgba(211, 211, 211, 0.38);">제목</th>
+						<td width="250" style="border: 1px solid black;">${b.board_title}</td>
+					</tr>
+					<tr>
+						<th width="80"
+							style="border: 1px solid black; vertical-align: middle; background-color: rgba(211, 211, 211, 0.38);">내용</th>
+						<td width="250" style="border: 1px solid black;">${b.board_cont}</td>
+					</tr>
+					<tr>
+						<th width="80"
+							style="border: 1px solid black; vertical-align: middle; background-color: rgba(211, 211, 211, 0.38);">조회수</th>
+						<td width="250" style="border: 1px solid black;">${b.board_hit}</td>
+					</tr>
+					<c:forEach var="file" items="${files}">
+						<tr>
+							<th width="80"
+								style="border: 1px solid black; vertical-align: middle; background-color: rgba(211, 211, 211, 0.38);">
+								첨부파일</th>
+							<td style="border: 1px solid black;"><a
+								href="/itemimages/${file.bbs_filepath}"
+								download="${file.bbs_originalFilename}">
+									${file.bbs_originalFilename} </a></td>
+						</tr>
+
+					</c:forEach>
+				</table>
+				<br>
+				<div id="abbsCont_menu" style="text-align: center;">
+					<input type="button" value="목록"
+						onclick="location='bbs_list?page=${page}';"
+						style="font-size: 14px;" class="btn btn-outline-dark btn-lg" />
+				</div>
+				<br>
+			</div>
+		</div>
 	</section>
 	<!-- 푸터 (footer.html) -->
 	<jsp:include page="../include/footer.jsp" />
