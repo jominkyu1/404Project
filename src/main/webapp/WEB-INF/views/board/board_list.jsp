@@ -185,8 +185,6 @@ get방식으로 &구분하면서 전달된다. --%></td>
                         location='board_del_ok?no=${b.board_no}&page=${page}&state=del';}else{ return ;}" />
 									</td>
 								</sec:authorize>
-
-
 							</tr>
 						</c:forEach>
 					</c:if>
@@ -242,8 +240,7 @@ get방식으로 &구분하면서 전달된다. --%></td>
                         <${a}>
                      </c:if>
 							<c:if test="${a != page}">
-								<%--현재 페이지가 선택되지 않았
-다면 --%>
+								<%--현재 페이지가 선택되지 않았다면 --%>
 								<a href="board_list?page=${a}">[${a}]</a>&nbsp;
                      </c:if>
 						</c:forEach>
@@ -265,7 +262,6 @@ get방식으로 &구분하면서 전달된다. --%></td>
 							<a
 								href="board_list?page=${page-1}&find_field=${find_field}&find_name=${find_name}">&laquo;</a>&nbsp;
                   </c:if>
-
 						<%--현재 쪽번호 출력--%>
 						<c:forEach var="a" begin="${startpage}" end="${endpage}" step="1">
 							<c:if test="${a == page}">

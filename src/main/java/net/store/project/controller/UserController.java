@@ -2,6 +2,7 @@ package net.store.project.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import net.store.project.api.PageableHandler;
 import net.store.project.repository.OrderRepository;
 import net.store.project.repository.UserRepository;
 import net.store.project.security.StoreUserDetails;
@@ -12,9 +13,14 @@ import net.store.project.service.UserService;
 import net.store.project.vo.item.ItemVO;
 import net.store.project.vo.order.OrderStatus;
 import net.store.project.vo.order.OrderVO;
+import net.store.project.vo.page.JpaPagingDto;
 import net.store.project.vo.user.UserGrade;
 import net.store.project.vo.user.UserVO;
 import net.store.project.vo.user.form.UserRegisterForm;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -44,6 +50,7 @@ public class UserController {
     private final PasswordEncoder passwordEncoder;
     private final OrderRepository orderRepository;
     private final OrderService orderService;
+    private final PageableHandler pageableHandler;
 
 
     @GetMapping("/{id}")
@@ -139,16 +146,33 @@ public class UserController {
 
     @GetMapping("/orders")
     public String orderList(@AuthenticationPrincipal StoreUserDetails storeUserDetails,
+                            @PageableDefault(size = 4, sort = "status", direction = Sort.Direction.DESC) Pageable pageable,
+                            @RequestParam(required = false) String category,
                             Model model){
         //로그인되지않은 유저
         if(storeUserDetails==null) throw new IllegalStateException("로그인이 필요합니다.");
         UserVO user = storeUserDetails.getUser();
-        List<OrderVO> orders = orderRepository.findAllByUser_Id(user.getUser_id());
-        //최근 주문순으로 정렬
-        orders.sort((o1, o2) -> o2.getOrder_date().compareTo(o1.getOrder_date()));
+
+        Page<OrderVO> pageOrders = findAllOrders(pageable, category, user.getUser_id());
+        List<OrderVO> orders = pageOrders.getContent();
+
+        //Paging
+        JpaPagingDto jpaPagingDto = pageableHandler.makePages(pageable, pageOrders, 3);
+
+        model.addAttribute("paging", jpaPagingDto);
         model.addAttribute("orders", orders);
+        model.addAttribute("category", category);
 
         return "user/ordered_list";
+    }
+
+    private Page<OrderVO> findAllOrders(Pageable pageable, String category, Long user_id){
+        //카테고리가 없을경우
+        if(category == null || category.isEmpty() || category.equals("ALL")){
+            return orderRepository.findAllByUser_Id(user_id, pageable);
+        }
+
+        return orderRepository.findAllByUser_IdAndStatus(pageable, user_id, OrderStatus.valueOf(category));
     }
 
     @GetMapping("/orders/{id}")
@@ -206,16 +230,6 @@ public class UserController {
         
         return Objects.equals(foundUser.getUser_id(), storeUserDetails.getUser().getUser_id());
     }
-
-
-
-
-
-
-
-
-
-
 
 
 

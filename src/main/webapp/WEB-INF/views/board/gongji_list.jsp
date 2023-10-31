@@ -209,8 +209,8 @@
 						<%-- 검색전 페이징 --%>
 						<c:if test="${(empty find_field) && (empty find_name)}">
 							<c:if test="${page<=1}">
-     &laquo;
-    </c:if>
+                            &laquo;
+                        </c:if>
 							<c:if test="${page>1}">
 								<li><a href="gongji_list?page=${page-1}">&laquo;</a></li>
 							</c:if>
@@ -218,19 +218,18 @@
 							<%--현재 쪽번호 출력--%>
 							<c:forEach var="a" begin="${startpage}" end="${endpage}" step="1">
 								<c:if test="${a == page}">
-									<%--현재 페이지가 선택되었다면--%>
-      <${a}>
-     </c:if>
+								<%--현재 페이지가 선택되었다면--%>
+                                 <${a}>
+                            </c:if>
 								<c:if test="${a != page}">
-									<%--현재 페이지가 선택되지 않았
-     다면 --%>
+									<%--현재 페이지가 선택되지 않았다면 --%>
 									<a href="gongji_list?page=${a}">[${a}]</a>&nbsp;
-     </c:if>
+                                </c:if>
 							</c:forEach>
 
 							<c:if test="${page >= maxpage}">
-    &raquo;
-    </c:if>
+                                &raquo;
+                            </c:if>
 							<c:if test="${page<maxpage}">
 								<a href="gongji_list?page=${page+1}">&raquo;</a>
 							</c:if>
@@ -239,33 +238,29 @@
 						<%-- 검색후 페이징 --%>
 						<c:if test="${(!empty find_field) || (!empty find_name)}">
 							<c:if test="${page<=1}">
-     &laquo;
-    </c:if>
+                                &laquo;
+                            </c:if>
 							<c:if test="${page>1}">
-								<a
-									href="gongji_list?page=${page-1}&find_field=${find_field}&find_name=${find_name}">&laquo;</a>&nbsp;
-    </c:if>
+								<a href="gongji_list?page=${page-1}&find_field=${find_field}&find_name=${find_name}">&laquo;</a>&nbsp;
+                            </c:if>
 
 							<%--현재 쪽번호 출력--%>
 							<c:forEach var="a" begin="${startpage}" end="${endpage}" step="1">
 								<c:if test="${a == page}">
-									<%--현재 페이지가 선택되었다면--%>
-      <${a}>
-     </c:if>
+								<%--현재 페이지가 선택되었다면--%>
+                                    <${a}>
+                                </c:if>
 								<c:if test="${a != page}">
-									<%--현재 페이지가 선택되지 않았
-     다면 --%>
-									<a
-										href="gongji_list?page=${a}&find_field=${find_field}&find_name=${find_name}">[${a}]</a>&nbsp;
-     </c:if>
+									<%--현재 페이지가 선택되지 않았다면 --%>
+									<a href="gongji_list?page=${a}&find_field=${find_field}&find_name=${find_name}">[${a}]</a>&nbsp;
+                                </c:if>
 							</c:forEach>
 
 							<c:if test="${page >= maxpage}">
 								&raquo;
-    </c:if>
+                            </c:if>
 							<c:if test="${page<maxpage}">
-								<a
-									href="gongji_list?page=${page+1}&find_field=${find_field}&find_name=${find_name}">&raquo;</a>
+								<a href="gongji_list?page=${page+1}&find_field=${find_field}&find_name=${find_name}">&raquo;</a>
 							</c:if>
 						</c:if>
 					</div>

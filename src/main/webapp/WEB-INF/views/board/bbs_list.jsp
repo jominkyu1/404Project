@@ -214,7 +214,6 @@
 						<%--쪽번호 출력부분 --%>
 						<c:forEach var="a" begin="${startpage}" end="${endpage}" step="1">
 							<c:if test="${a == page}"><${a}></c:if>
-
 							<c:if test="${a != page}">
 								<a href="bbs_list?page=${a}">[${a}]</a>&nbsp;
     </c:if>
@@ -239,7 +238,6 @@
 						<%--쪽번호 출력부분 --%>
 						<c:forEach var="a" begin="${startpage}" end="${endpage}" step="1">
 							<c:if test="${a == page}"><${a}></c:if>
-
 							<c:if test="${a != page}">
 								<a
 									href="bbs_list?page=${a}&find_field=${find_field}&find_name=${find_name}">[${a}]</a>&nbsp;

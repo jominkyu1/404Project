@@ -113,11 +113,11 @@
 				<form method="post" action="board_write_ok"
 					onsubmit="return bw_check();">
 					<sec:authorize access="isAnonymous()">
-							<script>
-								alert("로그인 후 이용해 주세요!");
-								location.href = "/login";
-							</script>
-						</sec:authorize>
+						<script>
+						    alert("로그인 후 이용해 주세요!");
+							location.href = "/login";
+						</script>
+					</sec:authorize>
 					<table id="bWrite_t" style="text-align: center;"
 						class="table table-bordered">
 						<sec:authorize access="isAuthenticated()">
@@ -148,8 +148,7 @@
 						
 						<tr>
 							<th style="text-align: center;">내용</th>
-							<td><textarea name="board_cont" id="board_cont" rows="9"
-									cols="31"></textarea></td>
+							<td><textarea name="board_cont" id="board_cont" rows="9" cols="31"></textarea></td>
 						</tr>
 
 					</table>
@@ -158,9 +157,8 @@
 						style="display: flex; justify-content: center; align-items: center;">
 						<div id="bWrite_menu">
 							<input type="submit" value="저장" /> <input type="reset"
-								value="취소" onclick="$('#board_name').focus();" /> <input
-								type="button" value="목록"
-								onclick="location='board_list?page=${page}';" />
+								value="취소" onclick="$('#board_name').focus();" /> 
+                                <input type="button" value="목록" onclick="location='board_list?page=${page}';" />
 						</div>
 					</div>
 				</form>
