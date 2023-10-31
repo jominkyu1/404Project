@@ -74,7 +74,7 @@
 
 /* 방문한 후 링크 색상 (회색) */
 /*#id1 li a:visited, #id2 li a:visited, #id3 li a:visited, #id4 li a:visited {
-        color: gainsboro; 
+        color: gainsboro;
         text-decoration: none;
         }*/
 #id1 li a:hover, #id2 li a:hover, #id3 li a:hover, #id4 li a:hover {
@@ -95,7 +95,7 @@
 	border-collapse: collapse;
 	border: 1px solid black;
 }
-;
+
 </style>
 <body>
 	<!-- 네비게이션(nav) 로드 -->
@@ -127,10 +127,8 @@
 							</td>
 						</tr>
 						<!-- 비밀번호 Hidden <th>비밀번호</th> -->
-						<tr>
-							<td><input type="hidden" name="board_pwd" id="board_pwd"
-								size="30" value="1234" /></td>
-						</tr>
+						<input type="hidden" name="board_pwd" id="board_pwd"
+								size="30" value="1234" />
 						<tr>
 							<th>내용</th>
 							<td><textarea name="board_cont" id="board_cont" rows="9"
@@ -139,8 +137,10 @@
 					</table>
 
 					<div id="aBw_menu" style="text-align: center;">
-						<input type="submit" value="작성" /> <input type="reset" value="취소"
-							onclick="$('#board_name').focus();" /> <input type="button"
+						<input type="submit" value="작성" />
+            <input type="reset" value="취소"
+							onclick="$('#board_name').focus();" />
+            <input type="button"
 							value="목록" onclick="location='gongji_list?page=${page}';" />
 					</div>
 				</form>

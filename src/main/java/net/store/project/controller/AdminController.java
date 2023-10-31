@@ -100,6 +100,7 @@ public class AdminController {
         //최신순으로
         itemList.sort(Comparator.comparing(ItemVO::getRegdate).reversed());
         model.addAttribute("itemlist", itemList);
+
         return "admin/admin_store";
     }
 
