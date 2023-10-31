@@ -65,4 +65,16 @@ public class BbsServiceImpl implements BbsService {
 	public BbsVO getFile(int bbs_no) {
 		return this.bbsDao.getFile(bbs_no);
 	}
+
+
+	//상단바 검색
+	@Override
+	public int getRowCount2(PageVO p) {
+		return this.bbsDao.getRowCount2(p);
+	}
+
+	@Override
+	public List<BoardVO> getBoardList2(PageVO p) {
+		return this.bbsDao.getBoardList2(p);
+	}
 }
