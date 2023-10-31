@@ -94,7 +94,7 @@
 	border-collapse: collapse;
 	border: 1px solid black;
 }
-;
+
 </style>
 <body>
 	<!-- 네비게이션(nav) 로드 -->

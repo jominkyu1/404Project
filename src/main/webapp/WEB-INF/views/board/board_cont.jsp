@@ -149,15 +149,15 @@
 					aria-label="Basic outlined example">
 					<sec:authorize access="hasRole('ROLE_USER')">
 						<input type="button" value="수정" class="btn btn-outline-dark"
-							style="font-size: 14; border-radius: 5px; margin-right: 5px;"
+							style="font-size: 14px; border-radius: 5px; margin-right: 5px;"
 							onclick="location= 'board_cont?no=${b.board_no}&page=${page}&state=edit';" />
 					</sec:authorize>
 					<input type="button" value="목록" class="btn btn-outline-dark"
-						style="font-size: 14; border-radius: 5px; margin-left: 5px;"
+						style="font-size: 14px; border-radius: 5px; margin-left: 5px;"
 						onclick="location='board_list?page=${page}';" />
 					<sec:authorize access="hasRole('ROLE_ADMIN')">
 						<input type="submit" value="답변" class="btn btn-outline-dark"
-							style="font-size: 14; border-radius: 5px; margin-left: 10px;"
+							style="font-size: 14px; border-radius: 5px; margin-left: 10px;"
 							onclick="location = 'board_cont?no=${b.board_no}&page=${page}&state=reply';" />
 					</sec:authorize>
 				</div>
