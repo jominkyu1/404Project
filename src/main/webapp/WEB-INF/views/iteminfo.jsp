@@ -66,7 +66,14 @@
                 가격: <fmt:formatNumber type="number" maxFractionDigits="3" value="${item.price}" var="price"/>
                 ${price}원
               </span> <br> <hr>
-              <span>재고: <b>${item.stockQuantity}</b>개</span>
+              <span>재고:
+                <c:if test="${item.stockQuantity > 0}">
+                  <b>${item.stockQuantity}</b>개
+                </c:if>
+                <c:if test="${item.stockQuantity == 0}">
+                  <b>품절</b>
+                </c:if>
+              </span>
             </div>
             
             <p class="lead">

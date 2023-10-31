@@ -54,7 +54,7 @@
 	<!-- 매인 섹션 -->
 	<section class="py-5">
 		<div class="text-center">
-			<h2 class="mb-3">이번주 한정 특가</h2>
+			<h2 class="mb-3">404스토어만의 특별한 상품</h2>
 			<!-- 제품 검색 폼 -->
 			<form onsubmit="return searchValid()">
 			<!-- 제품 카테고리-->
