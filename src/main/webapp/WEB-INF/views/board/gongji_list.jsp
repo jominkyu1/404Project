@@ -112,31 +112,34 @@
 			<div class="bList_count">글개수: ${listcount} 개</div>
 			<table id="bList_t">
 				<tr>
-						<th width="6%" height="26" style="text-align: center;">번호</th>
-						<th width="34%">제목</th>
-						<th width="14%" style="text-align: center;">작성자</th>
-						<th width="18%" style="text-align: center;">작성일</th>
-						<th width="10%" style="text-align: center;">조회수</th>
-						<sec:authorize access="hasRole('ROLE_ADMIN') ">
-						<th width="18%" style="text-align: center;">수정/삭제</th>
-						</sec:authorize>
-					</tr>
+                    <th width="6%" height="26" style="text-align: center;">번호</th>
+                    <th width="34%">제목</th>
+                    <th width="14%" style="text-align: center;">작성자</th>
+                    <th width="18%" style="text-align: center;">작성일</th>
+                    <th width="10%" style="text-align: center;">조회수</th>
+                    <sec:authorize access="hasRole('ROLE_ADMIN') ">
+                    <th width="18%" style="text-align: center;">수정/삭제</th>
+                    </sec:authorize>
+				</tr>
 					<c:if test="${!empty glist}">
 						<c:forEach var="b" items="${glist}">
 							<tr>
-								<td align="center"><c:if test="${b.board_step == 0}">
-										<%-- 원본글일때만 그룹번호가 출력 --%>
-     ${b.board_ref}  
-    </c:if></td>
-								<td><c:if test="${b.board_step != 0}">
-										<%--답변글일때만 실행--%>
-										<c:forEach begin="1" end="${b.board_step}" step="1">
-   &nbsp;<%--답변글 들여쓰기 --%>
-										</c:forEach>
-										<img src="./images/AnswerLine.gif" />
-										<%--답변글 이미지 출력부분 --%>
-									</c:if> <a href="gongji_cont?no=${b.board_no}&page=${page}&state=cont">
-										${b.board_title}</a> 
+								<td align="center">
+                                <c:if test="${b.board_step == 0}">
+									<%-- 원본글일때만 그룹번호가 출력 --%>
+                                    ${b.board_ref}  
+                                </c:if>
+                                </td>
+								<td>
+                                <c:if test="${b.board_step != 0}">
+                                    <%--답변글일때만 실행--%>
+                                    <c:forEach begin="1" end="${b.board_step}" step="1">
+                                    &nbsp;<%--답변글 들여쓰기 --%>
+                                    </c:forEach>
+                                    <img src="./images/AnswerLine.gif" />
+                                    <%--답변글 이미지 출력부분 --%>
+								</c:if> <a href="gongji_cont?no=${b.board_no}&page=${page}&state=cont">
+									${b.board_title}</a> 
 								</td>
 								<td align="center">${b.board_name}</td>
 								<td align="center">${fn:substring(b.board_date,0,10)}</td>
@@ -148,11 +151,9 @@
 										onclick="location= 'gongji_cont?no=${b.board_no}&page=${page}&state=edit';" />
 										<input type="button" value="삭제"
 										onclick="if(confirm('정말로 삭제할까요?') == true){
-								location='gongji_del?no=${b.board_no}&page=${page}&state=del';}else{ return ;}" />
+								        location='gongji_del?no=${b.board_no}&page=${page}&state=del';}else{ return ;}" />
 									</td>
 								</sec:authorize>
-
-
 							</tr>
 						</c:forEach>
 					</c:if>
@@ -176,15 +177,13 @@
 						onblur="if(this.placeholder == '') this.placeholder = 'Search';" />
 					<input type="submit" value="검색" />
 				</div>
-
-
 				<br>
 
 				<div id="bList_menu">
 					<a href="gongji_write?page=${page}" onclick="location.href='gongji_write?page=${page}';"
-					style="position: absolute; right: 30px; font-size: 12px;"
-						class="btn btn-outline-dark btn-lg">글쓰기 <c:if
-							test="${(!empty find_field) && (!empty find_name)}">
+					    style="position: absolute; right: 30px; font-size: 12px;"
+						class="btn btn-outline-dark btn-lg">글쓰기 
+                        <c:if test="${(!empty find_field) && (!empty find_name)}">
 						</c:if>
 					</a>
 				</div>
@@ -194,28 +193,27 @@
 						<%-- 검색전 페이징 --%>
 						<c:if test="${(empty find_field) && (empty find_name)}">
 							<c:if test="${page<=1}">
-     &laquo;
-    </c:if>
+                            &laquo;
+                        </c:if>
 							<c:if test="${page>1}">
 								<li><a href="gongji_list?page=${page-1}">&laquo;</a></li>
-    </c:if>
+                            </c:if>
 
 							<%--현재 쪽번호 출력--%>
 							<c:forEach var="a" begin="${startpage}" end="${endpage}" step="1">
 								<c:if test="${a == page}">
-									<%--현재 페이지가 선택되었다면--%>
-      <${a}>
-     </c:if>
+								<%--현재 페이지가 선택되었다면--%>
+                                 <${a}>
+                            </c:if>
 								<c:if test="${a != page}">
-									<%--현재 페이지가 선택되지 않았
-     다면 --%>
+									<%--현재 페이지가 선택되지 않았다면 --%>
 									<a href="gongji_list?page=${a}">[${a}]</a>&nbsp;
-     </c:if>
+                                </c:if>
 							</c:forEach>
 
 							<c:if test="${page >= maxpage}">
-    &raquo;
-    </c:if>
+                                &raquo;
+                            </c:if>
 							<c:if test="${page<maxpage}">
 								<a href="gongji_list?page=${page+1}">&raquo;</a>
 							</c:if>
@@ -224,33 +222,29 @@
 						<%-- 검색후 페이징 --%>
 						<c:if test="${(!empty find_field) || (!empty find_name)}">
 							<c:if test="${page<=1}">
-     &laquo;
-    </c:if>
+                                &laquo;
+                            </c:if>
 							<c:if test="${page>1}">
-								<a
-									href="gongji_list?page=${page-1}&find_field=${find_field}&find_name=${find_name}">&laquo;</a>&nbsp;
-    </c:if>
+								<a href="gongji_list?page=${page-1}&find_field=${find_field}&find_name=${find_name}">&laquo;</a>&nbsp;
+                            </c:if>
 
 							<%--현재 쪽번호 출력--%>
 							<c:forEach var="a" begin="${startpage}" end="${endpage}" step="1">
 								<c:if test="${a == page}">
-									<%--현재 페이지가 선택되었다면--%>
-      <${a}>
-     </c:if>
+								<%--현재 페이지가 선택되었다면--%>
+                                    <${a}>
+                                </c:if>
 								<c:if test="${a != page}">
-									<%--현재 페이지가 선택되지 않았
-     다면 --%>
-									<a
-										href="gongji_list?page=${a}&find_field=${find_field}&find_name=${find_name}">[${a}]</a>&nbsp;
-     </c:if>
+									<%--현재 페이지가 선택되지 않았다면 --%>
+									<a href="gongji_list?page=${a}&find_field=${find_field}&find_name=${find_name}">[${a}]</a>&nbsp;
+                                </c:if>
 							</c:forEach>
 
 							<c:if test="${page >= maxpage}">
 								&raquo;
-    </c:if>
+                            </c:if>
 							<c:if test="${page<maxpage}">
-								<a
-									href="gongji_list?page=${page+1}&find_field=${find_field}&find_name=${find_name}">&raquo;</a>
+								<a href="gongji_list?page=${page+1}&find_field=${find_field}&find_name=${find_name}">&raquo;</a>
 							</c:if>
 						</c:if>
 				</div>

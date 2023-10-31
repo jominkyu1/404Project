@@ -167,12 +167,12 @@
 		<div id="bList_paging">
 			<%--검색전 페이징 --%>
 			<c:if test="${(empty find_field)&&(empty find_name)}">
-				<c:if test="${page <=1}">
-   [이전]&nbsp;
-   </c:if>
+				<c:if test="${page <=1}"> 
+                [이전]&nbsp;
+                </c:if>
 				<c:if test="${page >1}">
 					<a href="bbs_list?page=${page-1}">[이전]</a>&nbsp;
-   </c:if>
+                </c:if>
 
 				<%--쪽번호 출력부분 --%>
 				<c:forEach var="a" begin="${startpage}" end="${endpage}" step="1">
@@ -180,23 +180,23 @@
 
 					<c:if test="${a != page}">
 						<a href="bbs_list?page=${a}">[${a}]</a>&nbsp;
-    </c:if>
+                    </c:if>
 				</c:forEach>
 
 				<c:if test="${page>=maxpage}">[다음]</c:if>
 				<c:if test="${page<maxpage}">
 					<a href="bbs_list?page=${page+1}">[다음]</a>
 				</c:if>
-			</c:if>
+			    </c:if>
 
 			<%-- 검색후 페이징(쪽나누기) --%>
 			<c:if test="${(!empty find_field) || (!empty find_name)}">
 				<c:if test="${page <=1}">
-   [이전]&nbsp;
-   </c:if>
+                [이전]&nbsp;
+                 </c:if>
 				<c:if test="${page >1}">
 					<a href="bbs_list?page=${page-1}&find_field=${find_field}&find_name=${find_name}">[이전]</a>&nbsp;
-   </c:if>
+                </c:if>
 
 				<%--쪽번호 출력부분 --%>
 				<c:forEach var="a" begin="${startpage}" end="${endpage}" step="1">
@@ -204,14 +204,14 @@
 
 					<c:if test="${a != page}">
 						<a href="bbs_list?page=${a}&find_field=${find_field}&find_name=${find_name}">[${a}]</a>&nbsp;
-    </c:if>
+                    </c:if>
 				</c:forEach>
 
 				<c:if test="${page>=maxpage}">[다음]</c:if>
 				<c:if test="${page<maxpage}">
 					<a href="bbs_list?page=${page+1}&find_field=${find_field}&find_name=${find_name}">[다음]</a>
 				</c:if>
-			</c:if>
+			    </c:if>
 		</div>
 
 		<div id="bList_menu">
