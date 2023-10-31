@@ -79,7 +79,6 @@ public class BoardServiceImpl implements BoardService {
 			bbs.setBoard_no(sequence);
 		}
 
-		// TODO BbsVO에 BoardVO의 PK를 넣어줘야함
 		this.bbsDao.insertBoardWithFiles(bbsList);
 	}
 

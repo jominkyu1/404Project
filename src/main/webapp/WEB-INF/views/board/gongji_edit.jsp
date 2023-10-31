@@ -112,7 +112,7 @@
      <table id="aBw_t">
     <tr>
     <sec:authorize access="isAuthenticated()">
-				<sec:authentication property="principal.user" var="user"/>
+	<sec:authentication property="principal.user" var="user"/>
      <th>이름</th>
      <td>
      <input name="board_name" id="board_name" size="14" 

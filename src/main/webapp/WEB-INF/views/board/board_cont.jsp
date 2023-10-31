@@ -162,9 +162,8 @@
 				</div>
 				</div>
 			</div>
-		</div>
-
-		<br>
+			<br>
+		
 
 	</section>
 	<!-- 푸터 (footer.html) -->
