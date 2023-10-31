@@ -17,8 +17,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Comparator;
 import java.util.List;
-
+import java.util.stream.Collectors;
 
 
 @Controller
@@ -27,16 +28,22 @@ public class MainController {
 	private ItemRepository itemRepository;
 
 	@Autowired
-	private  ItemService itemService;
-
-	@Autowired
 	private BoardService boardService;
 
 	@Autowired
 	private PageableHandler pageableHandler;
 
 	@GetMapping("/")
-	public String index() {
+	public String index(Model model) {
+		//stockQuantity가 적은순으로 4개만
+		List<ItemVO> items = itemRepository.findAll().stream()
+								.filter(item -> item.getStockQuantity() > 0)
+								.collect(Collectors.toList())
+								.subList(0, 4);
+		//적은순정렬
+		items.sort(Comparator.comparingInt(ItemVO::getStockQuantity));
+
+		model.addAttribute("items", items);
 		return "index";
 	}
 

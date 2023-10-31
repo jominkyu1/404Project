@@ -67,7 +67,7 @@
 
 					<!-- 하단요소 -->
 					<div class="mt-2 w-100" style="white-space: nowrap;">
-						<a href="" class="btn btn-outline-secondary">프로필사진 업로드</a> <a
+						<a href="" class="btn btn-outline-secondary" onclick="alert('준비중입니다.')">프로필사진 업로드</a> <a
 							href="/user/${user.user_id}/edit"
 							class="btn btn-outline-secondary">정보수정</a> <a href="/user/orders"
 							class="btn btn-outline-secondary">주문정보</a>

@@ -56,61 +56,26 @@ h4 {
 				</script>
 			</c:if>
 		</sec:authorize>
-
-
-		<h3 style="text-align: center;">추천 받고싶은 제품을 선택해 보세요!</h3>
-
-		<br>
-
 		<div class="container mt-5">
-			<h4 style="text-align: left;">인기 404스토어📌</h4>
+			<h4 style="text-align: left; color: #dc3545">재고가 얼마 남지 않았습니다! 📌</h4>
+			<p>404스토어에서 엄선한 최고의 제품들</p>
 			<br>
-
+			
 			<div class="row">
+				<c:forEach items="${items}" var="item">
 				<div class="col-md-6 col-lg-3 mb-3">
 					<div class="card" style="width: 100%;">
-						<img src="images/index/bbb.png" class="card-img-top" alt="버즈">
+						<img src="/itemimages/${item.image_path}" class="card-img-top" alt="${item.name}"
+						style="height: 200px; width: auto;">
 						<div class="card-body">
-							<h5 class="card-title">최고의 커널형 이어폰</h5>
-							<p class="card-text">Samsung Galaxy Buds2</p>
-							<a href="iteminfo.jsp" class="btn btn-outline-danger ">제품
+							<h5 class="card-title">${item.name}</h5>
+							<p class="card-text">남은 수량: ${item.stockQuantity}개</p>
+							<a href="/item/${item.item_id}" class="btn btn-outline-danger ">제품
 								확인하러가기!</a>
 						</div>
 					</div>
 				</div>
-
-				<div class="col-md-6 col-lg-3 mb-3">
-					<div class="card" style="width: 100%;">
-						<img src="images/index/su.png" class="card-img-top" alt="냉장고">
-						<div class="card-body">
-							<h5 class="card-title">최고의 4도어 냉장고</h5>
-							<p class="card-text">Refrigerator</p>
-							<a href="#" class="btn btn-outline-danger ">제품 확인하러가기!</a>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-md-6 col-lg-3 mb-3">
-					<div class="card" style="width: 100%;">
-						<img src="images/index/game.png" class="card-img-top " alt="모니터">
-						<div class="card-body ">
-							<h5 class="card-title">최고의 게임용 모니터</h5>
-							<p class="card-text">Monitor</p>
-							<a href="#" class="btn btn-outline-danger">제품 확인하러가기!</a>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-md-6 col-lg-3 mb-3">
-					<div class="card" style="width: 100%;">
-						<img src="images/index/vacuum.png" class="card-img-top" alt="청소기">
-						<div class="card-body">
-							<h5 class="card-title">최고의 가성비 무선청소기</h5>
-							<p class="card-text">Vacuum</p>
-							<a href="#" class="btn btn-outline-danger ">제품 확인하러가기!</a>
-						</div>
-					</div>
-				</div>
+				</c:forEach>
 			</div>
 		</div>
 
