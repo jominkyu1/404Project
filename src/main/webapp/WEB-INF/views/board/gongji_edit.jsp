@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 <!-- 더미이미지(데모이미지) 사용시
     <img src="https://placehold.it/가로x세로">
     로 적용 후 확인해보면 자동으로 그 사이즈에 맞게 불러옴
@@ -101,50 +102,43 @@
 	<jsp:include page="../include/header.jsp" />
 	<section>
 		<%-- 메인 본문 --%>
-  <div id="aMain_cont">
-    <div id="aBw_wrap">
-     <h2 class="aBw_title"> 공지 수정</h2>
-     <form method="post" action="gongji_edit_ok"
-     onsubmit="return gw_check();">
-     <input type="hidden" name="board_no" 
-     value="${b.board_no}" />
-     <input type="hidden" name="page" value="${page}" />
-     <table id="aBw_t">
-    <tr>
-    <sec:authorize access="isAuthenticated()">
-	<sec:authentication property="principal.user" var="user"/>
-     <th>이름</th>
-     <td>
-     <input name="board_name" id="board_name" size="14" 
-     value="${user.username}" readonly/>
-     </td>
-     </sec:authorize>
-    </tr>
-    <tr>
-     <th>제목</th>
-     <td>
-     <input name="board_title" id="board_title" size="35" 
-     value="${b.board_title}" />
-     </td>
-    </tr>
-    <tr>
-     <th>내용</th>
-     <td>
-     <textarea name="board_cont" id="board_cont" rows="9"
-     cols="36">${b.board_cont}</textarea>
-     </td>
-    </tr>
-   </table>
-   <div id="aBw_menu">
-    <input type="submit" value="수정" />
-    <input type="reset" value="취소" 
-    onclick="$('#board_name').focus();" />
-    <input type="button" value="목록"
-    onclick="location='gongji_list?page=${page}';" />
-   </div>
-     </form>
-    </div>
-  </div>
+		<div id="aMain_cont" style="display: flex; justify-content: center;">
+			<div id="aBw_wrap">
+				<h2 class="aBw_title" style="text-align: center;">공지 수정</h2>
+				<Br>
+				<form method="post" action="gongji_edit_ok"
+					onsubmit="return gw_check();">
+					<input type="hidden" name="board_no" value="${b.board_no}" /> <input
+						type="hidden" name="page" value="${page}" />
+					<table id="aBw_t" style="text-align: center;"
+						class="table table-bordered">
+						<tr>
+							<sec:authorize access="isAuthenticated()">
+								<sec:authentication property="principal.user" var="user" />
+								<th>이름</th>
+								<td><input name="board_name" id="board_name" size="30"
+									value="${user.username}" readonly /></td>
+							</sec:authorize>
+						</tr>
+						<tr>
+							<th>제목</th>
+							<td><input name="board_title" id="board_title" size="30"
+								value="${b.board_title}" /></td>
+						</tr>
+						<tr>
+							<th>내용</th>
+							<td><textarea name="board_cont" id="board_cont" rows="9"
+									cols="31">${b.board_cont}</textarea></td>
+						</tr>
+					</table>
+					<div id="aBw_menu" style="text-align: center;">
+						<input type="submit" value="수정" /> <input type="reset" value="취소"
+							onclick="$('#board_name').focus();" /> <input type="button"
+							value="목록" onclick="location='gongji_list?page=${page}';" />
+					</div>
+				</form>
+			</div>
+		</div>
 	</section>
 	<!-- 푸터 (footer.html) -->
 	<jsp:include page="../include/footer.jsp" />

@@ -13,13 +13,13 @@
 	font-size: 16px; /* 모든 텍스트 크기를 16px로 설정 */
 }
 
-ul {
+#CS {
 	list-style: none;
 	text-align: left;
 	font-size: 16px; /* 모든 텍스트 크기를 16px로 설정 */
 }
 
-h4 {
+#CSS {
 	text-align: center;
 	white-space: nowrap;
 	overflow: hidden;
@@ -27,7 +27,7 @@ h4 {
 	font-size: 25px; /* 모든 텍스트 크기를 16px로 설정 */
 }
 
-a {
+#SNS {
 	text-decoration: none;
 	color: inherit;
 	font-size: 16px; /* 모든 텍스트 크기를 16px로 설정 */
@@ -47,48 +47,48 @@ a {
 <footer class="py-5" id="footerjs">
 	<div class="cs_info widget widget_links clearfix">
 		<div class="col-md-3">
-			<h4>CS Center</h4>
-			<ul>
+			<h4 id="CSS">CS Center</h4>
+			<ul id="CS">
 				<li class="hb_footer_tel">Tel: 070-1234-5678</li>
 				<li><span>평일</span> 09:00am - 06:00pm</li>
 				<li><span>점심</span> 12:00pm - 01:00pm</li>
 				<li><span>휴무</span> 토 / 일 / 공휴일 휴무</li>
 			</ul>
 		</div>
-		<div class="col-md-3">
-			<h4>Bank Info</h4>
-			<ul>
+		<div class="col-md-3" id="Bank">
+			<h4 id="CSS">Bank Info</h4>
+			<ul id="CS">
 				<li><span>국민은행</span>1234-567-890123</li>
 				<li><span>우리은행</span>1234-567-890123</li>
 				<li><span>농협은행</span>1234-567-890123</li>
 				<li><span>예금주 :</span> 홍길동</li>
 			</ul>
 		</div>
-		<div class="col-md-3">
-			<h4>SNS Link</h4>
-			<nav class="sns" style="text-align: center;">
-				<a target="_blank" href="https://www.instagram.com/"
+		<div class="col-md-3" id="SNS">
+			<h4 id="CSS">SNS Link</h4>
+			<nav class="sns" style="text-align: center;" id="CS">
+				<a id="SNS" target="_blank" href="https://www.instagram.com/"
 					rel="noreferrer"> <img
 					src="https://s-lol-web.op.gg/images/icon/icon-logo-instagram.svg?v=1698201580448"
 					width="40" alt="instagram account" height="40" loading="lazy">
-				</a> <a target="_blank" href="https://www.youtube.com/" rel="noreferrer">
-					<img
+				</a> <a id="SNS" target="_blank" href="https://www.youtube.com/"
+					rel="noreferrer"> <img
 					src="https://s-lol-web.op.gg/images/icon/icon-logo-youtube.svg?v=1698201580448"
 					width="40" alt="youtube account" height="40" loading="lazy">
-				</a> <br> <a target="_blank" href="https://twitter.com/"
+				</a> <br> <a id="SNS" target="_blank" href="https://twitter.com/"
 					rel="noreferrer"> <img
 					src="https://s-lol-web.op.gg/images/icon/icon-logo-x.svg?v=1698201580448"
 					width="40" alt="twitter account" height="40" loading="lazy">
-				</a> <a target="_blank" href="https://www.facebook.com/"
+				</a> <a id="SNS" target="_blank" href="https://www.facebook.com/"
 					rel="noreferrer"> <img
 					src="https://s-lol-web.op.gg/images/icon/icon-logo-facebook.svg?v=1698201580448"
 					width="40" alt="facebook account" height="40" loading="lazy">
 				</a>
 			</nav>
 		</div>
-		<div class="col-md-3">
-			<h4>회사소개</h4>
-			<div class="copy-link">
+		<div class="col-md-3" id="COMPANY">
+			<h4 id="CSS">회사소개</h4>
+			<div class="copy-link" id="CS">
 				<span>법인명(상호): 404Store</span> | <span>대표자(성명): 홍길동</span> | <br>
 				<span>사업자 등록번호 안내: 12333-4563145-4222</span> | <br> <span>개인정보보호책임자:
 					홍길동</span> | <br> <span>전화: 010-1234-5678</span> | <span>주소:
@@ -99,7 +99,7 @@ a {
 	</div>
 	<p class="m-0 text-center text-black">Copyright &copy; 404Store
 		2023</p>
-	
+
 </footer>
 </body>
 </html>

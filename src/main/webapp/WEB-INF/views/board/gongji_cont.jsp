@@ -94,7 +94,13 @@
 	border-collapse: collapse;
 	border: 1px solid black;
 }
-;
+
+#aBc_t {
+	width: 60%;
+	margin: auto;
+	border-collapse: collapse;
+	text-align: left;
+}
 </style>
 <body>
 	<!-- 네비게이션(nav) 로드 -->
@@ -103,25 +109,37 @@
 	<jsp:include page="../include/header.jsp" />
 	<section>
 		<div id="aMain_cont">
- <div id="aBc_wrap">
-  <h2 class="aBc_title"> 공지 내용</h2>
-  <table id="aBc_t">
-   <tr>
-    <th>제목</th> <td>${b.board_title}</td>
-   </tr>
-   <tr>
-    <th>내용</th> <td>${b_cont}</td>
-   </tr>
-   <tr>
-    <th>조회수</th> <td>${b.board_hit}</td>
-   </tr>
-  </table>
-  <div id="aBc_menu">
-  <input type="button" value="목록"
-  onclick="location='gongji_list?page=${page}';" />  
-  </div>
- </div>
-</div>
+			<div id="aBc_wrap">
+				<h2 class="aBc_title" style="text-align: center;">공지 내용</h2>
+				<br>
+				<table id="aBc_t" class="table table-bordered"
+					style="text-align: center; border-collapse: collapse; margin: auto; width: 50%;">
+					<tr>
+						<th width="80"
+							style="border: 1px solid black; vertical-align: middle; background-color: rgba(211, 211, 211, 0.38);">제목</th>
+						<td width="250" style="border: 1px solid black;">${b.board_title}</td>
+					</tr>
+					<tr>
+						<th width="80"
+							style="border: 1px solid black; vertical-align: middle; background-color: rgba(211, 211, 211, 0.38);">내용</th>
+						<td width="250" style="border: 1px solid black;">${b_cont}</td>
+					</tr>
+					<tr>
+						<th width="80"
+							style="border: 1px solid black; vertical-align: middle; background-color: rgba(211, 211, 211, 0.38);">조회수</th>
+						<td width="250" style="border: 1px solid black;">${b.board_hit}</td>
+					</tr>
+				</table>
+				<br>
+				<div id="aBc_menu" style="text-align: center;">
+					<input type="button" value="목록"
+						onclick="location='gongji_list?page=${page}';"
+						style="font-size: 14px;" class="btn btn-outline-dark btn-lg" />
+				</div>
+				<br>
+
+			</div>
+		</div>
 	</section>
 	<!-- 푸터 (footer.html) -->
 	<jsp:include page="../include/footer.jsp" />

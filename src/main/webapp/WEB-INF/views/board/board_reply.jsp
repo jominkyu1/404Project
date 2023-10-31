@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 <!-- 더미이미지(데모이미지) 사용시
     <img src="https://placehold.it/가로x세로">
     로 적용 후 확인해보면 자동으로 그 사이즈에 맞게 불러옴
@@ -102,7 +103,8 @@
 	<jsp:include page="../include/header.jsp" />
 	<section>
 		<div id="bWrite_wrap">
-			<h2 class="bWrite_title">게시판 답변</h2>
+			<h2 class="bWrite_title" style="text-align: center;">게시판 답변</h2>
+			<br>
 			<form method="post" action="board_reply_ok"
 				onsubmit="return bw_check();">
 				<%--답변글 히든값 --%>
@@ -115,33 +117,34 @@
 				<%-- 페이징 히든값 --%>
 				<input type="hidden" name="page" value="${page}" />
 
-				<table id="bWrite_t">
+				<table id="bWrite_t" style="text-align: center; display: flex; justify-content: center;" 
+					class="table table-bordered">
 					<tr>
-					<sec:authorize access="hasRole('ROLE_ADMIN')" >
-                    <sec:authentication property="principal.user" var="user"/>
-						<th>이름</th>
-						<td><input name="board_name" id="board_name" size="14" value="${user.username}" readonly/></td>
-					</sec:authorize>
+						<sec:authorize access="hasRole('ROLE_ADMIN')">
+							<sec:authentication property="principal.user" var="user" />
+							<th>이름</th>
+							<td><input name="board_name" id="board_name" size="30"
+								value="${user.username}" readonly /></td>
+						</sec:authorize>
 					</tr>
 					<tr>
 						<th>제목</th>
-						<td><input name="board_title" id="board_title" size="35"
+						<td><input name="board_title" id="board_title" size="30"
 							value="Re:${b.board_title}" /></td>
 					</tr>
 					<tr>
 						<!-- 비밀번호 Hidden <th>비밀번호</th> -->
 						<td><input type="hidden" name="board_pwd" id="board_pwd"
-						size="14" value="1234"/></td>
+							size="14" value="1234" /></td>
 					</tr>
 					<tr>
 						<th>내용</th>
 						<td><textarea name="board_cont" id="board_cont" rows="9"
-								cols="36"></textarea></td>
+								cols="31"></textarea></td>
 					</tr>
 				</table>
-				<div id="bWrite_menu">
-					<input type="submit" value="답변" />
-					 <input type="reset" value="취소"
+				<div id="bWrite_menu" style="text-align: center;">
+					<input type="submit" value="답변" /> <input type="reset" value="취소"
 						onclick="$('#board_name').focus();" /> <input type="button"
 						value="목록" onclick="location='board_list?page=${page}';" />
 				</div>

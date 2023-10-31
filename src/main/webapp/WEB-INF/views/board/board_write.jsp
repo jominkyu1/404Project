@@ -132,18 +132,20 @@
 							<th>제목</th>
 							<td><input name="board_title" id="board_title" size="30" /></td>
 						</tr>
-						<tr>
+						
 							<sec:authorize access="hasRole('ROLE_ADMIN')">
 							<!-- 비밀번호 Hidden <th>비밀번호</th> -->
-								<td><input type="hidden" name="board_pwd" id="board_pwd"
-								size="14" value="1234"/></td>
+								<input type="hidden" name="board_pwd" id="board_pwd"
+								size="14" value="1234"/>
 							</sec:authorize>
 							<sec:authorize access="hasRole('ROLE_USER')">
+							<tr>
 							<th>비밀번호</th>
 								<td><input type="password" name="board_pwd" id="board_pwd" size="30" />
 								</td>
+							</tr>
 							</sec:authorize>
-						</tr>
+						
 						<tr>
 							<th style="text-align: center;">내용</th>
 							<td><textarea name="board_cont" id="board_cont" rows="9" cols="31"></textarea></td>

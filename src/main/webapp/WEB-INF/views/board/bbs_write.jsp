@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 <!-- 더미이미지(데모이미지) 사용시
     <img src="https://placehold.it/가로x세로">
     로 적용 후 확인해보면 자동으로 그 사이즈에 맞게 불러옴
@@ -103,61 +104,63 @@
 	<jsp:include page="../include/header.jsp" />
 	<section>
 
-<div id="aMain_cont">
-	<div id="aBw_wrap">
-		<h2 class="aBw_title">자료실 글쓰기</h2>
-		<form method="post" action="bbs_write_ok"
-			onsubmit="return write_check();" enctype="multipart/form-data">
-			<table id="aBw_t">
-			<sec:authorize access="isAnonymous()">
-				<script>
-					alert("로그인 후 이용해 주세요!");
-					location.href = "/login";
-				</script>
-			</sec:authorize>
-			<sec:authorize access="isAuthenticated()">
-				<sec:authentication property="principal.user" var="user"/>
-				<tr>
-					<th>이름</th>
-					<td><input name="board_name" id="board_name"
-						value="${user.username}" size="30" readonly /></td>
-				</tr>
-				</sec:authorize>
-				<tr>
-					<th>제목</th>
-					<td><input name="board_title" id="board_title" size="35" /></td>
-				</tr>
-				<tr>
-				<sec:authorize access="hasRole('ROLE_ADMIN')">
-					<!-- 비밀번호 Hidden <th>비밀번호</th> -->
-					<td><input type="hidden" name="board_pwd" id="board_pwd"
-						size="14" value="1234"/></td>
-				</sec:authorize>
-				<sec:authorize access="hasRole('ROLE_USER')">
-				<th>비밀번호</th>
-				<td><input type="password" name="board_pwd" id="board_pwd"
-					size="30" />
-				</td>
-				</sec:authorize>
-				</tr>
-				<tr>
-					<th>내용</th>
-					<td><textarea name="board_cont" id="board_cont" rows="9" cols="36"></textarea>
-					</td>
-				</tr>
-				<tr>
-					<th>파일첨부</th>
-					<td><input type="file" name="bbs_file" multiple="multiple"/></td>
-				</tr>
-			</table>
-			<div id="aBw_menu">
-				<input type="submit" value="저장" /> 
-				<input type="reset" value="취소" onclick="$('#board_name').focus();" /> 
-				<input type="button" value="목록" onclick="location='bbs_list?page=${page}';" />
+		<div id="aMain_cont" style="display: flex; justify-content: center;">
+			<div id="aBw_wrap">
+				<h2 class="aBw_title" style="text-align: center;">자료실 글쓰기</h2>
+				<br>
+				<form method="post" action="bbs_write_ok"
+					onsubmit="return write_check();" enctype="multipart/form-data">
+					<table id="aBw_t" tyle="text-align: center;"
+						class="table table-bordered">
+						<sec:authorize access="isAnonymous()">
+							<script>
+								alert("로그인 후 이용해 주세요!");
+								location.href = "/login";
+							</script>
+						</sec:authorize>
+						<sec:authorize access="isAuthenticated()">
+							<sec:authentication property="principal.user" var="user" />
+							<tr>
+								<th>이름</th>
+								<td><input name="board_name" id="board_name"
+									value="${user.username}" size="30" readonly  width="100px"/></td>
+							</tr>
+						</sec:authorize>
+						<tr>
+							<th>제목</th>
+							<td><input name="board_title" id="board_title" size="30" /></td>
+						</tr>
+						<tr>
+							<sec:authorize access="hasRole('ROLE_ADMIN')">
+								<!-- 비밀번호 Hidden <th>비밀번호</th> -->
+								<td><input type="hidden" name="board_pwd" id="board_pwd"
+									size="14" value="1234" /></td>
+							</sec:authorize>
+							<sec:authorize access="hasRole('ROLE_USER')">
+								<th>비밀번호</th>
+								<td><input type="password" name="board_pwd" id="board_pwd"
+									size="30" /></td>
+							</sec:authorize>
+						</tr>
+						<tr>
+							<th>내용</th>
+							<td><textarea name="board_cont" id="board_cont" rows="9"
+									cols="36"></textarea></td>
+						</tr>
+						<tr>
+							<th>파일첨부</th>
+							<td><input type="file" name="bbs_file" multiple="multiple" /></td>
+						</tr>
+					</table>
+				
+					<div id="aBw_menu" style="text-align: center;">
+						<input type="submit" value="저장" /> <input type="reset" value="취소"
+							onclick="$('#board_name').focus();" /> <input type="button"
+							value="목록" onclick="location='bbs_list?page=${page}';" />
+					</div>
+				</form>
 			</div>
-		</form>
-	</div>
-</div>
+		</div>
 	</section>
 	<!-- 푸터 (footer.html) -->
 	<jsp:include page="../include/footer.jsp" />
