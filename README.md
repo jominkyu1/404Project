@@ -149,4 +149,10 @@
 <br><br>   
 <div align=center><b>주문관리</b></div>   
 
-![admin_order](https://github.com/jominkyu1/404Project/assets/18455743/de995b7e-c494-48d7-ac16-3198d0e2c893)   
+![admin_order](https://github.com/jominkyu1/404Project/assets/18455743/de995b7e-c494-48d7-ac16-3198d0e2c893)    
+
+<br><br>
+
+<div align=center><b>상품문의 답변</b></div>    
+
+![admin_apply_qna](https://github.com/jominkyu1/404Project/assets/18455743/cd69baa1-d848-4632-88c5-1ae34d5ca6e0)
