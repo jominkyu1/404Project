@@ -26,6 +26,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			</if>
 	</select>
 
+
+	<!-- 상단 searchbar 레코드 개수 구하기 -->
+	<select id="bs_count2"  resultType="int">
+		select count(board_no) from board where board_category = 'bbs' and board_title like #{find_name}
+	</select>
+
+
+	<!-- 검색 전후 목록 -->
+	<select id="bs_list2" parameterType="page" resultType="board">
+		select * from
+		(select rowNum rNum,board_no,board_name,board_title,
+		board_hit,board_ref,board_step,board_level,board_date,board_category
+		from (select * from board where board_category = 'bbs'
+			<!-- 검색 조건이 제목인 경우 -->
+			and board_title like #{find_name} <!-- like는 오라클 검색 연산자 -->
+		order by board_ref desc,board_level asc))
+		where rNum &gt;= #{startrow} and rNum &lt;= #{endrow}
+		<!-- &gt;은 ~보다 크다(>), &lt;은 ~보다 작다(<) -->
+	</select>
+
 	<!-- 검색 전후 목록 -->
 	<select id="bs_list" parameterType="page" resultType="board">
 		select * from

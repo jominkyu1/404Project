@@ -27,5 +27,8 @@ public interface BbsDAO {
 	void delbbsFile(int bbs_no);
 
 	BbsVO getFile(int bbs_no);
-	
+
+	int getRowCount2(PageVO p);
+
+	List<BoardVO> getBoardList2(PageVO p);
 }

@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -46,9 +47,7 @@
     <!-- 아이템 검색 결과 -->
     </div>
     <div class="container px-4 px-lg-5 mt-5">
-        <div
-                class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center"
-        >
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
             <c:forEach items="${itemlist}" var="itemlist">
                 <div class="col mb-5">
                     <div class="card h-100">
@@ -107,10 +106,20 @@
             <th width="14%" style="text-align: center;">작성자</th>
             <th width="18%" style="text-align: center;">작성일</th>
             <th width="10%" style="text-align: center;">조회수</th>
+            <sec:authorize access="hasRole('ROLE_ADMIN')">
             <th width="18%" style="text-align: center;">수정/삭제</th>
+            </sec:authorize>
         </tr>
         <c:if test="${!empty boardlist}">
-            <c:forEach var="b" items="${boardlist}">
+            <c:set var="limit" value="true" />
+
+            <c:forEach var="b" items="${boardlist}" varStatus="status">
+                <!-- 게시글이 5개가 초과하면 반복문을 돌리지 않음 -->
+                <c:if test="${status.count > 5}" >
+                    <c:set var="limit" value="false" />
+                </c:if>
+
+                <c:if test="${limit == true}">
                 <tr>
                     <td align="center"><c:if test="${b.board_step == 0}">
                         <%-- 원본글일때만 그룹번호가 출력 --%>
@@ -129,29 +138,61 @@ get방식으로 &구분하면서 전달된다. --%></td>
                     <td align="center">${b.board_name}</td>
                     <td align="center">${fn:substring(b.board_date,0,10)}</td>
                     <td align="center">${b.board_hit}</td>
+
+
+
                     <!-- 관리자 로그인일때 수정/삭제 뜨게하기 -->
                     <sec:authorize access="hasRole('ROLE_ADMIN')">
                         <sec:authentication property="principal.user" var="user" />
                         <td align="center"><input type="button" value="수정"
                                                   onclick="location=
-                                                          'admin_board_cont?no=${b.board_no}&page=${page}&state=edit';" />
+                                                          'board_cont?no=${b.board_no}&page=${page}&state=edit';" />
                             <input type="button" value="삭제"
                                    onclick="if(confirm('정말로 삭제할까요?') == true){
-                                           location='admin_board_del?no=${b.board_no}&page=${page}';}else{ return ;}" />
+                                           location='board_del?no=${b.board_no}&page=${page}';}else{ return ;}" />
                         </td>
                     </sec:authorize>
-
-
                 </tr>
+                </c:if>
+
             </c:forEach>
         </c:if>
+
+
+
         <c:if test="${empty boardlist}">
             <tr>
                 <th colspan="5">목록이 없습니다!</th>
             </tr>
+
         </c:if>
+
+
+
+
+
+
+
     </table>
+
+
+
+
+
+
+
 </section>
+
+<!-- 게시글 5개 이상일 경우; 더보기 -->
+<c:if test = "${fn: length(boardlist) >=5}">
+    <div style="text-align: center">
+        <a href="/board_list?find_field=board_title&find_name=${search}" class="btn btn-outline-secondary">
+            전체 게시글 검색결과 보기</a>
+    </div>
+</c:if>
+
+<br>
+
 <!-- 푸터 (footer.html) -->
 <jsp:include page="include/footer.jsp" />
 <!-- include.js 자바스크립트 -->

@@ -69,4 +69,14 @@ public class BbsDAOImpl implements BbsDAO {
 		return this.sqlSession.selectOne("getFileByBbs_no", bbs_no);
 	}
 
+	@Override
+	public int getRowCount2(PageVO p) {
+		return this.sqlSession.selectOne("bs_count2", p);
+	}
+
+	@Override
+	public List<BoardVO> getBoardList2(PageVO p) {
+		return this.sqlSession.selectList("bs_list2", p);
+	}
+
 }

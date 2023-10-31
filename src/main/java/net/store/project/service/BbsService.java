@@ -28,4 +28,8 @@ public interface BbsService {
 
 	BbsVO getFile(int bbs_no);
 
+	//상단바 검색
+    int getRowCount2(PageVO p);
+
+	List<BoardVO> getBoardList2(PageVO p);
 }
