@@ -107,7 +107,7 @@
 }
 
 .nav-item {
-	font-size: 20;
+	font-size: 20px;
 }
 
 .nav-link:hover {
@@ -137,11 +137,11 @@ a.nav-link:hover {
 						style="color: black;">공지사항</a></li>
 				</ul>
 				<br>
-				<div class="bList_count" style="margin-left: 20; font-size: 20px;">글개수:
+				<div class="bList_count" style="margin-left: 20px; font-size: 20px;">글개수:
 					${listcount} 개</div>
 
 				<table id="bList_t" border="1"
-					style="position: relative top: 28px left: 48px opacity: 0.8 margin: 0 auto;"
+					style="position: relative top: 28px left: 48px opacity: 0.8 margin: 0 auto"
 					class="table table-hover">
 					<tr>
 						<th width="6%" height="26" style="text-align: center;">번호</th>
@@ -219,7 +219,7 @@ a.nav-link:hover {
 						</c:if>
 					</a>
 				</div>
-
+				
 				<%--페이징 즉 쪽나누기 추가 --%>
 				<div id="bList_paging" class="text-center">
 					<%-- 검색전 페이징 --%>
@@ -259,7 +259,6 @@ a.nav-link:hover {
 						<c:if test="${page>1}">
 							<a href="board_list?page=${page-1}&find_field=${find_field}&find_name=${find_name}">&lequo;</a>&nbsp;
                         </c:if>
-
 						<%--현재 쪽번호 출력--%>
 						<c:forEach var="a" begin="${startpage}" end="${endpage}" step="1">
 							<c:if test="${a == page}">
@@ -280,6 +279,7 @@ a.nav-link:hover {
 						</c:if>
 					</c:if>
 				</div>
+			
 			</div>
 		</form>
 	</section>
