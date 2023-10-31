@@ -1,0 +1,548 @@
+setwd("c:/r_workdata")
+
+Sys.setlocale("LC_ALL", "Korean")
+
+library(dplyr)
+library(plyr)
+library(googleVis)
+library(devtools)
+library(lubridate)
+library(stringr)
+library(ggplot2)
+library(RColorBrewer)
+library(wordcloud)
+
+library(KoNLP)
+useSejongDic()
+
+
+# 실습) 서울 명소 추천
+# 원본 파일 : seoul_go.txt
+# gsub 파일 : 서울명소gsub.txt
+# merge 파일 : 서울명소merge.txt
+
+buildDictionary(user_dic = data.frame(readLines("서울명소merge.txt"),"ncn"))
+txt=readLines("seoul_go.txt")
+p1=sapply(txt, extractNoun, USE.NAMES = F)
+p1
+
+p2=unlist(p1)
+p3=str_replace_all(p2, "[^[:alpha:]]","")
+p3=gsub(" ","", p3)
+
+t1=readLines("서울명소gsub.txt")
+
+for (i in 1:length(t1)) {
+  p3=gsub((t1[i]),"",p3)
+}
+p3
+
+p4=Filter(function(x){
+  nchar(x) >= 2
+}, p3)
+p4
+
+write(p4, "seoul_2.txt")
+p5=read.table("seoul_2.txt")
+
+wc=table(p5)
+wc
+
+pal=brewer.pal(9, "Set3")
+wordcloud(names(wc), freq=wc, scale=c(5,1), rot.per = 0.25, min.freq = 2, random.order = F, random.color = T, color=pal)
+
+# 영문 워드클라우드
+install.packages("tm")
+library(tm)
+
+# 1. 데이터불러오기
+# 2. 말뭉치변환
+# 3. 말뭉치안의 내용보기
+# 4. term-document형식의 matrix로 변환
+# 5. 사람이 볼수있는 matrix로 변환
+# 6. 단어핸들링
+# 6-1. 여러개의 공백을 하나로
+# 6-2. 대문자를 소문자
+# 6-3. 숫자제거
+# 6-4. 마침표, 콤마, 콜론, 세미콜론등 제거
+# 6-5. 일반문서로 변환
+# 6-6. 불용어 제거및 단어 추가
+# 6-7. 불용어 제거 후 재생성
+# 7. 컬럼명 변경
+# 8. 단어별 집계
+# 8-1. 특정 횟수 이상의 언급 단어 찾기
+# 8-2. 특정단어와 상관관계인 단어 찾기
+# 9. 워드클라우드
+
+# 영문 워드클라우드
+install.packages("tm")
+library(tm)
+
+# 1. 데이터불러오기
+d1=readLines("steve.txt")
+d1
+class(d1)
+
+# 2. 말뭉치변환
+c1 = VCorpus(VectorSource(d1))
+c1
+
+# 3. 말뭉치안의 내용보기
+inspect(c1)
+
+# 4. term-document형식의 matrix로 변환
+tdm = TermDocumentMatrix(c1)
+tdm
+
+# 5. 사람이 볼수있는 matrix로 변환
+m=as.matrix(tdm)
+m
+
+# 6. 단어핸들링
+# 6-1. 여러개의 공백을 하나로
+c2 = tm_map(c1, stripWhitespace)
+
+# 6-2. 대문자를 소문자
+c2 = tm_map(c2, tolower)
+
+# 6-3. 숫자제거
+c2 = tm_map(c2, removeNumbers)
+
+# 6-4. 마침표, 콤마, 콜론, 세미콜론등 제거
+c2 = tm_map(c2, removePunctuation)
+
+# 6-5. 일반문서로 변환
+c2 = tm_map(c2, PlainTextDocument)
+
+# 6-6. 불용어 제거및 단어 추가
+sw2 = c(stopwords('en'), 'and', 'but', 'not', 'that')
+c2 = tm_map(c2, removeWords, sw2)
+
+# 6-7. 불용어 제거 후 재생성
+c3=TermDocumentMatrix(c2)
+c3
+tdm2 = c3
+
+m2=as.matrix(tdm2)
+m2
+
+# 7. 컬럼명 변경
+colnames(m2)=c(1:59)
+m2
+d1
+
+# 8. 단어별 집계
+f1=sort(rowSums(m2), decreasing = T)
+f1
+head(sort(f1, decreasing = T), 20)
+
+# 컬럼별 집계
+f2 = sort(colSums(m2), decreasing = T)
+f2
+
+# 8-1. 특정 횟수 이상의 언급 단어 찾기
+findFreqTerms(tdm2, 2)
+
+# 8-2. 특정단어와 상관관계인 단어 찾기
+findAssocs(tdm2, 'apple', 0.5)
+findAssocs(tdm2, 'mac', 0.5)
+
+# 9. 워드클라우드
+wordcloud(names(f1), freq = f1, rot.per = 0.25, min.freq = 5, random.order = F, random.color = T, colors = pal)
+
+d1 = data.frame(word=names(f1), freq=f1)
+
+library(wordcloud2)
+wordcloud2(d1, color = "random-light")
+
+
+
+buildDictionary(user_dic = data.frame(readLines("제주도여행지.txt"),'ncn'))
+
+t1=readLines("jeju.txt")
+p1=sapply(t1, extractNoun,USE.NAMES = F)
+p1
+
+c1=unlist(p1)
+
+p1=str_replace_all(c1, "[^[:alpha:]]","")
+p1=gsub(" ","", p1)
+p1
+
+table(p1)
+
+t2=readLines("제주도여행코스gsub.txt")
+
+for (i in 1:length(t2)) {
+  p1=gsub((t2[i]),"",p1)
+}
+p1
+
+p2=Filter(function(x){
+  nchar(x)>=2
+},p1)
+p2
+
+write(unlist(p2),"jeju_2.txt")
+p3=read.table("jeju_2.txt")
+wc=table(p3)
+wc
+
+pal=brewer.pal(8, "Set2")
+wordcloud(names(wc), freq=wc, scale = c(5,1), rot.per = 0.25, min.freq = 2, random.order = F, random.color = T, colors = pal)
+
+top10 = head(sort(wc, decreasing = T), 10)
+top10
+
+wordcloud2(top10, color = "random-light")
+
+pct=round(top10/sum(top10)*100,1)
+lab=paste(names(top10), "\n", pct, "%")
+pie(top10, main="제주도여행코스 TOP10",col=rainbow(10), cex=0.8, labels = lab)
+
+bp=barplot(top10, main="제주도여행코스 TOP10",col=rainbow(10), cex.names = 0.7, las=1, ylim=c(0,25))
+text(x=bp, y=top10*0.95, labels = paste("(", pct, "%)"), col="black", cex=0.7)
+text(x=bp, y=top10*1.05, labels = paste(top10, "건"), col="black", cex=0.7)
+
+# 막대그래프 오름차순
+top10_2 = rev(top10)
+pct_2 = round(top10_2/sum(top10_2)*100,1)
+bp=barplot(top10_2, main="제주도여행코스 TOP10",col=rainbow(10), cex.names = 0.7, las=1, ylim=c(0,25))
+text(x=bp, y=top10_2*0.95, labels = paste("(", pct_2, "%)"), col="black", cex=0.7)
+text(x=bp, y=top10_2*1.05, labels = paste(top10_2, "건"), col="black", cex=0.7)
+
+# 가로막대
+bp=barplot(top10, main="제주도여행코스 TOP10",col=rainbow(10), cex.names = 0.7, las=1, xlim=c(0,25), horiz = T)
+text(y=bp, x=top10*0.95, labels = paste("(", pct, "%)"), col="black", cex=0.7)
+text(y=bp, x=top10*1.25, labels = paste(top10, "건"), col="black", cex=0.7)
+
+# 가로막대그래프 오름차순
+top10_2 = rev(top10)
+pct_2 = round(top10_2/sum(top10_2)*100,1)
+bp=barplot(top10_2, main="제주도여행코스 TOP10",col=rainbow(10), cex.names = 0.7, las=1, xlim=c(0,25), horiz = T)
+text(y=bp, x=top10_2*0.95, labels = paste("(", pct_2, "%)"), col="black", cex=0.7)
+text(y=bp, x=top10_2*1.25, labels = paste(top10_2, "건"), col="black", cex=0.7)
+
+
+# 프로포즈 선물 TOP10
+
+buildDictionary(user_dic = data.frame(readLines("proposemerge.txt"),'ncn'))
+txt=readLines("propose.txt")
+pro=sapply(txt, extractNoun, USE.NAMES = F)
+
+c=unlist(pro)
+
+pro2 = gsub("\\.", "", c)
+pro2 = gsub("\\'", "", pro2)
+pro2 = gsub('\\"', "", pro2)
+pro2 = gsub(" ", "", pro2)
+pro2 = gsub("\\d+", "", pro2)
+pro2 = gsub("링", "반지", pro2)
+pro2 = gsub("꽃", "꽃다발", pro2)
+pro2 = gsub("꽃다발다발", "꽃다발", pro2)
+pro2 = gsub("^^", "", pro2)
+pro2 = gsub("^ㅎ^ㅎ", "", pro2)
+pro2 = gsub("주얼", "주얼리", pro2)
+pro2 = gsub("보석", "주얼리", pro2)
+pro2 = gsub("\\^ㅎ\\^ㅎ", "", pro2)
+
+txt = readLines("proposegsub.txt")
+
+for (i in 1:length(txt)) {
+  pro2=gsub((txt[i]),"", pro2)
+}
+
+pro2=Filter(function(x){
+  nchar(x)>1
+}, pro2)
+
+pro2 = Filter(function(x){
+  nchar(x)<=6
+}, pro2)
+
+pro2=Filter(function(x){
+  (nchar(x)>1 & nchar(x) <=6)
+}, pro2)
+
+write(unlist(pro2), "pro_2.txt")
+rev=read.table("pro_2.txt")
+rev
+
+wc=table(rev)
+wc
+
+top10 = head(sort(wc, decreasing = T),10)
+top10
+
+par(mfrow=c(2,2))
+colors=c()
+for (i in 1:length(top10)) {
+  if (top10[i] >= 50) {
+    colors=c(colors, 'red')
+  } else if (top10[i] >= 30) {
+    colors=c(colors, 'yellow')
+  } else if (top10[i] >= 10) {
+    colors=c(colors, 'blue')
+  } else {
+    colors=c(colors, 'pink')
+  }
+}
+
+
+bp=barplot(top10, main="프로포즈 TOP10", col=colors, cex.names = 0.9, ylim = c(0,80), las=2)
+text(x=bp, y=top10*1.05, labels = paste(top10,"건"),col='black', cex=0.7)
+
+top10_2=rev(top10)
+colors=c()
+for (i in 1:length(top10_2)) {
+  if (top10_2[i] >= 50) {
+    colors=c(colors, 'red')
+  } else if (top10_2[i] >= 30) {
+    colors=c(colors, 'yellow')
+  } else if (top10_2[i] >= 10) {
+    colors=c(colors, 'blue')
+  } else {
+    colors=c(colors, 'pink')
+  }
+}
+
+pct_2=round(top10_2/sum(top10_2)*100,1)
+bp=barplot(top10_2, main="프로포즈 TOP10", col=colors, cex.names = 0.9, xlim = c(0,80), las=1, horiz = T)
+text(y=bp, x=top10_2*1.15, labels = paste(top10_2,"건"),col='black', cex=0.7)
+
+pal=brewer.pal(8, "Set2")
+wordcloud(names(top10), freq = top10, scale = c(5,1), rot.per = 0.25, random.order = F, random.color = T, colors = pal)
+
+install.packages("plotrix")
+library(plotrix)
+lab=paste(names(top10), "\n", pct_2,"%")
+pie3D(top10_2, main="프로포즈 TOP10", col=colors,labels=lab, labelcex = 0.8, explode = 0.3)
+
+library(dplyr)
+library(ggplot2)
+
+
+dat = read.csv("유학생정보.csv")
+dat
+
+class(dat)
+str(dat)
+summary(dat)
+
+table(is.na(dat))
+
+# 국적별 유학생 수
+
+dat1 = dat %>% 
+  group_by(국적명) %>% 
+  dplyr::summarise(tot=n()) %>% 
+  arrange(desc(tot)) %>% 
+  head(20)
+dat1
+
+View(dat1)
+
+ggplot(dat1, aes(x=reorder(국적명, desc(tot)), y=tot, fill=국적명))+geom_bar(stat='identity')+theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0))
+
+# 유학생이 가장 많은 나라의 체류자격
+dat2 = dat %>% 
+  filter(국적명 %in% c('베트남','중국','몽골','우즈베키스탄','일본')) %>% 
+  group_by(국적명, 체류자격) %>% 
+  dplyr::summarise(tot=n()) %>% 
+  mutate(비율=tot/sum(tot))
+dat2
+View(dat2)
+
+ggplot(dat2, aes(x=국적명, y=비율, fill=체류자격))+geom_bar(stat = 'identity')+theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0))
+
+# 유학생이 어느 학교에 많은가?
+dat3 = dat %>% 
+  group_by(학교명) %>% 
+  dplyr::summarise(tot=n()) %>% 
+  arrange(desc(tot)) %>% 
+  head(20)
+
+ggplot(dat3, aes(x=reorder(학교명, desc(tot)), y=tot, fill=학교명))+geom_bar(stat='identity')+theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0))
+
+View(dat)
+
+# 데이터분석
+# 1. 패키지 준비
+# 2. 데이터 준비
+# 3. 데이터 검토
+# 4. 변수명 바꾸기
+# 5. 데이터 분석절차
+#   5-1. 변수검토및 전처리
+#   5-2. 변수간 관계분석
+# 6. 시각화
+
+
+# 데이터분석
+# 1. 패키지 준비
+library(dplyr)
+library(plyr)
+library(lubridate)
+library(stringr)
+library(ggplot2)
+
+# 2. 데이터 준비
+df=read.csv("전국문화축제.csv")
+View(df)
+
+# 3. 데이터 검토
+# 데이터 재구성 : 축제명, 축제시작일자, 축제종료일자, 소재지도로주소명, 경도, 위도
+
+str(df)
+df1=data.frame(df[1], df[3:4], df[12], df[14:15])
+View(df1)
+
+# 4. 변수명 바꾸기
+cnt = length(df1)
+names(df1)[cnt]="LAT"
+names(df1)[cnt-1]="LON"
+View(df1)
+
+# 5. 데이터 분석절차
+#   5-1. 변수검토및 전처리
+# 결측치, 이상치 처리
+summary(df1)
+nrow(df1)
+
+df2=df1[complete.cases(df1), ]
+nrow(df2)
+summary(df2)
+View(df2)
+
+####### 컬럼별 정리
+
+cnt=1
+head(table(df2[cnt]))
+
+# 빈값을 NA로 변경후 삭제 
+length(df2$축제명[df2$축제명] == "")
+df2$축제명[df2$축제명==""] = NA
+df2$축제명[df2$축제명=="-"] = NA
+df2$축제명[df2$축제명=="."] = NA
+
+df2=df2[complete.cases(df2), ]
+nrow(df2)
+
+cnt=2
+head(table(df2[cnt]))
+
+# 빈값을 NA로 변경후 삭제 
+length(df2$축제시작일자[df2$축제시작일자] == "")
+df2$축제시작일자[df2$축제시작일자==""] = NA
+df2$축제시작일자[df2$축제시작일자=="-"] = NA
+df2$축제시작일자[df2$축제시작일자=="."] = NA
+
+df2=df2[complete.cases(df2), ]
+nrow(df2)
+
+cnt=3
+head(table(df2[cnt]))
+
+# 빈값을 NA로 변경후 삭제 
+length(df2$축제종료일자[df2$축제종료일자] == "")
+df2$축제종료일자[df2$축제종료일자==""] = NA
+df2$축제종료일자[df2$축제종료일자=="-"] = NA
+df2$축제종료일자[df2$축제종료일자=="."] = NA
+
+df2=df2[complete.cases(df2), ]
+nrow(df2)
+
+cnt=4
+head(table(df2[cnt]))
+
+# 빈값을 NA로 변경후 삭제 
+length(df2$소재지도로명주소[df2$소재지도로명주소] == "")
+df2$소재지도로명주소[df2$소재지도로명주소==""] = NA
+df2$소재지도로명주소[df2$소재지도로명주소=="-"] = NA
+df2$소재지도로명주소[df2$소재지도로명주소=="."] = NA
+
+df2=df2[complete.cases(df2), ]
+nrow(df2)
+
+cnt=5
+head(table(df2[cnt]))
+
+# 빈값을 NA로 변경후 삭제 
+length(df2$LON[df2$LON] == "")
+df2$LON[df2$LON==""] = NA
+df2$LON[df2$LON=="-"] = NA
+df2$LON[df2$LON=="."] = NA
+
+df2=df2[complete.cases(df2), ]
+nrow(df2)
+
+cnt=6
+head(table(df2[cnt]))
+
+# 빈값을 NA로 변경후 삭제 
+length(df2$LAT[df2$LAT] == "")
+df2$LAT[df2$LAT==""] = NA
+df2$LAT[df2$LAT=="-"] = NA
+df2$LAT[df2$LAT=="."] = NA
+
+df2=df2[complete.cases(df2), ]
+nrow(df2)
+
+#   5-2. 변수간 관계분석
+# 자료분류 : 년도, 월별, 지역
+attach(df2)
+
+str(df2)
+df2$축제시작일자 = as.Date(df2$축제시작일자)
+df2$축제종료일자 = as.Date(df2$축제종료일자)
+str(df2)
+
+df2$축제기간 = df2$축제종료일자-df2$축제시작일자+1
+View(df2)
+table(df2$축제기간)
+
+df2 = subset(df2, df2$축제기간 > 0 & df2$축제기간 <= 700)
+table(df2$축제기간)
+
+비고 = ifelse(df2$축제기간 >= 365, "1년이상", ifelse(df2$축제기간 >= 50, "50일이상", ifelse(df2$축제기간 == 1, "1일", "50일 미만")))
+
+View(df2)
+df2=cbind(df2, 비고)
+
+View(df2)
+
+# 패키지 이용한 년도별, 월별 추출
+df2$월별=month(df2$축제시작일자)
+df2$월별
+table(df2$월별)
+hist(df2$월별)
+
+df2$년도별=year(df2$축제시작일자)
+df2$년도별
+table(df2$년도별)
+hist(df2$년도별)
+
+df2$요일별=wday(df2$축제시작일자, label=T)
+df2$요일별
+table(df2$요일별)
+hist(df2$요일별)
+qplot(df2$요일별)
+
+# 소재지 도로주소명의 컬럼명을 addr로 
+colnames(df2)[4]='addr'
+View(df2)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

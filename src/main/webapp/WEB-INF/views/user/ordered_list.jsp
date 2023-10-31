@@ -78,7 +78,7 @@ p {
 	font-weight: bold;
 }
 
-.styled-button {absolute;
+.styled-button {
 	top: 50%;
 	background-color: #0a0a23;
 	color: #fff;
@@ -97,34 +97,20 @@ p {
 	<jsp:include page="../include/nav.jsp" />
 	<jsp:include page="../include/header.jsp" />
 	<section class="py-3 mx-auto">
-		<h2 style="text-align: center;">ORDER LIST</h2>
-
-
+		<h2 style="text-align: center;" class="mb-2">주문 내역</h2>
 
 		<div style="text-align: center;">
-			<ul class="menu">
-				<li class="tab_class selected"><a href="#"><strong>주문내역조회</strong></a></li>
-				<li class="tab_class_cs"><a href="#"><strong>취소/반품/교환내역</strong></a></li>
+			<ul class="nav justify-content-center">
+        <li class="nav-link"><a href="?category=ALL"><strong>전체내역</strong></a></li>
+        <li class="nav-link"><a href="?category=ORDER"><strong>주문접수</strong></a></li>
+				<li class="nav-link"><a href="?category=DELIVERY"><strong>배송중</strong></a></li>
+        <li class="nav-link"><a href="?category=COMPLETE"><strong>배송완료</strong></a></li>
+        <li class="nav-link">
+          <a href="?category=CANCEL" style="color: #bb2d3b; font-weight: bold">주문취소</a>
+        </li>
 			</ul>
 		</div>
 		<hr>
-		<h3 style="text-align: center; font-size: 15px;">
-			<strong>배송기간조회</strong>
-		</h3>
-		<form style="text-align: center;">
-			<p>
-				<input type="date" id="startDate"> ~ <input type="date"
-					id="endDate"> <input type="submit" value="조회"
-					class="styled-button">
-			</p>
-
-			<ul style="font-size: 10px; text-align: center; list-style: none;" >
-				<li>기본적으로 최근 3개월간의 자료가 조회되며, 기간 검색시 지난 주문내역을 조회하실 수 있습니다.</li>
-				<li>주문번호를 클릭하시면 해당 주문에 대한 상세내역을 확인하실 수 있습니다.</li>
-				<li class="">취소/교환/반품 신청은 배송완료일 기준 30일까지 가능합니다.</li>
-			</ul>
-		</form>
-
 
 		<c:forEach var="order" items="${orders}">
 			<div class="card mt-2">
@@ -191,6 +177,13 @@ p {
       </div>
     </div>
   </c:forEach>
+    
+    <div class="d-flex justify-content-center">
+    <jsp:include page="../paging/paging.jsp">
+      <jsp:param name="paging" value="${paging}" />
+    </jsp:include>
+    </div>
+    
 </section>
 <jsp:include page="../include/footer.jsp" />
 </body>

@@ -96,7 +96,7 @@
 	border-collapse: collapse;
 	border: 1px solid black;
 }
-;
+
 </style>
 <body>
 	<!-- 네비게이션(nav) 로드 -->
@@ -107,19 +107,14 @@
 		<Br>
 		<form method="get" action="bbs_list">
 			<div id="bList_wrap">
-				<ul class="nav nav-tabs" style="font-size: 20px;">
-					<li class="nav-item"><a class="nav-link" aria-current="page"
-						href="/board_list" style="color: black; font-weight: bold;">게시판</a></li>
-					<li class="nav-item"><a class="nav-link active"
-						href="/bbs_list" style="color: black; font-weight: bold;">자료실</a></li>
-					<li class="nav-item"><a class="nav-link" href="/gongji_list"
-						style="color: black; font-weight: bold;">공지사항</a></li>
-				</ul>
+				<h3 align="center">자료실</h3>
+				<%-- 상단 탭 --%>
+				<jsp:include page="board_include/board_tab.jsp" />
+				
 				<br>
 				<div class="bList_count" style="margin-left: 20px; font-size: 20px;">글개수:
 					${listcount} 개</div>
 				<table id="bList_t" border=1
-					style="position: relative top: 28px left: 48px opacity: 0.8 margin: 0 auto"
 					class="table table-hover">
 					<tr>
 						<th width="6%" height="26" style="text-align: center;">번호</th>
@@ -199,67 +194,10 @@
 							class="btn btn-outline-dark btn-lg">
 					</sec:authorize>
 				</div>
-
-				<%--페이징(쪽나누기)--%>
-				<div id="bList_paging" style="text-align: center;">
-					<%--검색전 페이징 --%>
-					<c:if test="${(empty find_field)&&(empty find_name)}">
-						<c:if test="${page <=1}">
-   [이전]&nbsp;
-   </c:if>
-						<c:if test="${page >1}">
-							<a href="bbs_list?page=${page-1}">[이전]</a>&nbsp;
-   </c:if>
-
-						<%--쪽번호 출력부분 --%>
-						<c:forEach var="a" begin="${startpage}" end="${endpage}" step="1">
-							<c:if test="${a == page}"><${a}></c:if>
-
-							<c:if test="${a != page}">
-								<a href="bbs_list?page=${a}">[${a}]</a>&nbsp;
-    </c:if>
-						</c:forEach>
-
-						<c:if test="${page>=maxpage}">[다음]</c:if>
-						<c:if test="${page<maxpage}">
-							<a href="bbs_list?page=${page+1}">[다음]</a>
-						</c:if>
-					</c:if>
-
-					<%-- 검색후 페이징(쪽나누기) --%>
-					<c:if test="${(!empty find_field) || (!empty find_name)}">
-						<c:if test="${page <=1}">
-   [이전]&nbsp;
-   </c:if>
-						<c:if test="${page >1}">
-							<a
-								href="bbs_list?page=${page-1}&find_field=${find_field}&find_name=${find_name}">[이전]</a>&nbsp;
-   </c:if>
-
-						<%--쪽번호 출력부분 --%>
-						<c:forEach var="a" begin="${startpage}" end="${endpage}" step="1">
-							<c:if test="${a == page}"><${a}></c:if>
-
-							<c:if test="${a != page}">
-								<a
-									href="bbs_list?page=${a}&find_field=${find_field}&find_name=${find_name}">[${a}]</a>&nbsp;
-    </c:if>
-						</c:forEach>
-
-						<c:if test="${page>=maxpage}">[다음]</c:if>
-						<c:if test="${page<maxpage}">
-							<a
-								href="bbs_list?page=${page+1}&find_field=${find_field}&find_name=${find_name}">[다음]</a>
-						</c:if>
-					</c:if>
-				</div>
-
 				
-
+				<%-- 페이징 --%>
+				<jsp:include page="board_include/board_paging.jsp" />
 				
-
-
-
 			</div>
 		</form>
 	</section>

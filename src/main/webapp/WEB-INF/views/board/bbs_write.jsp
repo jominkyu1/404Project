@@ -95,7 +95,7 @@
 	border-collapse: collapse;
 	border: 1px solid black;
 }
-;
+
 </style>
 <body>
 	<!-- 네비게이션(nav) 로드 -->
@@ -130,18 +130,19 @@
 							<th>제목</th>
 							<td><input name="board_title" id="board_title" size="30px" /></td>
 						</tr>
-						<tr>
+						
 							<sec:authorize access="hasRole('ROLE_ADMIN')">
 								<!-- 비밀번호 Hidden <th>비밀번호</th> -->
-								<td><input type="hidden" name="board_pwd" id="board_pwd"
-									size="14px" value="1234" /></td>
+								<input type="hidden" name="board_pwd" id="board_pwd"
+									size="14" value="1234" />
 							</sec:authorize>
 							<sec:authorize access="hasRole('ROLE_USER')">
+							<tr>
 								<th>비밀번호</th>
-								<input type="password" name="board_pwd" id="board_pwd"
-									size="30px" />
+								<td><input type="password" name="board_pwd" id="board_pwd"
+									size="30px" /></td>
 							</sec:authorize>
-						</tr>
+						
 						<tr>
 							<th>내용</th>
 							<td><textarea name="board_cont" id="board_cont" rows="9"

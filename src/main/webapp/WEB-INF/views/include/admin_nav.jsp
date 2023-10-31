@@ -24,11 +24,6 @@
                 상품문의
             </a>
         </li>
-        <li>
-            <a href="#" class="nav-link text-black fw-bolder">
-                Q&A
-            </a>
-        </li>
 
         <hr>
  

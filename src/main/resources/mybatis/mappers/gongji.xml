@@ -51,7 +51,7 @@
 		board_no_seq.nextval,0,0,sysdate,#{board_category})
 	</insert>
 	
-	<!-- 공지 내용보기+수정폼 -->
+	<!-- 공지 내용보기 -->
 	<select id="g_cont" parameterType="int" resultType="board">
 		select * from board where board_no=#{board_no}
 	</select>

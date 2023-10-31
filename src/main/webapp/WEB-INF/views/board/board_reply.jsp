@@ -94,7 +94,7 @@
 	border-collapse: collapse;
 	border: 1px solid black;
 }
-;
+
 </style>
 <body>
 	<!-- 네비게이션(nav) 로드 -->
@@ -109,12 +109,9 @@
 				onsubmit="return bw_check();">
 				<%--답변글 히든값 --%>
 				<input type="hidden" name="board_ref" value="${b.board_ref}" />
-				<%--원본글과 답변글을 묶어주는 그룹
-  번호값 --%>
+				<%--원본글과 답변글을 묶어주는 그룹 번호값 --%>
 				<input type="hidden" name="board_step" value="${b.board_step}" />
-				<%-- 원본글이면 0,첫번째 답변글이면
-  1,즉 원본글과 답변글을 구분하는 번호값이면서 몇번째 답변글인가
-  를 알려줌. --%>
+				<%-- 원본글이면 0,첫번째 답변글이면 1,즉 원본글과 답변글을 구분하는 번호값이면서 몇번째 답변글인가를 알려줌. --%>
 				<input type="hidden" name="board_level" value="${b.board_level}" />
 				<%--답변글 정렬순서 --%>
 				<%-- 페이징 히든값 --%>

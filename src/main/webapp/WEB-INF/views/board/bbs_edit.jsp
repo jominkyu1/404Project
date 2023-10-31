@@ -94,7 +94,7 @@
 	border-collapse: collapse;
 	border: 1px solid black;
 }
-;
+
 </style>
 <body>
 	<!-- 네비게이션(nav) 로드 -->
@@ -129,7 +129,7 @@
 
 								<td><input type="hidden" name="board_pwd" id="board_pwd"
 									value="1234"
-									style="width: 300px; font-size: 14; text-align: center; vertical-align: middle;" /></td>
+									style="width: 300px; font-size: 14px; text-align: center; vertical-align: middle;" /></td>
 							</sec:authorize>
 						</tr>
 						<tr>
