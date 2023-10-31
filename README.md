@@ -1,13 +1,17 @@
 # 404 Store 쇼핑몰 프로젝트
 ## :blue_book:  목차
 
-- 프로젝트 개요
-- 기술 및 도구
-- 기능 및 구현내용
+- [프로젝트 개요](#rainbow-프로젝트-개요) 
+- [기술 및 도구](#star-기술-및-도구) 
+- [기능 및 구현내용](#gear-기능-및-구현내용)  <br><br>
+  - [회원가입](#회원가입)
+  - [로그인](#로그인)
+  - [상품주문](#상품주문)
+  - [관리페이지](#관리페이지)
 
 <br><br>
 
-## :rainbow: 프로젝트 개요 
+# :rainbow: 프로젝트 개요 
 
 ![store_main](https://github.com/jominkyu1/404Project/assets/18455743/b18df33a-d903-4773-a53d-a4197f3ee701)
 
@@ -117,7 +121,7 @@
 
 ![store_payment](https://github.com/jominkyu1/404Project/assets/18455743/af8e1fe9-ba1f-4462-ae0b-7f56d9fa898c)  
 ![kakao_payment](https://github.com/jominkyu1/404Project/assets/18455743/7d43250a-d633-4716-b2dd-8eea24d308be)  
-![order_info_detail](https://github.com/jominkyu1/404Project/assets/18455743/c7a57b00-9ab2-4fcf-8ee9-f6b1688b542c)  
+![order_info2](https://github.com/jominkyu1/404Project/assets/18455743/e2b56ffb-1be7-445a-948e-94c4924288b9)   
     
 ### 관리페이지
 
@@ -129,7 +133,12 @@
 - 주문관리: 전체주문, 배송대기중인 주문, 배송중인 주문, 배송완료된 주문, 배송이 취소된 주문을 관리할 수 있음
 - 회원관리: 가입된 회원의 현황을 자세히 확인가능하며, 탈퇴를 시킬 수 있음
 - 상품문의: 작성이 완료되거나, 답변이 필요한 상품문의를 관리할 수 있음
-- Q&A: 고객센터 게시판의 글을 관리할 수 있음 (TODO)
 - 이번주특가: 상품을 등록하거나 수정이 가능함
-     
-![store_admin](https://github.com/jominkyu1/404Project/assets/18455743/f1495044-a0e3-4a4f-ae9e-d8e324d76623)
+<br><br><br>
+<div align=center><b>메인화면</b></div>   
+
+![admin_page2](https://github.com/jominkyu1/404Project/assets/18455743/fbde0b7a-2c53-48de-8170-dc0bb4c96489)       
+<br><br>   
+<div align=center><b>주문관리</b></div>   
+
+![admin_order](https://github.com/jominkyu1/404Project/assets/18455743/de995b7e-c494-48d7-ac16-3198d0e2c893)   
