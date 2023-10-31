@@ -12,7 +12,7 @@ import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-//@Controller
+@Controller
 /**
  * 배포환경에서 사용할 IMAGE CONTROLLER
  * */
@@ -20,9 +20,10 @@ public class ImageController {
 
     private final String FILE_DIR = ImageHandler.FILE_DIR;
 
-    @GetMapping("/itemimages/{image_path}")
+    @GetMapping("/itemimages/{date_path}/{image_path}")
     @ResponseBody
-    public Resource imageProcess(@PathVariable String image_path) throws MalformedURLException {
+    public Resource imageProcess(@PathVariable String date_path, @PathVariable String image_path) throws MalformedURLException {
+        image_path = date_path + "/" + image_path;
         Path itemPath = Paths.get(FILE_DIR + image_path);
 
         return new UrlResource("file:" + itemPath);

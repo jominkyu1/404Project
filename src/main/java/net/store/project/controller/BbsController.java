@@ -260,7 +260,7 @@ public class BbsController {
 			response.setContentType("text/html;charset=UTF-8");
 			
 			page = 1;
-			String delFolder= ImageHandler.IMG_DIR;
+			String delFolder= ImageHandler.FILE_DIR;
 			
 			//실제 파일삭제
 			BbsVO bbs = bbsService.getFile(bbs_no);

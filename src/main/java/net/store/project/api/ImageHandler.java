@@ -20,7 +20,7 @@ public class ImageHandler {
         //현재날짜를 기준으로 폴더경로 생성
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
         String currentDate = dateFormat.format(new Date());
-        String uploadDir = IMG_DIR + currentDate;
+        String uploadDir = FILE_DIR + currentDate;
 
         // 업로드한 파일명(ex:: apple.jpg)
         String originalFilename = multipartFile.getOriginalFilename();
