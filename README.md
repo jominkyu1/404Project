@@ -126,11 +126,27 @@
 
 
 ### 고객센터   
-- QNA: TODO
-- 자료실: TODO
-- 공지사항: TODO  
+- 관리자 공통: Spring Security TagLibrary를 활용하여 로그인 한 유저가 관리자임을 검증, 관리자는 각 게시판에 글을 등록, 수정, 삭제가 가능
+  
+고객센터 게시판  
+- QNA: 로그인한 회원은 질문글을 작성할 수 있으며 관리자는 답변을 작성 가능 (계단식 답변)
+- 자료실: 관리자만 글을 작성할 수 있으며, 파일을 등록, 이후 모든 사용자가 다운로드할 수 있도록 구현
+- 공지사항: 관리자만 글을 작성할 수 있으며, 사이트 이용에 필요한 게시글 등을 작성
+  <br><br><br>
+  <div align=center><b>일반사용자</b></div>    
+  
+![help_user1](https://github.com/jominkyu1/404Project/assets/18455743/3ce85cc4-07df-4155-abe8-08fb209bff64)   
+  <br><br>
+  <div align=center><b>관리자</b></div>      
+  
+![help_admin1](https://github.com/jominkyu1/404Project/assets/18455743/0c523bec-b26c-499d-9916-99e1375dda82)      
 
-     
+<br><br>  
+<div align=center><b>자료실</b></div>   
+
+![help_bbs1](https://github.com/jominkyu1/404Project/assets/18455743/d9967e32-4af6-4edd-8178-641693b5ec6e)  
+<br><br>
+
 ### 관리페이지
 
 메인화면  
