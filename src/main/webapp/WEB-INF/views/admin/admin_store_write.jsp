@@ -57,6 +57,13 @@
         <form:input path="stockQuantity" class="form-control" />
       </div>
       <div class="mb-3">
+        <label for="category" class="form-label">카테고리</label>
+        <form:select path="category" class="form-select">
+          <form:option value="FRUITS">과일</form:option>
+          <form:option value="ELECTRONICS">전자제품</form:option>
+        </form:select>
+      </div>
+      <div class="mb-3">
         <label for="image" class="form-label">상품이미지</label>
         <form:input path="image" type="file" class="form-control" required="required"/>
       </div>
