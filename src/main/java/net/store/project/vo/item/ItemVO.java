@@ -6,13 +6,9 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
 
 @Setter
 @Getter
@@ -56,12 +52,13 @@ public class ItemVO {
     protected ItemVO() {}
 
     @Builder
-    public ItemVO(String name, String description, int price, int stockQuantity, String image_path) {
+    public ItemVO(String name, String description, int price, int stockQuantity, String image_path, ItemCategory category) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.stockQuantity = stockQuantity;
         this.image_path = image_path;
+        this.category = category;
     }
 
     //주문시 재고 감소

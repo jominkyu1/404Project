@@ -44,7 +44,8 @@
                     <th>상품가격</th>
                     <th>남은개수</th>
                     <th>등록일자</th>
-                      <th>수정</th>
+                    <th>카테고리</th>
+                    <th>수정</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -54,14 +55,25 @@
                       <td>${item.price}</td>
                       <td>${item.stockQuantity}</td>
                       <td>${item.regdate}</td>
-                        <td><a href="/admin/item/${item.item_id}/edit">수정하기</a></td>
+                      <td>${item.category}</td>
+                      <td><a href="/admin/item/${item.item_id}/edit" class="btn btn-outline-dark btn-sm">수정</a></td>
                     </tr>
                   </c:forEach>
                   </tbody>
                   <tfooter>
                     <a href="/admin/store/write" class="btn btn-dark my-2">제품등록</a>
+                    <select class="form-select-sm" id="category"
+                            onchange="updateCategory(this)">
+                      <option value="ALL">전체</option>
+                      <option value="FRUITS">과일</option>
+                      <option value="ELECTRONICS">전자제품</option>
+                    </select>
                   </tfooter>
               </table>
+              
+              <!-- 페이징 -->
+              <jsp:include page="../paging/paging.jsp"/>
+              
             </div>
             
         </div>
@@ -69,7 +81,18 @@
     <!-- 푸터 (footer.html) -->
     <jsp:include page="../include/footer.jsp" />
     </body>
-
+    <script>
+      $(document).ready(function(){
+          if(${param.category != null}){
+          $('#category').val('${param.category}');
+          }
+      })
+      
+      function updateCategory(selectElement){
+        var selectedValue = selectElement.value;
+        location.href = "/admin/store?category="+selectedValue;
+      }
+    </script>
     <!-- Bootstrap core JS-->
     <script src="/js/bootstrap.bundle.js"></script>
 </html>

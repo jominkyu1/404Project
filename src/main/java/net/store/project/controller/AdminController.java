@@ -12,6 +12,7 @@ import net.store.project.service.ItemQnaService;
 import net.store.project.service.ItemService;
 import net.store.project.service.OrderService;
 import net.store.project.service.UserService;
+import net.store.project.vo.item.ItemCategory;
 import net.store.project.vo.item.ItemQnaVO;
 import net.store.project.vo.item.ItemVO;
 import net.store.project.vo.item.form.ItemUploadForm;
@@ -95,11 +96,21 @@ public class AdminController {
     }
 
     @GetMapping("/store")
-    public String admin_Store(Model model){
-        List<ItemVO> itemList = itemRepository.findAll();
+    public String admin_Store(Model model,@PageableDefault Pageable pageable,
+                              @RequestParam(required = false) String category){
+
+        Page<ItemVO> pageableItemList = getItemsByCategory(pageable, category);
+
+        //불변객체 -> 가변객체로 반환
+        List<ItemVO> itemList = new ArrayList<>(pageableItemList.getContent());
+
+        //페이징변수
+        JpaPagingDto jpaPagingDto = pageableHandler.makePages(pageable, pageableItemList, 3);
         //최신순으로
         itemList.sort(Comparator.comparing(ItemVO::getRegdate).reversed());
+
         model.addAttribute("itemlist", itemList);
+        model.addAttribute("paging", jpaPagingDto);
 
         return "admin/admin_store";
     }
@@ -271,5 +282,13 @@ public class AdminController {
         count.put("adminUsers", userService.getAdminUsersCount());
 
         return count;
+    }
+
+    private Page<ItemVO> getItemsByCategory(Pageable pageable, String itemCategory){
+        if(itemCategory == null || itemCategory.equals("ALL")){
+            return itemRepository.findAll(pageable);
+        }
+
+        return itemRepository.findAllByCategory(ItemCategory.valueOf(itemCategory), pageable);
     }
 }
