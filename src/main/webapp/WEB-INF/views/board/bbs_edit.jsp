@@ -127,9 +127,9 @@
 							<sec:authorize access="hasRole('ROLE_ADMIN')">
 								<!-- 비밀번호 Hidden <th>비밀번호</th> -->
 
-								<td><input type="hidden" name="board_pwd" id="board_pwd"
-									value="1234"
-									style="width: 300px; font-size: 14px; text-align: center; vertical-align: middle;" /></td>
+								<input type="hidden" name="board_pwd" id="board_pwd"
+									value="1234
+									style="width: 300px; font-size: 14px; text-align: center; vertical-align: middle;" />
 							</sec:authorize>
 						</tr>
 						<tr>
