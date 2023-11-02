@@ -123,12 +123,12 @@
 							<tr>
 								<th>이름</th>
 								<td><input name="board_name" id="board_name"
-									value="${user.username}" size="30" readonly  width="100px"/></td>
+									value="${user.username}" size="30" readonly /></td>
 							</tr>
 						</sec:authorize>
 						<tr>
 							<th>제목</th>
-							<td><input name="board_title" id="board_title" size="30" /></td>
+							<td><input name="board_title" id="board_title" size="30px" /></td>
 						</tr>
 						
 							<sec:authorize access="hasRole('ROLE_ADMIN')">
@@ -140,8 +140,7 @@
 							<tr>
 								<th>비밀번호</th>
 								<td><input type="password" name="board_pwd" id="board_pwd"
-									size="30" /></td>
-							</tr>
+									size="30px" /></td>
 							</sec:authorize>
 						
 						<tr>

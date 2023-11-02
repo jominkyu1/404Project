@@ -127,9 +127,9 @@
 							<sec:authorize access="hasRole('ROLE_ADMIN')">
 								<!-- 비밀번호 Hidden <th>비밀번호</th> -->
 
-								<td><input type="hidden" name="board_pwd" id="board_pwd"
-									value="1234"
-									style="width: 300px; font-size: 14px; text-align: center; vertical-align: middle;" /></td>
+								<input type="hidden" name="board_pwd" id="board_pwd"
+									value="1234
+									style="width: 300px; font-size: 14px; text-align: center; vertical-align: middle;" />
 							</sec:authorize>
 						</tr>
 						<tr>
@@ -142,7 +142,7 @@
 						</tr>
 						<c:forEach var="file" items="${files}">
 							<tr>
-								<td>첨부파일: <a href="/itemimages/${file.bbs_filepath}"
+								<th>첨부파일</th> <td><a href="/itemimages/${file.bbs_filepath}"
 									download="${file.bbs_originalFilename}">
 										${file.bbs_originalFilename} </a>&nbsp; <a
 									href="/bbs_del_file?bbs_no=${file.bbs_no}&page=${page}&board_no=${b.board_no}">파일삭제</a>

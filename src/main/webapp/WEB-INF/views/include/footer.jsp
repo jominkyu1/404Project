@@ -1,105 +1,226 @@
 <%@ page contentType="text/html; charset=UTF-8"%><link
 	href="/css/bootstrap.min.css" rel="stylesheet">
 <style>
-#footerjs {
+.site-footer {
 	background-color: rgba(211, 211, 211, 0.38);
-	padding-top: 20px;
-	padding-bottom: 20px;
+	padding: 45px 0 20px;
+	font-size: 15px;
+	line-height: 24px;
+	color: #737373;
 }
 
-.col-md-3 {
-	display: inline-block;
-	vertical-align: top;
-	font-size: 16px; /* 모든 텍스트 크기를 16px로 설정 */
+.site-footer hr {
+	border-top-color: #bbb;
+	opacity: 0.5
 }
 
-#CS {
-	list-style: none;
-	text-align: left;
-	font-size: 16px; /* 모든 텍스트 크기를 16px로 설정 */
+.site-footer hr.small {
+	margin: 20px 0
 }
 
-#CSS {
-	text-align: center;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	font-size: 25px; /* 모든 텍스트 크기를 16px로 설정 */
+.site-footer h6 {
+	color: #fff;
+	font-size: 16px;
+	text-transform: uppercase;
+	margin-top: 5px;
+	letter-spacing: 2px
 }
 
-#SNS {
+.site-footer a {
+	color: #737373;
+}
+
+.site-footer a:hover {
+	color: #3366cc;
 	text-decoration: none;
-	color: inherit;
-	font-size: 16px; /* 모든 텍스트 크기를 16px로 설정 */
 }
 
-.cs_info {
-	display: flex;
+.footer-links {
+	padding-left: 0;
+	list-style: none
 }
 
-.sns a {
-	text-decoration: none; /* 링크 텍스트 밑줄 제거 */
-	border: none; /* 테두리 제거 */
-	outline: none; /* 포커스 테두리 제거 (접근성 고려) */
+.footer-links li {
+	display: block
+}
+
+.footer-links a {
+	color: #737373
+}
+
+.footer-links a:active, .footer-links a:focus, .footer-links a:hover {
+	color: #3366cc;
+	text-decoration: none;
+}
+
+.footer-links.inline li {
+	display: inline-block
+}
+
+.site-footer .social-icons {
+	text-align: right
+}
+
+.site-footer .social-icons a {
+	width: 40px;
+	height: 40px;
+	line-height: 40px;
+	margin-left: 6px;
+	margin-right: 0;
+	border-radius: 100%;
+	background-color: #33353d
+}
+
+.copyright-text {
+	margin: 0
+}
+
+@media ( max-width :991px) {
+	.site-footer [class^=col-] {
+		margin-bottom: 30px
+	}
+}
+
+@media ( max-width :767px) {
+	.site-footer {
+		padding-bottom: 0
+	}
+	.site-footer .copyright-text, .site-footer .social-icons {
+		text-align: center
+	}
+}
+
+.social-icons {
+	padding-left: 0;
+	margin-bottom: 0;
+	list-style: none
+}
+
+.social-icons li {
+	display: inline-block;
+	margin-bottom: 4px
+}
+
+.social-icons li.title {
+	margin-right: 15px;
+	text-transform: uppercase;
+	color: #96a2b2;
+	font-weight: 700;
+	font-size: 13px
+}
+
+.social-icons a {
+	background-color: #eceeef;
+	color: #818a91;
+	font-size: 16px;
+	display: inline-block;
+	line-height: 44px;
+	width: 44px;
+	height: 44px;
+	text-align: center;
+	margin-right: 8px;
+	border-radius: 100%;
+	-webkit-transition: all .2s linear;
+	-o-transition: all .2s linear;
+	transition: all .2s linear
+}
+
+.social-icons a:active, .social-icons a:focus, .social-icons a:hover {
+	color: #fff;
+	background-color: #29aafe
+}
+
+.social-icons.size-sm a {
+	line-height: 34px;
+	height: 34px;
+	width: 34px;
+	font-size: 14px
+}
+
+.social-icons a.facebook:hover {
+	background-color: #3b5998
+}
+
+.social-icons a.twitter:hover {
+	background-color: #00aced
+}
+
+.social-icons a.linkedin:hover {
+	background-color: #007bb6
+}
+
+.social-icons a.dribbble:hover {
+	background-color: #ea4c89
+}
+
+@media ( max-width :767px) {
+	.social-icons li.title {
+		display: block;
+		margin-right: 0;
+		font-weight: 600
+	}
 }
 </style>
 
-<footer class="py-5" id="footerjs">
-	<div class="cs_info widget widget_links clearfix">
-		<div class="col-md-3">
-			<h4 id="CSS">CS Center</h4>
-			<ul id="CS">
-				<li class="hb_footer_tel">Tel: 070-1234-5678</li>
-				<li><span>평일</span> 09:00am - 06:00pm</li>
-				<li><span>점심</span> 12:00pm - 01:00pm</li>
-				<li><span>휴무</span> 토 / 일 / 공휴일 휴무</li>
-			</ul>
-		</div>
-		<div class="col-md-3" id="Bank">
-			<h4 id="CSS">Bank Info</h4>
-			<ul id="CS">
-				<li><span>국민은행</span>1234-567-890123</li>
-				<li><span>우리은행</span>1234-567-890123</li>
-				<li><span>농협은행</span>1234-567-890123</li>
-				<li><span>예금주 :</span> 홍길동</li>
-			</ul>
-		</div>
-		<div class="col-md-3" id="SNS">
-			<h4 id="CSS">SNS Link</h4>
-			<nav class="sns" style="text-align: center;" id="CS">
-				<a id="SNS" target="_blank" href="https://www.instagram.com/"
-					rel="noreferrer"> <img
-					src="https://s-lol-web.op.gg/images/icon/icon-logo-instagram.svg?v=1698201580448"
-					width="40" alt="instagram account" height="40" loading="lazy">
-				</a> <a id="SNS" target="_blank" href="https://www.youtube.com/"
-					rel="noreferrer"> <img
-					src="https://s-lol-web.op.gg/images/icon/icon-logo-youtube.svg?v=1698201580448"
-					width="40" alt="youtube account" height="40" loading="lazy">
-				</a> <br> <a id="SNS" target="_blank" href="https://twitter.com/"
-					rel="noreferrer"> <img
-					src="https://s-lol-web.op.gg/images/icon/icon-logo-x.svg?v=1698201580448"
-					width="40" alt="twitter account" height="40" loading="lazy">
-				</a> <a id="SNS" target="_blank" href="https://www.facebook.com/"
-					rel="noreferrer"> <img
-					src="https://s-lol-web.op.gg/images/icon/icon-logo-facebook.svg?v=1698201580448"
-					width="40" alt="facebook account" height="40" loading="lazy">
-				</a>
-			</nav>
-		</div>
-		<div class="col-md-3" id="COMPANY">
-			<h4 id="CSS">회사소개</h4>
-			<div class="copy-link" id="CS">
-				<span>법인명(상호): 404Store</span> | <span>대표자(성명): 홍길동</span> | <br>
-				<span>사업자 등록번호 안내: 12333-4563145-4222</span> | <br> <span>개인정보보호책임자:
-					홍길동</span> | <br> <span>전화: 010-1234-5678</span> | <span>주소:
-					서울 종로구 돈화문로 26 단성사빌딩 4층</span> <span><strong></strong></span>
+<footer class="site-footer">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-12 col-md-6">
+				<h6 style="color: black;">회사소개</h6>
+				<p class="text-justify">
+					법인명(상호): 4040Stpre | 대표자(성명): 홍길동 <br> 사업자 등록번호 안내:
+					12333-4561231-4222 <br> 개인정보보호책임자: 홍길동 <br> 전화:
+					010-1234-5678 <br> 주소: 서울 종로구 돈화문로 26 단성사빌딩 4층
+
+				</p>
+			</div>
+
+			<div class="col-xs-6 col-md-3">
+				<h6 style="color: black;">Cs Center</h6>
+				<ul class="footer-links">
+					<li>고객센터: 070-1234-5678</li>
+					<li>평일: 09:00am - 06:00pm</li>
+					<li>점심: 12:00pm - 01:00pm</li>
+					<li>휴뮤: 토/ 일 / 공휴일 휴무</li>
+				</ul>
+			</div>
+
+			<div class="col-xs-6 col-md-3">
+				<h6 style="color: black;">MEMBERSHIP</h6>
+				<ul class="footer-links">
+					<li><a href="http://localhost:8082/">홈으로</a></li>
+					<li><a href="http://localhost:8082/register">회원가입</a></li>
+					<li><a href="http://localhost:8082/board_list">고객센터</a></li>
+					<li><a href="http://localhost:8082/find/pwd_find">비밀번호 찾기</a></li>
+				</ul>
 			</div>
 		</div>
-
+		<hr>
 	</div>
-	<p class="m-0 text-center text-black">Copyright &copy; 404Store
-		2023</p>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8 col-sm-6 col-xs-12">
+				<p class="copyright-text">Copyright &copy; 404Store 2023</p>
+			</div>
+			<nav class="sns"
+				style="text-align: right; text-decoration: none; font-size: 16px;">
+				<a target="_blank" href="https://www.instagram.com/"
+					rel="noreferrer"><img
+					src="https://s-lol-web.op.gg/images/icon/icon-logo-instagram.svg?v=1698825847926"
+					width="35" alt="instagram account" height="35" loading="lazy"></a>
+				<a target="_blank" href="https://www.youtube.com/" rel="noreferrer"><img
+					src="https://s-lol-web.op.gg/images/icon/icon-logo-youtube.svg?v=1698825847926"
+					width="35" alt="twitter account" height="35" loading="lazy"></a>
+				<a target="_blank" href="https://twitter.com/" rel="noreferrer"><img
+					src="https://s-lol-web.op.gg/images/icon/icon-logo-x.svg?v=1698825847926"
+					width="35" alt="twitter account" height="35" loading="lazy"></a>
+				<a target="_blank" href="https://www.facebook.com/" rel="noreferrer"><img
+					src="https://s-lol-web.op.gg/images/icon/icon-logo-facebook.svg?v=1698825847926"
+					width="35" alt="facebook account" height="35" loading="lazy"></a>
+			</nav>
 
+		</div>
+	</div>
 </footer>
 </body>
 </html>
