@@ -1,13 +1,18 @@
 package net.store.project.controller;
 
 import lombok.RequiredArgsConstructor;
-import net.store.project.repository.ItemQnaRepository;
-import net.store.project.repository.ItemRepository;
-import net.store.project.repository.UserRepository;
+import net.store.project.repository.*;
+import net.store.project.security.StoreUserDetails;
 import net.store.project.service.ItemQnaService;
+import net.store.project.service.ItemReviewService;
 import net.store.project.vo.item.ItemQnaVO;
+import net.store.project.vo.item.ItemReviewVO;
 import net.store.project.vo.item.ItemVO;
+import net.store.project.vo.order.OrderVO;
 import net.store.project.vo.user.UserVO;
+import org.hibernate.cache.spi.support.AbstractReadWriteAccess;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +30,11 @@ public class ItemController {
     private final ItemRepository itemRepository;
     private final UserRepository userRepository;
     private final ItemQnaService itemQnaService;
+
+    private final ItemReviewRepository itemReviewRepository;
+    private final ItemReviewService itemReviewService;
+
+    private final OrderRepository orderRepository;
 
     @GetMapping
     public String itemInfo(){
@@ -47,6 +57,21 @@ public class ItemController {
         
         model.addAttribute("qnaCount", count); //해당 상품에대한 문의글 갯수
         model.addAttribute("qnaList", qnaList); //해당 상품에대한 문의글 리스트
+
+
+        //상품리뷰처리
+        int countReview = itemReviewRepository.countByItemVO(item);
+        List<ItemReviewVO> reviewList = itemReviewService.findAllReview(item);
+        //답변이 없는 문의글을 위로
+//        qnaList.sort(Comparator.comparingInt(ItemQnaVO::getAnswered));
+
+        model.addAttribute("reviewCount", countReview); //해당 상품에대한 문의글 갯수
+        model.addAttribute("reviewList", reviewList); //해당 상품에대한 문의글 리스트
+
+
+
+
+
         return "iteminfo";
     }
 
@@ -75,9 +100,29 @@ public class ItemController {
     }
 
 
+    /**
+     * 상품리뷰 등록 메소드
+     * */
+    @PostMapping("/{item_id}/applyReview")
+    public String applyReview(@PathVariable Long item_id,
+                              @RequestParam String reviewUsername,
+                              @RequestParam String reviewContents){
+
+        ItemVO itemVO = itemRepository.findById(item_id)
+                .orElseThrow(() -> new IllegalArgumentException("리뷰 등록 중 오류가 발생했습니다. 상품을 찾을 수 없습니다."));
+        UserVO userVO = userRepository.findByUsername(reviewUsername)
+                .orElseThrow(() -> new NoSuchElementException("리뷰 등록 중 오류가 발생했습니다. 유저를 찾을 수 없습니다."));
 
 
+        ItemReviewVO reviewVO = ItemReviewVO.builder()
+                .itemVO(itemVO)
+                .userVO(userVO)
+                .contents(reviewContents)
+                .build();
 
+        itemReviewService.applyReview(reviewVO);
 
+        return "redirect:/item/{item_id}";
 
+    }
 }

@@ -21,4 +21,5 @@ public interface OrderRepository extends JpaRepository<OrderVO, Long> {
 
     @Query("select o from OrderVO o where o.user.user_id = :user_id and o.status = :status")
     Page<OrderVO> findAllByUser_IdAndStatus(Pageable pageable, Long user_id, OrderStatus status);
+
 }

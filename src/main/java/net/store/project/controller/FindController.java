@@ -72,7 +72,7 @@ public class FindController {
 
             String encodedPassword = passwordEncoder.encode(ran_pwd); //비번 암호화
             uservo.setPassword(encodedPassword);
-            this.findService.updatePwd(uservo);//id기준 암호화된 비번 수젇
+            this.findService.updatePwd(uservo);//id기준 암호화된 비번 수정
 
 
             ModelAndView fm = new ModelAndView("user/pwd_find_ok");

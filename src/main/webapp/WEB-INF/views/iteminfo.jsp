@@ -95,10 +95,18 @@
                 장바구니
               </button>
               <!-- -->
-              <a class="btn btn-outline-dark mx-2" href="/specialstore">
+
+
+              <a class="btn btn-outline-dark mx-2 " href="/specialstore">
                 <i class="bi-arrow-return-right me-1"></i>
                 목록으로
               </a>
+
+
+
+
+            <div class="border border-5" style="flex-direction: row; ">
+
               <button
                 type="button"
                 class="btn btn-outline-dark ms-auto"
@@ -111,6 +119,32 @@
                 <i class="bi-question-circle me-1"></i>
                 상품 문의
               </button>
+
+
+
+
+              <!--상품 리뷰 버튼 -->
+
+
+              <button
+                      type="button"
+                      class="btn btn-outline-dark ms-auto"
+                      data-bs-toggle="modal"
+                      data-bs-target="#productReviewInquiryModal"
+                      <sec:authorize access="isAnonymous()">
+                        onclick="alert('로그인이 필요합니다.'); location.href='/login';"
+                      </sec:authorize>
+              >
+                <i class="bi-exclamation-circle-fill me-1"></i>
+                상품 리뷰
+              </button>
+
+            </div>
+
+
+
+              <!-- -->
+
             </div>
             </form>
           </div>
@@ -137,7 +171,7 @@
                   <td>${qna.userVO.username}</td>
                   <td>
                     ${qna.contents}
-  
+
                     <button
                       class="btn btn-outline-secondary btn-sm dropdown-toggle float-end"
                       type="button"
@@ -170,11 +204,73 @@
             </tbody>
           </table>
         </div>
+
+        <!--상품 리뷰-->
+
+
+        <div>
+          <table class="table" style="white-space: nowrap;">
+            <caption class="caption-top mb-3 text-center"><b>상품리뷰: ${reviewCount}개</b></caption>
+            <thead class="table-light ">
+            <tr>
+              <th class="col-1">리뷰일자</th>
+              <th class="col-1" width="10%">아이디</th>
+              <th class="col-9">리뷰내용</th>
+<%--              <th class="col-1" width="5%">답변</th>--%>
+            </tr>
+            </thead>
+            <tbody>
+            <c:forEach items="${reviewList}" var="review">
+              <tr>
+                <td>
+                  <fmt:formatDate value="${review.regdate}" pattern="yy-MM-dd" />
+                </td>
+                <td>${review.userVO.username}</td>
+                <td>
+                    ${review.contents}
+
+<%--                  <button--%>
+<%--                          class="btn btn-outline-secondary btn-sm dropdown-toggle float-end"--%>
+<%--                          type="button"--%>
+<%--                          data-bs-toggle="collapse"--%>
+<%--                          data-bs-target="#reply${review.review_id}"--%>
+<%--                          aria-expanded="false"--%>
+<%--                          <c:if test="${review.review_id == 0}">--%>
+<%--                            disabled="disabled"--%>
+<%--                          </c:if>--%>
+<%--                  >--%>
+<%--                    답변보기--%>
+<%--                  </button>--%>
+<%--                  <div class="collapse" id="reply${review.review_id}">--%>
+<%--                    <hr>--%>
+<%--                    <p class="m-auto fw-bolder" >--%>
+<%--                        ${review.answered_text}--%>
+<%--                    </p>--%>
+<%--                  </div>--%>
+                </td>
+<%--                <c:choose>--%>
+<%--                  <c:when test="${review.answered == 0}">--%>
+<%--                    <td align="center" style="color: red">X</td>--%>
+<%--                  </c:when>--%>
+<%--                  <c:otherwise>--%>
+<%--                    <td align="center" style="color: green">O</td>--%>
+<%--                  </c:otherwise>--%>
+<%--                </c:choose>--%>
+              </tr>
+            </c:forEach>
+            </tbody>
+          </table>
+        </div>
+
+
+
       </div>
-    </section>
+
+
+    <!--</section>-->
     <!-- 푸터 (footer.html) -->
     <jsp:include page="include/footer.jsp" />
-  </body>
+  <!--</body>-->
  <sec:authorize access="isAuthenticated()">
    <sec:authentication property="principal.user" var="user" />
   <!-- 모달 창 -->
@@ -223,6 +319,10 @@
             </div>
           
         </div>
+
+
+
+
         <div class="modal-footer">
           <button type="submit" class="btn btn-outline-secondary">문의하기</button>
           <button
@@ -233,11 +333,103 @@
             닫기
           </button>
         </div>
+
+
       </div>
     </div>
     </form>
   </div>
  </sec:authorize>
+
+
+
+   <hr class="my-5">
+   <!--상품리뷰 -->
+
+
+   </section>
+   <!-- 푸터 (footer.html) -->
+   <jsp:include page="include/footer.jsp" />
+   </body>
+   <sec:authorize access="isAuthenticated()">
+     <sec:authentication property="principal.user" var="reviewUser" />
+     <!-- 모달 창 -->
+     <div
+             class="modal fade"
+             id="productReviewInquiryModal"
+             tabindex="-1"
+             aria-labelledby="productReviewInquiryModalLabel"
+             aria-hidden="true"
+     >
+       <form method="post" action="/item/${item.item_id}/applyReview">
+         <div class="modal-dialog">
+           <div class="modal-content">
+             <div class="modal-header">
+               <h5 class="modal-title" id="productReviewInquiryModalLabel">상품 리뷰</h5>
+               <button
+                       type="button"
+                       class="btn-close"
+                       data-bs-dismiss="modal"
+                       aria-label="닫기"
+               ></button>
+             </div>
+
+             <div class="modal-body">
+               <!-- 상품 리뷰 폼 -->
+               <div class="mb-3">
+                 <label for="reviewUsername" class="form-label">아이디</label>
+                 <input
+                         type="text"
+                         class="form-control bg-dark-subtle"
+                         id="reviewUsername"
+                         name="reviewUsername"
+                         value="${user.username}"
+                         readonly
+                 />
+               </div>
+               <div class="mb-3">
+                 <label for="reviewContents" class="form-label">리뷰 내용</label>
+                 <textarea
+                         class="form-control"
+                         id="reviewContents"
+                         name="reviewContents"
+                         rows="4"
+                         required
+                 ></textarea>
+               </div>
+
+             </div>
+
+
+
+
+             <div class="modal-footer">
+               <button type="submit" class="btn btn-outline-secondary">상품리뷰 쓰기</button>
+               <button
+                       type="button"
+                       class="btn btn-secondary"
+                       data-bs-dismiss="modal"
+               >
+                 닫기
+               </button>
+             </div>
+
+
+           </div>
+         </div>
+       </form>
+
+    <!--상품리뷰 끝 -->
+
+
+
+
+
+
+  </div>
+ </sec:authorize>
   <!-- Bootstrap core JS-->
   <script src="/js/bootstrap.bundle.js"></script>
 </html>
+
+
